@@ -29,8 +29,6 @@ namespace HDC
         {
             var harmony = new Harmony(ModID);
             harmony.PatchAll();
-            UnityEngine.Debug.Log("Test Test");
-            UnityEngine.Debug.Log("Please let this show up");
         }
 
         void Start()
