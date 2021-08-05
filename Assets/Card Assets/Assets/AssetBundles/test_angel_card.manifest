@@ -1,0 +1,67 @@
+ManifestFileVersion: 0
+CRC: 3436914870
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: c4205df41ea1beda3757f2875fb55996
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 37d75b64657c5be054c9ffe9588dddf9
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 23f87014774b6a44dbae62c7e38bc6f1, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 223
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+- Class: 225
+  Script: {instanceID: 0}
+Assets:
+- Assets/Prefabs/Images/Circle_Quarter2.png
+- Assets/Prefabs/Images/Eyes-White.png
+- Assets/Prefabs/Images/Circle_Quarter1.png
+- Assets/Prefabs/Images/Body-White.png
+- Assets/Prefabs/Images/Triangle2.png
+- Assets/Prefabs/Images/DotsDetail_2.png
+- Assets/Prefabs/Images/Closed-Eyes-White.png
+- Assets/Prefabs/Images/Triangle1.png
+- Assets/Prefabs/Images/TriangleSpriteHalf.png
+- Assets/Prefabs/Images/Square.png
+- Assets/Prefabs/Images/Halo-BG-White.png
+- Assets/Prefabs/Images/Crowsfeet-White.png
+- Assets/Prefabs/Images/CardBG.png
+- Assets/Prefabs/Images/Grid3.png
+- Assets/Prefabs/Images/Wing-White.png
+- Assets/Prefabs/Images/Eyes-Outline-White.png
+- Assets/Prefabs/Images/Halo-White.png
+- Assets/Prefabs/Images/Mouth-White.png
+- Assets/Prefabs/AngelCard1.prefab
+- Assets/Prefabs/Images/Bg_Pattern2.png
+Dependencies: []
