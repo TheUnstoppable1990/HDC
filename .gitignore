@@ -364,3 +364,19 @@ FodyWeavers.xsd
 
 # Packaged
 **/Packaged
+
+# Assets
+Assets/
+
+# Libs
+Libs/
+
+# git
+.gitignore
+.gitattributes
+
+# SLN
+*.sln
+
+# txt
+*.txt
