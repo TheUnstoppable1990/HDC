@@ -380,3 +380,8 @@ Libs/
 
 # txt
 *.txt
+
+# HDC
+HDC.dll
+HDC.zip
+HDC.csproj
