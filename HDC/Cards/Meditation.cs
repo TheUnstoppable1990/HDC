@@ -14,6 +14,7 @@ namespace HDC.Cards
 {
     class Meditation : CustomCard
     {
+        private float health_boost = 0.25f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
             
@@ -21,12 +22,12 @@ namespace HDC.Cards
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //UnityEngine.Debug.Log(data);
-            Regeneration regeneration = player.gameObject.AddComponent<Regeneration>();
-            data.maxHealth *= 1.25f;
+            Meditation_Effect regeneration = player.gameObject.AddComponent<Meditation_Effect>();
+            data.maxHealth *= (1+health_boost);
         }
         public override void OnRemoveCard()
         {
-            //throw new NotImplementedException();
+            
         }
         protected override string GetTitle()
         {
@@ -60,7 +61,7 @@ namespace HDC.Cards
                 {
                     positive = true,
                     stat = "Health",
-                    amount = "25%",
+                    amount = $"+{health_boost*100}%",
                     simepleAmount = CardInfoStat.SimpleAmount.Some
                 }
             };

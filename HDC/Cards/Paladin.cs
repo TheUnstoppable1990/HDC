@@ -6,43 +6,38 @@ using System.Threading.Tasks;
 using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
-using UnboundLib.Networking;
-using System.Collections;
 using HDC.MonoBehaviours;
 
 namespace HDC.Cards
 {
-    class DivineBlessing : CustomCard
+    class Paladin : CustomCard
     {
-        private float block_cooldown = 0.25f;
-        private float health_boost = 0.25f;
-        private float health_restore = 0.15f;
+        private Paladin_Effect paladin_effect;
+        private Player player;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-            var block = gameObject.AddComponent<Block>();
-            block.InvokeMethod("ResetStats");
-            block.cdMultiplier = 1-block_cooldown;
+
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            DivineBlessing_Effect divineBlessing = player.gameObject.AddComponent<DivineBlessing_Effect>();
-            divineBlessing.player = player;
-            divineBlessing.data = data;
-            divineBlessing.block = block;
-            divineBlessing.healRatio = health_restore;
-            data.maxHealth *= (1+health_boost);
-        }      
+            
+            this.paladin_effect = player.gameObject.AddComponent<Paladin_Effect>();
+            this.paladin_effect.player = player;
+            this.player = player;
+            data.maxHealth *= 1.5f;
+        }
         public override void OnRemoveCard()
         {
-         
+            //throw new NotImplementedException();
+           Destroy(paladin_effect);                
         }
         protected override string GetTitle()
         {
-            return "Divine Blessing";
+            return "Paladins Endurance";
         }
         protected override string GetDescription()
         {
-            return $"Heal {health_restore*100}% of your hp everytime you block";
+            return "Regain vitality for each nearby enemy and rally your allies when they are near.";
         }
         protected override GameObject GetCardArt()
         {
@@ -67,16 +62,9 @@ namespace HDC.Cards
                 new CardInfoStat()
                 {
                     positive = true,
-                    stat = "Block Cooldown",
-                    amount =  $"-{block_cooldown*100}%",
-                    simepleAmount = CardInfoStat.SimpleAmount.lower
-                },
-                new CardInfoStat()
-                {
-                    positive = true,
                     stat = "Health",
-                    amount = $"+{health_boost*100}%",
-                    simepleAmount = CardInfoStat.SimpleAmount.Some
+                    amount = "50%",
+                    simepleAmount = CardInfoStat.SimpleAmount.aLotOf
                 }
             };
         }

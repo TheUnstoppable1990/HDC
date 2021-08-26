@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace HDC.MonoBehaviours
 {
-    class Regeneration : MonoBehaviour
+    class Meditation_Effect : MonoBehaviour
     {
         internal Player player;
         internal Gun gun;
@@ -29,7 +29,7 @@ namespace HDC.MonoBehaviours
         private int secondCount = 0;
 
         private float healAmount = 5.0f;
-        public float healRatio = 0.05f; //5 base hp/sec for base health of 100
+        public float healRatio = 0.1f; //10  base hp/sec for base health of 100
 
         private void Start()
         {
@@ -64,15 +64,17 @@ namespace HDC.MonoBehaviours
                 timePass += Time.deltaTime;
                 if (timePass > 1.0f)  //every second
                 {
-                    healAmount = (healRatio + secondCount / 100f) * this.data.maxHealth;
+                    //healAmount = (healRatio + secondCount / 100f) * this.data.maxHealth;
+                    healAmount = 5.0f + (float)Math.Pow(secondCount,2) / 100f;
                     this.data.health += healAmount;
                     if (this.data.health > this.data.maxHealth)
                     {
                         this.data.health = this.data.maxHealth; // simpler way to cap health
+                        secondCount = 0; //resets the exponential growth factor
                     }
                     timePass = 0.0f;
-                    secondCount++;
-                    UnityEngine.Debug.Log(healAmount);
+                    secondCount++;//removing this for the time being
+                    //UnityEngine.Debug.Log(healAmount);
                 }
             }
             else

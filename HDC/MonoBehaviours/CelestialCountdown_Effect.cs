@@ -18,7 +18,7 @@ using Photon.Realtime;
 
 namespace HDC.MonoBehaviours
 {
-    public class CelestialCountdown : MonoBehaviour
+    public class CelestialCountdown_Effect : MonoBehaviour
     {
         public SoundEvent soundCelestialChargeLoop;
         
@@ -182,7 +182,7 @@ namespace HDC.MonoBehaviours
                 this.counter = this.remainingDuration / this.duration;
                 return; //Breaks out before further conditionals
             }
-            //UnityEngine.Debug.Log("Made it this far --- 1.");
+            
             if (this.isCelestialForm) //Occurs when duration is zero or less
             {
                 //Remove Buffs here
@@ -191,18 +191,18 @@ namespace HDC.MonoBehaviours
                 this.isCelestialForm = false;
                 UnityEngine.Debug.Log("Celestial Form Disabled");                
             }
-            //UnityEngine.Debug.Log("Made it this far --- 2.");
+            
             if (this.data.input.direction == Vector3.zero || this.data.input.direction == Vector3.down)
             {
-                //UnityEngine.Debug.Log("I think you are not moving");
+              
                 this.counter += TimeHandler.deltaTime / this.timeToFill; //Fills the circle when not moving?
-                UnityEngine.Debug.Log(this.counter);
+               
             }
             else
             {
-                //UnityEngine.Debug.Log("Are you moving?");
+           
                 this.counter -= TimeHandler.deltaTime / this.timeToEmpty; //empties circle
-                UnityEngine.Debug.Log(this.counter);
+
             }
             this.counter = Mathf.Clamp(this.counter, -0.1f / this.timeToFill, 1f);
             if (this.counter >= 1f && this.data.view.IsMine)
@@ -224,11 +224,7 @@ namespace HDC.MonoBehaviours
             base.transform.localScale = Vector3.one * 1.2f * Mathf.Pow(this.data.maxHealth / 100f * 1.2f, 0.2f) * 1f;//size multiplier? not sure if static or not
         }
         
-        //Work Around for Movement
-        private bool HasMoved()
-        {
-            return true;
-        }
+        
         
     }
 }

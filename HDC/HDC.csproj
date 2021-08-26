@@ -74,23 +74,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cards\CelestialCountdownCard.cs" />
+    <Compile Include="Cards\CelestialCountdown.cs" />
+    <Compile Include="Cards\BehindYou.cs" />
+    <Compile Include="Cards\Paladin.cs" />
     <Compile Include="Cards\TheDebugCard.cs" />
     <Compile Include="Cards\Meditation.cs" />
     <Compile Include="Cards\DivineBlessing.cs" />
     <Compile Include="Cards\TestCard.cs" />
     <Compile Include="HDC.cs" />
-    <Compile Include="MonoBehaviours\CelestialCountdown.cs" />
-    <Compile Include="MonoBehaviours\Regeneration.cs" />
+    <Compile Include="MonoBehaviours\CelestialCountdown_Effect.cs" />
+    <Compile Include="MonoBehaviours\BehindYou_Effect.cs" />
+    <Compile Include="MonoBehaviours\DivineBlessing_Effect.cs" />
+    <Compile Include="MonoBehaviours\Paladin_Effect.cs" />
+    <Compile Include="MonoBehaviours\Meditation_Effect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="manifest.json" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AssetsEmbedded\test_angel_card">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extentions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

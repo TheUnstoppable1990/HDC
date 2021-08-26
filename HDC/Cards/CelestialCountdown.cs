@@ -11,18 +11,19 @@ using System.Collections;
 using HDC.MonoBehaviours;
 namespace HDC.Cards
 {
-    class CelestialCountdownCard : CustomCard
+    class CelestialCountdown : CustomCard
     {
         private Player thisPlayer;
+        private CelestialCountdown_Effect countdown;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-
+            cardInfo.allowMultiple = false;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //UnityEngine.Debug.Log(data);
-            thisPlayer = player;
-            CelestialCountdown countdown = player.gameObject.AddComponent<CelestialCountdown>();
+            this.thisPlayer = player;
+            this.countdown = player.gameObject.AddComponent<CelestialCountdown_Effect>();
             countdown.player = player;
             countdown.duration = 10f;
             countdown.hpMultiplier = 10f;
@@ -38,7 +39,7 @@ namespace HDC.Cards
         public override void OnRemoveCard()
         {
             //throw new NotImplementedException();
-            
+            Destroy(this.countdown);
             
         }
         protected override string GetTitle()
