@@ -42,6 +42,10 @@ namespace HDC.MonoBehaviours
         {
 
         }
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(this);
+        }
         private void Awake()
         {
             this.player = gameObject.GetComponent<Player>(); //might make the player setting in the card redundant but oh well at this point
@@ -52,8 +56,6 @@ namespace HDC.MonoBehaviours
         {
             this.startHealth = this.data.health;
             this.startMaxHealth = this.data.maxHealth;
-
-            UnityEngine.Debug.Log($"Starting health is {this.startHealth}/{this.startMaxHealth}");
         }
         private void OnDisable()
         {
@@ -68,7 +70,7 @@ namespace HDC.MonoBehaviours
             {
                 CharacterData otherData = otherPlayer.GetComponent<CharacterData>();
                 float dist = Vector2.Distance(this.data.playerVel.position, otherData.playerVel.position);
-                //UnityEngine.Debug.Log(dist);
+                
                 foreach(Player enemy in this.enemiesInRange)
                 {
                     CharacterData enemyData = enemy.GetComponent<CharacterData>();
@@ -153,39 +155,7 @@ namespace HDC.MonoBehaviours
                 this.timePass = 0.0f; //resets the second
             }
 
-                /*
-                int diff = Math.Abs(this.numOfEnemies - this.previousNumOfEnemies);
-                this.healthChange = (float)Math.Pow(multiplier, diff);
-                if (this.numOfEnemies > this.previousNumOfEnemies)
-                {
-                    this.data.maxHealth *= this.healthChange;
-                    this.data.health *= this.healthChange;
-                    this.ConfigureMassAndSize();
-                    /*
-                    foreach(Player ally in this.alliesInRange)// this won't work except when enemy numbers change ally entrance will totally be borked
-                    {
-                        //boosts Ally stats
-                        CharacterData allyData = ally.GetComponent<CharacterData>();
-                        allyData.maxHealth *= this.healthChange;
-                        allyData.health *= this.healthChange;
-                    }
-                    UnityEngine.Debug.Log($"Start Health: {this.startMaxHealth}, Current Health: {this.data.maxHealth}");
-                }
-                else if (this.numOfEnemies < this.previousNumOfEnemies)
-                {
-                    this.data.maxHealth /= this.healthChange;
-                    this.data.health /= this.healthChange;
-                    this.ConfigureMassAndSize();
-                    /*
-                    foreach (Player ally in this.alliesInRange)
-                    {
-                        //boosts Ally stats
-                        CharacterData allyData = ally.GetComponent<CharacterData>();
-                        allyData.maxHealth /= this.healthChange;
-                        allyData.health /= this.healthChange;
-                    }
-
-                }*/
+                
 
                 
             this.previousNumOfEnemies = this.numOfEnemies;
@@ -207,10 +177,7 @@ namespace HDC.MonoBehaviours
         {
             return PlayerManager.instance.players.Where(player => player.playerID != this.player.playerID).ToList();
         }
-        private void ConsoleLog(CharacterData target)
-        {
-            UnityEngine.Debug.Log($"{target.playerVel.position.x},{target.playerVel.position.y}");
-        }
+
         private void ConfigureMassAndSize()
         {
             base.transform.localScale = Vector3.one * 1.2f * Mathf.Pow(this.data.maxHealth / 100f * 1.2f, 0.2f) * 1f;//size multiplier? not sure if static or not

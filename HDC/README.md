@@ -44,6 +44,14 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+#### v0.0.6
+
+-------------
+
+-Fixes
+	
+	-Solved the persistence issue between rounds (I think)
+
 #### v0.0.5
 
 -------------

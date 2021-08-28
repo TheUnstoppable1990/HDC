@@ -49,7 +49,7 @@ namespace HDC.MonoBehaviours
                 Vector3 randomEnemyPosition = randomEnemy.transform.position;
 
 
-                UnityEngine.Debug.Log($"The random enemy is Player {randomEnemy.playerID}");
+                
                 playerPosition.y = randomEnemyPosition.y;
 
                 if (randomEnemyPosition.x < playerPosition.x)
@@ -70,6 +70,11 @@ namespace HDC.MonoBehaviours
         {
             block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, behindYouAction);
             //block.BlockAction -= behindYouAction;
+        }
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(this);
+            block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, behindYouAction);
         }
 
     }

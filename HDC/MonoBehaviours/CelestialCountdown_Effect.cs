@@ -219,6 +219,10 @@ namespace HDC.MonoBehaviours
             //this.rotator.gameObject.SetActive(true);
             //this.still.gameObject.SetActive(true);
         }
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(this);
+        }
         private void ConfigureMassAndSize()
         {
             base.transform.localScale = Vector3.one * 1.2f * Mathf.Pow(this.data.maxHealth / 100f * 1.2f, 0.2f) * 1f;//size multiplier? not sure if static or not

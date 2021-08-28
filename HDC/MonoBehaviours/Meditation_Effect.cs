@@ -64,8 +64,8 @@ namespace HDC.MonoBehaviours
                 timePass += Time.deltaTime;
                 if (timePass > 1.0f)  //every second
                 {
-                    //healAmount = (healRatio + secondCount / 100f) * this.data.maxHealth;
-                    healAmount = 5.0f + (float)Math.Pow(secondCount,2) / 100f;
+                    
+                    healAmount = 5.0f + (float)Math.Pow(secondCount,2);
                     this.data.health += healAmount;
                     if (this.data.health > this.data.maxHealth)
                     {
@@ -73,8 +73,8 @@ namespace HDC.MonoBehaviours
                         secondCount = 0; //resets the exponential growth factor
                     }
                     timePass = 0.0f;
-                    secondCount++;//removing this for the time being
-                    //UnityEngine.Debug.Log(healAmount);
+                    secondCount++;
+                    
                 }
             }
             else
@@ -87,6 +87,10 @@ namespace HDC.MonoBehaviours
         private void ResetStuff()
         {
             timePass = 0.0f;
+        }
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(this);
         }
     }
 }

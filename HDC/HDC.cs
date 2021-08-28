@@ -26,13 +26,14 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "0.0.5";
+        public const string ModVersion = "0.0.6";
         internal static AssetBundle ArtAssets;
         void Awake()
         {
             var harmony = new Harmony(ModID);
             harmony.PatchAll();
             GameModeManager.AddHook(GameModeHooks.HookGameEnd, ResetEffects); //Thank you Willis for this Code :)
+            
         }
         IEnumerator ResetEffects(IGameModeHandler gm)
         {
@@ -48,15 +49,20 @@ namespace HDC
             var objects = GameObject.FindObjectsOfType<T>();
             for (int i = objects.Length - 1; i >= 0; i--)
             {
-                Destroy(objects[i]);
+                UnityEngine.Debug.Log($"Attempting to Destroy {objects[i].GetType().Name} number {i}");
+                UnityEngine.Object.Destroy(objects[i]);
             }
         }
+
         
         void Start()
         {
 
             //Cards go here
-            Unbound.RegisterCredits(ModName, new string[] { "TheUnstoppable1990 (HatchetDaddy himself)" }, new string[] { "Have Some Bad Dinosaur Jokes" }, new string[] { "https://baddinopuns.tumblr.com/" });
+            Unbound.RegisterCredits(ModName, 
+                new string[] {"TheUnstoppable1990 (HatchetDaddy himself)" }, 
+                new string[] { "GitHub",                                        "Have Some Bad Dinosaur Jokes" }, 
+                new string[] { "https://github.com/TheUnstoppable1990/HDC",     "https://baddinopuns.tumblr.com/" });
             HDC.ArtAssets = AssetUtils.LoadAssetBundleFromResources("test_angel_card", typeof(HDC).Assembly);
 
             //

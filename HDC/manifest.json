@@ -1,9 +1,9 @@
 {
   "name": "HDC",
-  "version_number": "0.0.5",
+  "version_number": "0.0.6",
   "website_url": "https://github.com/TheUnstoppable1990/HDC",
   "description": "Adds new themed cards to the game",
   "dependencies": [
-    "willis81808-UnboundLib-2.5.1"
+    "willis81808-UnboundLib-2.6.0"
   ]
 }

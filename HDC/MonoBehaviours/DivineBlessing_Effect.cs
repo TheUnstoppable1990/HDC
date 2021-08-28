@@ -47,13 +47,18 @@ namespace HDC.MonoBehaviours
                 {
                     data.health = data.maxHealth;
                 }
-                UnityEngine.Debug.Log($"{data.health}/{data.maxHealth}");
+                
             };
         }
         private void OnDestroy()
         {
             block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, divineBlessingAction);
             //block.BlockAction -= divineBlessingAction;
+        }
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(this);
+            block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, divineBlessingAction);
         }
     }
 }
