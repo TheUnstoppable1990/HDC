@@ -44,6 +44,16 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+#### v0.0.7
+
+-------------
+
+-Changes
+
+	-Buffed Paladin with more HP
+
+	-Minor code cleanup
+
 #### v0.0.6
 
 -------------

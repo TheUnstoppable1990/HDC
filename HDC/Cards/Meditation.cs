@@ -57,18 +57,19 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                new CardInfoStat()
+                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
+                /*new CardInfoStat()
                 {
                     positive = true,
                     stat = "Health",
                     amount = $"+{health_boost*100}%",
                     simepleAmount = CardInfoStat.SimpleAmount.Some
-                }
+                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.DefensiveBlue;
+            return CardThemeColor.CardThemeColorType.ColdBlue;
         }
         public override string GetModName()
         {

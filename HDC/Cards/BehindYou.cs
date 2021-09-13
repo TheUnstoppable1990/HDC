@@ -15,14 +15,14 @@ namespace HDC.Cards
 {
     class BehindYou : CustomCard
     {
-    
 
+        private float block_cooldown = 0.5f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
             cardInfo.allowMultiple = false;
             var block = gameObject.AddComponent<Block>();
             block.InvokeMethod("ResetStats");
-            block.cdMultiplier = 1.5f;
+            block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -56,13 +56,14 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                new CardInfoStat()
+                HDC.FormatStat(false,"Block Cooldown",block_cooldown,CardInfoStat.SimpleAmount.aLotOf)
+                /*new CardInfoStat()
                 {
                     positive = false,
                     stat = "Block Cooldown",
                     amount = "+50%",
                     simepleAmount = CardInfoStat.SimpleAmount.aLotOf
-                }
+                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

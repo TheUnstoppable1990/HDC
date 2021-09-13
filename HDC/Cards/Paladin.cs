@@ -14,6 +14,7 @@ namespace HDC.Cards
     {
         private Paladin_Effect paladin_effect;
         private Player player;
+        private float health_boost = 2f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
 
@@ -24,7 +25,7 @@ namespace HDC.Cards
             this.paladin_effect = player.gameObject.AddComponent<Paladin_Effect>();
             this.paladin_effect.player = player;
             this.player = player;
-            data.maxHealth *= 1.5f;
+            data.maxHealth *= (1f + health_boost);
         }
         public override void OnRemoveCard()
         {
@@ -59,18 +60,19 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                new CardInfoStat()
+                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.aHugeAmountOf)
+                /*new CardInfoStat()
                 {
                     positive = true,
                     stat = "Health",
                     amount = "50%",
                     simepleAmount = CardInfoStat.SimpleAmount.aLotOf
-                }
+                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.DefensiveBlue;
+            return CardThemeColor.CardThemeColorType.ColdBlue;
         }
         public override string GetModName()
         {

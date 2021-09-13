@@ -15,7 +15,7 @@ namespace HDC.Cards
     class DivineBlessing : CustomCard
     {
         private float block_cooldown = 0.25f;
-        private float health_boost = 0.25f;
+        private float health_boost = 0.50f;
         private float health_restore = 0.15f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
@@ -64,7 +64,9 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                new CardInfoStat()
+                HDC.FormatStat(true,"Block Cooldown",-block_cooldown,CardInfoStat.SimpleAmount.lower),
+                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
+                /*new CardInfoStat()
                 {
                     positive = true,
                     stat = "Block Cooldown",
@@ -77,12 +79,12 @@ namespace HDC.Cards
                     stat = "Health",
                     amount = $"+{health_boost*100}%",
                     simepleAmount = CardInfoStat.SimpleAmount.Some
-                }
+                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.DefensiveBlue;
+            return CardThemeColor.CardThemeColorType.ColdBlue;
         }
         public override string GetModName()
         {

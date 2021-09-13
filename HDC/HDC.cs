@@ -26,7 +26,7 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "0.0.6";
+        public const string ModVersion = "0.0.7";
         internal static AssetBundle ArtAssets;
         void Awake()
         {
@@ -73,6 +73,28 @@ namespace HDC
             CustomCard.BuildCard<BehindYou>();
             
          
+        }
+
+        static public string FormatStat(float value)
+        {
+
+            return value.ToString();
+        }
+        static public CardInfoStat FormatStat(bool pos, string name, float amount, CardInfoStat.SimpleAmount simple)
+        {
+            string formatAmount;
+            formatAmount = (amount * 100).ToString() + "%";
+            if(amount > 0)
+            {
+                formatAmount = "+" + formatAmount;
+            }
+            return new CardInfoStat()
+            {
+                positive = pos,
+                stat = name,
+                amount = formatAmount,
+                simepleAmount = simple
+            };
         }
 
     }
