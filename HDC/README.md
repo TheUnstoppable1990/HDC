@@ -44,6 +44,16 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.0.8
+
+-------------
+
+-Fixes
+	
+	-Forgot to call a method for resetting effects. Thanks to Pykes for pointing this out XD
+
+	-Effects should no longer persist in instances like Rare Glitched card 
+
 #### v0.0.7
 
 -------------

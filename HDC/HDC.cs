@@ -26,7 +26,7 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "0.0.7";
+        public const string ModVersion = "0.0.8";
         internal static AssetBundle ArtAssets;
         void Awake()
         {

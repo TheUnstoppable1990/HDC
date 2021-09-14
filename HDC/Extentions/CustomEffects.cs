@@ -13,7 +13,7 @@ namespace HDC.Extentions
     {
         public static void DestroyAllEffects(GameObject gameObject)
         {
-
+            DestroyAllAppliedEffects(gameObject);
         }
         public static void DestroyAllAppliedEffects(GameObject gameObject)
         {
