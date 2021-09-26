@@ -57,6 +57,14 @@ namespace HDC.Extentions
                     dbe.Destroy();
                 }
             }
+            HolyLight_Effect[] hl_Effects = gameObject.GetComponents<HolyLight_Effect>();
+            foreach (HolyLight_Effect hle in hl_Effects)
+            {
+                if(hle != null)
+                {
+                    hle.Destroy();
+                }
+            }
         }
        
     }

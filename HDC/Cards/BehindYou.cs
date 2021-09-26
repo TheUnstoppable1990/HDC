@@ -57,13 +57,6 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 HDC.FormatStat(false,"Block Cooldown",block_cooldown,CardInfoStat.SimpleAmount.aLotOf)
-                /*new CardInfoStat()
-                {
-                    positive = false,
-                    stat = "Block Cooldown",
-                    amount = "+50%",
-                    simepleAmount = CardInfoStat.SimpleAmount.aLotOf
-                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

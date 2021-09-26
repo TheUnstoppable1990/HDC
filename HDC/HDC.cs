@@ -20,13 +20,14 @@ using HDC.MonoBehaviours;
 namespace HDC
 {
     [BepInDependency("com.willis.rounds.unbound", BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("pykess.rounds.plugins.moddingutils",BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin(ModID, ModName, ModVersion)]
     [BepInProcess("Rounds.exe")]
     public class HDC : BaseUnityPlugin
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "0.0.8";
+        public const string ModVersion = "0.0.11";
         internal static AssetBundle ArtAssets;
         void Awake()
         {
@@ -70,7 +71,12 @@ namespace HDC
             CustomCard.BuildCard<Meditation>();
             CustomCard.BuildCard<CelestialCountdown>();
             CustomCard.BuildCard<Paladin>();
+            CustomCard.BuildCard<HolyLight>();
             CustomCard.BuildCard<BehindYou>();
+            CustomCard.BuildCard<LilDefensive>();
+            CustomCard.BuildCard<LilOffensive>();
+            CustomCard.BuildCard<PointBlank>();
+
             
          
         }
@@ -80,7 +86,23 @@ namespace HDC
 
             return value.ToString();
         }
-        static public CardInfoStat FormatStat(bool pos, string name, float amount, CardInfoStat.SimpleAmount simple)
+        static public CardInfoStat FormatStat(bool pos, string name, int amount, CardInfoStat.SimpleAmount simple = CardInfoStat.SimpleAmount.notAssigned)
+        {
+            string formatAmount;
+            formatAmount = amount.ToString();
+            if (amount > 0)
+            {
+                formatAmount = "+" + formatAmount;
+            }
+            return new CardInfoStat()
+            {
+                positive = pos,
+                stat = name,
+                amount = formatAmount,
+                simepleAmount = simple
+            };
+        }
+        static public CardInfoStat FormatStat(bool pos, string name, float amount, CardInfoStat.SimpleAmount simple = CardInfoStat.SimpleAmount.notAssigned)
         {
             string formatAmount;
             formatAmount = (amount * 100).ToString() + "%";

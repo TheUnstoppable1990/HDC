@@ -31,6 +31,10 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Heals based on enemies in aura and heals your allies (if you have more than half health whether or not enemies are present)
 
+#### Holy Light
+
+-Charge by healing, smite by blocking
+
 ### Signature Cards
 
 ------------------
@@ -39,10 +43,38 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Teleports you behind an enemy player when you block. Increases Block Cooldown by 50%
 
+#### Point Blank
+
+-Very short range, very deadly
+
+#### Lil Defensive
+
+-Reduces block cooldown and maximum ammo
+
+#### Lil Offensive
+
+-Increase block cooldown and maximum ammo
+
 
 ### Version Notes
 
 -----------------
+
+### v0.0.10
+
+-------------
+
+-Changes
+
+	-Two new COMMON cards. The first common cards to be included in the HDC pack
+
+### v0.0.9
+
+-------------
+
+-Changes
+
+	-Using Modding Utils to add a glow effect for Celestial Countdown for a temporary visual indicator
 
 ### v0.0.8
 

@@ -15,6 +15,7 @@ using UnityEngine.UI;
 using UnityEngine.UI.ProceduralImage;
 using Photon.Pun;
 using Photon.Realtime;
+using ModdingUtils.MonoBehaviours;
 
 namespace HDC.MonoBehaviours
 {
@@ -69,6 +70,7 @@ namespace HDC.MonoBehaviours
         public Player player;
         private SetTeamColor[] teamColors;
 
+        private CelestialGlow celestialGlow = null;
 
         //Work around for simulated position issue
         private Vector2 lastPosition = Vector2.zero;
@@ -122,7 +124,8 @@ namespace HDC.MonoBehaviours
                 this.gun.attackSpeed *= this.aSpeedModifier;
                 this.gravity.gravityForce /= 2f;
                 this.characterStats.movementSpeed *= 2f;
-                this.characterStats.sizeMultiplier *= 2f;
+                //this.characterStats.sizeMultiplier *= 2f;
+                celestialGlow = player.gameObject.AddComponent<CelestialGlow>();
             }
             else
             {
@@ -133,8 +136,14 @@ namespace HDC.MonoBehaviours
 
                 this.gravity.gravityForce *= 2f;
                 this.characterStats.movementSpeed /= 2f;
-                this.characterStats.sizeMultiplier /= 2f;
+                //this.characterStats.sizeMultiplier /= 2f;
+                if(celestialGlow != null)
+                {
+                    UnityEngine.Object.Destroy(celestialGlow);
+                    celestialGlow = null;
+                }
             }
+            this.ConfigureMassAndSize();
         }
         private void Update()
         {
@@ -187,7 +196,7 @@ namespace HDC.MonoBehaviours
             {
                 //Remove Buffs here
                 this.alterStats(false);
-                this.ConfigureMassAndSize();
+                
                 this.isCelestialForm = false;
                 UnityEngine.Debug.Log("Celestial Form Disabled");                
             }
@@ -230,5 +239,40 @@ namespace HDC.MonoBehaviours
         
         
         
+    }
+
+    public class CelestialGlow : ReversibleEffect //Thanks Pykess for this Utility
+    {
+        private readonly Color color = new Color(0.75f, 1f, 1f, 0.75f); //light bluish i think?
+        private ReversibleColorEffect colorEffect = null;
+
+        public override void OnOnEnable()
+        {
+            if (this.colorEffect != null)
+            {
+                this.colorEffect.Destroy();
+            }
+        }
+        public override void OnStart()
+        {
+            this.colorEffect = base.player.gameObject.AddComponent<ReversibleColorEffect>();
+            this.colorEffect.SetColor(this.color);
+            this.colorEffect.SetLivesToEffect(1);
+        }
+        public override void OnOnDisable()
+        {
+            if (this.colorEffect != null)
+            {
+                this.colorEffect.Destroy();
+            }
+        }
+        public override void OnOnDestroy()
+        {
+            if (this.colorEffect != null)
+            {
+                this.colorEffect.Destroy();
+            }
+        }
+
     }
 }

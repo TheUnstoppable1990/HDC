@@ -61,13 +61,6 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.aHugeAmountOf)
-                /*new CardInfoStat()
-                {
-                    positive = true,
-                    stat = "Health",
-                    amount = "50%",
-                    simepleAmount = CardInfoStat.SimpleAmount.aLotOf
-                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

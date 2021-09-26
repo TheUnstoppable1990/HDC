@@ -66,20 +66,6 @@ namespace HDC.Cards
             {
                 HDC.FormatStat(true,"Block Cooldown",-block_cooldown,CardInfoStat.SimpleAmount.lower),
                 HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
-                /*new CardInfoStat()
-                {
-                    positive = true,
-                    stat = "Block Cooldown",
-                    amount =  $"-{block_cooldown*100}%",
-                    simepleAmount = CardInfoStat.SimpleAmount.lower
-                },
-                new CardInfoStat()
-                {
-                    positive = true,
-                    stat = "Health",
-                    amount = $"+{health_boost*100}%",
-                    simepleAmount = CardInfoStat.SimpleAmount.Some
-                }*/
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

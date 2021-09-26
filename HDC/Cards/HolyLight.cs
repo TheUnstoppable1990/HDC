@@ -6,36 +6,41 @@ using System.Threading.Tasks;
 using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
-using UnboundLib.Networking;
-using System.Collections;
 using HDC.MonoBehaviours;
-
 namespace HDC.Cards
 {
-    class Meditation : CustomCard
+    class HolyLight : CustomCard
     {
+        private HolyLight_Effect holyLight_effect;
+        private Player player;
         private float health_boost = 0.25f;
+        private float damage_ratio = 0.25f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-            
+
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //UnityEngine.Debug.Log(data);
-            Meditation_Effect regeneration = player.gameObject.AddComponent<Meditation_Effect>();
-            data.maxHealth *= (1+health_boost);
+
+            this.holyLight_effect = player.gameObject.AddComponent<HolyLight_Effect>();
+            this.holyLight_effect.player = player;
+            this.holyLight_effect.damageRatio = this.damage_ratio;
+            this.holyLight_effect.block = block;
+            this.player = player;
+            data.maxHealth *= (1f + health_boost);
         }
         public override void OnRemoveCard()
         {
-            
+            //throw new NotImplementedException();
+            Destroy(holyLight_effect);
         }
         protected override string GetTitle()
         {
-            return "Meditation";
+            return "Holy Light";
         }
         protected override string GetDescription()
         {
-            return "Regenerate health slowly as you stand still";
+            return "Charge your holy light by healing, then smite enemies with your block.";
         }
         protected override GameObject GetCardArt()
         {
@@ -51,13 +56,14 @@ namespace HDC.Cards
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Uncommon;
+            return CardInfo.Rarity.Rare;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
+                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.aHugeAmountOf),
+                HDC.FormatStat(true,"Damage on Heal",damage_ratio,CardInfoStat.SimpleAmount.aLittleBitOf)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
@@ -68,5 +74,6 @@ namespace HDC.Cards
         {
             return "HDC";
         }
+
     }
 }

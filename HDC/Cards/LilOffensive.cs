@@ -8,61 +8,56 @@ using UnboundLib.Cards;
 using UnityEngine;
 using UnboundLib.Networking;
 using System.Collections;
+using HarmonyLib;
 using HDC.MonoBehaviours;
 
 namespace HDC.Cards
 {
-    class Meditation : CustomCard
+    class LilOffensive : CustomCard
     {
-        private float health_boost = 0.25f;
+        private float block_cooldown = 0.35f;
+        private int ammo_change = 2;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-            
+            var block = gameObject.AddComponent<Block>();
+            block.InvokeMethod("ResetStats");
+            block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //UnityEngine.Debug.Log(data);
-            Meditation_Effect regeneration = player.gameObject.AddComponent<Meditation_Effect>();
-            data.maxHealth *= (1+health_boost);
+            gunAmmo.maxAmmo += ammo_change;
         }
         public override void OnRemoveCard()
         {
-            
+            throw new NotImplementedException();
         }
         protected override string GetTitle()
         {
-            return "Meditation";
+            return "Lil Offensive";
         }
         protected override string GetDescription()
         {
-            return "Regenerate health slowly as you stand still";
-        }
-        protected override GameObject GetCardArt()
-        {
-            try
-            {
-                return HDC.ArtAssets.LoadAsset<GameObject>("C_AngelCard");
-            }
-            catch
-            {
-                UnityEngine.Debug.Log("Something went wrong with card art");
-                return null;
-            }
-        }
-        protected override CardInfo.Rarity GetRarity()
-        {
-            return CardInfo.Rarity.Uncommon;
+            return "Watch your language.";
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
+                HDC.FormatStat(false,"Block Cooldown",block_cooldown,CardInfoStat.SimpleAmount.Some),
+                HDC.FormatStat(true,"Ammo",ammo_change,CardInfoStat.SimpleAmount.notAssigned)
             };
+        }
+        protected override GameObject GetCardArt()
+        {
+            return null;
+        }
+        protected override CardInfo.Rarity GetRarity()
+        {
+            return CardInfo.Rarity.Common;
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.ColdBlue;
+            return CardThemeColor.CardThemeColorType.FirepowerYellow;
         }
         public override string GetModName()
         {
