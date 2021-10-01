@@ -15,7 +15,7 @@ namespace HDC.Cards
     {
         private Player thisPlayer;
         private CelestialCountdown_Effect countdown;
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.allowMultiple = false;
         }

@@ -60,6 +60,30 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.0.14
+
+-------------
+
+-Changes
+
+	-Update for new Unbound update
+
+### v0.0.13
+
+-------------
+
+-Changes
+
+	-Fixed more holy light stuff
+
+### v0.0.12
+
+-------------
+
+-Changes
+
+	-Improved Visual effect for Holy Light
+
 ### v0.0.10
 
 -------------

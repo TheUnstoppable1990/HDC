@@ -17,22 +17,21 @@ namespace HDC.Cards
         private float block_cooldown = 0.25f;
         private float health_boost = 0.50f;
         private float health_restore = 0.15f;
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            var block = gameObject.AddComponent<Block>();
             block.InvokeMethod("ResetStats");
             block.cdMultiplier = 1-block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            DivineBlessing_Effect divineBlessing = player.gameObject.AddComponent<DivineBlessing_Effect>();
+            DivineBlessing_Effect divineBlessing = player.gameObject.GetOrAddComponent<DivineBlessing_Effect>();
             divineBlessing.player = player;
             divineBlessing.data = data;
             divineBlessing.block = block;
             divineBlessing.healRatio = health_restore;
             data.maxHealth *= (1+health_boost);
         }      
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
          
         }

@@ -15,7 +15,7 @@ namespace HDC.Cards
         private int bullets = 5;
         private float damage = 2f;
         private int ammo = 5;
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             gun.numberOfProjectiles = bullets;
             gun.damage = 1f+damage;

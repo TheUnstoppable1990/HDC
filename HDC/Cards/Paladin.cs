@@ -15,7 +15,7 @@ namespace HDC.Cards
         private Paladin_Effect paladin_effect;
         private Player player;
         private float health_boost = 2f;
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
 
         }

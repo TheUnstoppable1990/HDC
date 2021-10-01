@@ -17,10 +17,9 @@ namespace HDC.Cards
     {
         private float block_cooldown = 0.35f;
         private int ammo_change = 2;
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            var block = gameObject.AddComponent<Block>();
-            block.InvokeMethod("ResetStats");
+            //block.InvokeMethod("ResetStats");
             block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)

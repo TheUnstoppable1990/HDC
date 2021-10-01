@@ -15,7 +15,7 @@ namespace HDC.Cards
     class Meditation : CustomCard
     {
         private float health_boost = 0.25f;
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             
         }

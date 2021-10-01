@@ -23,7 +23,6 @@ namespace HDC.MonoBehaviours
     {
         public Player player;
         public CharacterData data;
-        public float rangeOfEffect = 10f;
         public float damageRatio = 0.1f;
         private float previous_health = 0.0f;
         private float damage_charge = 0f;
@@ -63,9 +62,9 @@ namespace HDC.MonoBehaviours
                     CharacterData enemyData = enemy.GetComponent<CharacterData>();
                     Vector2 enemyPos = enemyData.playerVel.position;
                     float dist = Vector2.Distance(this.data.playerVel.position, enemyPos);
-                    if (dist <= rangeOfEffect)// checks range
+                    if (dist <= HLConst.range && PlayerManager.instance.CanSeePlayer(this.player.transform.position, enemy).canSee)// checks range
                     {
-                        Vector2 damage = new Vector2(0, -1 * this.damage_charge);
+                        Vector2 damage = new Vector2(0, -1 * (this.damage_charge + 10f));
                         enemyData.healthHandler.DoDamage(damage, enemyPos, Color.yellow,null, this.player, false, true, true);
                         
                     }
@@ -102,7 +101,7 @@ namespace HDC.MonoBehaviours
             {
                 CharacterData ed = e.GetComponent<CharacterData>();
                 float dist = Vector2.Distance(this.data.playerVel.position, ed.playerVel.position);
-                if(dist <= rangeOfEffect)
+                if(dist <= HLConst.range && PlayerManager.instance.CanSeePlayer(this.player.transform.position,e).canSee)
                 {
                     return true;
                 }
@@ -111,7 +110,12 @@ namespace HDC.MonoBehaviours
         }
         private void OnDisable()
         {
-
+            if (holyGlow != null)
+            {
+                holyGlow.OnOnDestroy();
+                UnityEngine.GameObject.Destroy(holyGlow);
+                holyGlow = null;
+            }
         }
         private void OnDestroy()
         {
@@ -121,9 +125,11 @@ namespace HDC.MonoBehaviours
         IEnumerator GlowEffect()
         {
             holyGlow = this.player.gameObject.AddComponent<HolyGlow>();
-            yield return new WaitForSeconds(1f);
+            holyGlow.range = HLConst.range;
+            yield return new WaitForSeconds(0.5f);
             if (holyGlow != null)
             {
+                holyGlow.OnOnDestroy();
                 UnityEngine.GameObject.Destroy(holyGlow);
                 holyGlow = null;
             }
@@ -131,37 +137,100 @@ namespace HDC.MonoBehaviours
        
     }
     public class HolyGlow : ReversibleEffect //Thanks Pykess for this Utility
-    {
-        private readonly Color color = Color.yellow; //light bluish i think?
+    {        
         private ReversibleColorEffect colorEffect = null;
+        private HolyRadiance radiance = null;
+        public float range = HLConst.range;
 
         public override void OnOnEnable()
         {
-            if (this.colorEffect != null)
-            {
-                this.colorEffect.Destroy();
-            }
+            KillItDead();
         }
         public override void OnStart()
         {
             this.colorEffect = base.player.gameObject.AddComponent<ReversibleColorEffect>();
-            this.colorEffect.SetColor(this.color);
+            this.colorEffect.SetColor(HLConst.color);
+            this.radiance = base.player.gameObject.AddComponent<HolyRadiance>();
             this.colorEffect.SetLivesToEffect(1);
         }
         public override void OnOnDisable()
         {
-            if (this.colorEffect != null)
-            {
-                this.colorEffect.Destroy();
-            }
+            KillItDead();
         }
         public override void OnOnDestroy()
+        {
+            KillItDead();
+        }
+        private void KillItDead()
         {
             if (this.colorEffect != null)
             {
                 this.colorEffect.Destroy();
             }
+            if (this.radiance != null)
+            {
+                this.radiance.Destroy();
+            }
         }
 
+    }
+    public class HolyRadiance : MonoBehaviour
+    {
+        private static GameObject lineEffect = null;
+        private Player player = null;
+        public GameObject holyEffect = null;
+        public GameObject holyLightObj = null;
+        
+        
+        public void Start()
+        {
+            player = gameObject.GetComponent<Player>();
+            
+            holyLightObj = new GameObject();            
+            holyLightObj.transform.SetParent(player.transform);
+            holyLightObj.transform.position = player.transform.position;
+           
+            if(lineEffect == null)
+            {
+                GetLineEffect();
+            }
+            holyEffect = Instantiate(lineEffect, holyLightObj.transform);
+            var effect = holyEffect.GetComponentInChildren<LineEffect>();
+            effect.colorOverTime = new Gradient()
+            {
+                alphaKeys = new GradientAlphaKey[]
+                {
+                    new GradientAlphaKey(1,0)
+                },
+                colorKeys = new GradientColorKey[]
+                {
+                    new GradientColorKey(HLConst.color,0)
+                },
+                mode = GradientMode.Fixed
+            };
+            effect.widthMultiplier = 1f;
+            effect.radius = HLConst.range;
+            effect.raycastCollision = true;
+            effect.useColorOverTime = true;
+            
+        }
+        private void GetLineEffect()
+        {
+            var card = CardChoice.instance.cards.First(c => c.name.Equals("ChillingPresence"));
+            var statMods = card.gameObject.GetComponentInChildren<CharacterStatModifiers>();
+            lineEffect = statMods.AddObjectToPlayer.GetComponentInChildren<LineEffect>().gameObject;
+        }
+        public void Destroy()
+        {
+            UnityEngine.GameObject.Destroy(this.holyLightObj);
+            UnityEngine.GameObject.Destroy(this.holyEffect);
+            UnityEngine.GameObject.Destroy(this);
+        }
+        
+    }
+    static class HLConst
+    {
+        public static float range = 10f;//keeping it like this cuz i feel like its the range of chilling presence
+        public static Color color = new Color(0f, 0.75f, 1f);
     }
 }

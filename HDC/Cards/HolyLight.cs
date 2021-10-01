@@ -14,7 +14,7 @@ namespace HDC.Cards
         private HolyLight_Effect holyLight_effect;
         private Player player;
         private float health_boost = 0.25f;
-        private float damage_ratio = 0.25f;
+        private float damage_ratio = 1f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
 
@@ -40,7 +40,7 @@ namespace HDC.Cards
         }
         protected override string GetDescription()
         {
-            return "Charge your holy light by healing, then smite enemies with your block.";
+            return "Your holy light builds by every bit of health you regain. When you block, you unleash this light in a devestating AOE.";
         }
         protected override GameObject GetCardArt()
         {
@@ -63,7 +63,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.aHugeAmountOf),
-                HDC.FormatStat(true,"Damage on Heal",damage_ratio,CardInfoStat.SimpleAmount.aLittleBitOf)
+                HDC.FormatStat(true,"Heal Damage on Discharge ",damage_ratio,CardInfoStat.SimpleAmount.aLotOf)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
