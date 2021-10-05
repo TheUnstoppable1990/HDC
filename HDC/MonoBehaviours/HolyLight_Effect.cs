@@ -228,6 +228,9 @@ namespace HDC.MonoBehaviours
         }
         
     }
+
+    //need to make sure the asset gets removed everytime, probably hard code a removal timeout
+
     static class HLConst
     {
         public static float range = 10f;//keeping it like this cuz i feel like its the range of chilling presence

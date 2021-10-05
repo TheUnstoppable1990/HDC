@@ -8,58 +8,66 @@ using UnboundLib.Cards;
 using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
+using HDC.Extentions;
 
 namespace HDC.Cards
 {
-    class PointBlank : CustomCard
+    class Rex : CustomCard
     {
-        private int bullets = 5;
-        private float damage = 1f;
-        private int ammo = 5;
+        private float health_boost = 1f;
+        private float dmg_boost = 1f;
+        private float distance = 0.5f;
+        private float add_reload_time = 0.25f; //seconds
+        private float size = 0.5f;
+
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            gun.numberOfProjectiles = bullets;
-            gun.damage = 1f+damage;
-            gun.destroyBulletAfter = 0.1f;
-            gun.spread = 0f;
-            gun.ammo = this.ammo;
+            statModifiers.sizeMultiplier = 1f + size;
+            statModifiers.health = 1f + health_boost;
+            gun.damage = 1f + dmg_boost;
+            gun.destroyBulletAfter = distance;
+            gun.reloadTimeAdd = add_reload_time;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-
+            
+            
         }
         public override void OnRemoveCard()
         {
             //throw new NotImplementedException();
+                     
         }
         protected override string GetTitle()
         {
-            return "Point Blank";
+            return "Rex";
         }
         protected override string GetDescription()
         {
-            return "Warning, will shorten your range to nothing and increase your damage to everything.";
+            return CardTools.RandomDescription(DinoPuns.rex);
         }
         protected override GameObject GetCardArt()
         {
-            return null;
+            return null;            
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Uncommon;
+            return CardInfo.Rarity.Rare;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Damage",damage),
-                CardTools.FormatStat(true,"Bullets",bullets),
-                CardTools.FormatStat(true,"Ammo",ammo)
+                CardTools.FormatStat(true,"Size",size),
+                CardTools.FormatStat(true,"Health",health_boost),
+                CardTools.FormatStat(true,"Damage",dmg_boost),
+                CardTools.FormatStat(false,"Range","Reduced"),
+                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.FirepowerYellow;
+            return CardThemeColor.CardThemeColorType.DestructiveRed;
         }
         public override string GetModName()
         {

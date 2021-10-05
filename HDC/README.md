@@ -35,6 +35,22 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Charge by healing, smite by blocking
 
+### Dino Pun Cards
+
+-----------------
+
+#### Raptor
+
+-Adds speed speed speed
+
+#### Rex
+
+-Adds size and power!
+
+#### Triceratops
+
+-Adds plenty of defense and block
+
 ### Signature Cards
 
 ------------------
@@ -59,6 +75,16 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v0.1.0
+
+------------
+
+-New Cards
+
+	-Three new cards that are dinosaur themed and have different flavor text everytime you play the game
+	
+	-Try to find all the puns and ruin your sense of humor forever :D
 
 ### v0.0.14
 

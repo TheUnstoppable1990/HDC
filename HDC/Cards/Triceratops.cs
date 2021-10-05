@@ -6,58 +6,65 @@ using System.Threading.Tasks;
 using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
-using UnboundLib.Networking;
-using System.Collections;
-using HarmonyLib;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
+using HDC.Extentions;
 
 namespace HDC.Cards
 {
-    class LilOffensive : CustomCard
+    class Triceratops : CustomCard
     {
-        private float block_cooldown = 0.35f;
-        private int ammo_change = 2;
+        private float health_boost = 0.5f;
+        private float speed_boost = 0.5f;
+        private float block_cooldown = -0.4f;
+        private float add_reload_time = 0.25f; //seconds
+
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            //block.InvokeMethod("ResetStats");
+            statModifiers.movementSpeed = 1 + speed_boost;
+            statModifiers.health = 1f + health_boost;                        
+            gun.reloadTimeAdd = add_reload_time;
             block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            gunAmmo.maxAmmo += ammo_change;
+            
+            
         }
         public override void OnRemoveCard()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+                     
         }
         protected override string GetTitle()
         {
-            return "Lil Offensive";
+            return "Triceratops";
         }
         protected override string GetDescription()
         {
-            return "Watch your language.";
+            return CardTools.RandomDescription(DinoPuns.triceratops);
+        }
+        protected override GameObject GetCardArt()
+        {
+            return null;            
+        }
+        protected override CardInfo.Rarity GetRarity()
+        {
+            return CardInfo.Rarity.Rare;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(false,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Ammo",ammo_change)
+                CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
+                CardTools.FormatStat(true,"Health",health_boost),
+                CardTools.FormatStat(true,"Movement Speed",speed_boost),
+                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
             };
-        }
-        protected override GameObject GetCardArt()
-        {
-            return null;
-        }
-        protected override CardInfo.Rarity GetRarity()
-        {
-            return CardInfo.Rarity.Common;
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.FirepowerYellow;
+            return CardThemeColor.CardThemeColorType.DestructiveRed;
         }
         public override string GetModName()
         {

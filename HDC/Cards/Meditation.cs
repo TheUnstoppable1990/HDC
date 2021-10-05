@@ -9,6 +9,7 @@ using UnityEngine;
 using UnboundLib.Networking;
 using System.Collections;
 using HDC.MonoBehaviours;
+using HDC.Utilities;
 
 namespace HDC.Cards
 {
@@ -21,7 +22,6 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //UnityEngine.Debug.Log(data);
             Meditation_Effect regeneration = player.gameObject.AddComponent<Meditation_Effect>();
             data.maxHealth *= (1+health_boost);
         }
@@ -57,7 +57,7 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
+                CardTools.FormatStat(true,"Health",health_boost)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

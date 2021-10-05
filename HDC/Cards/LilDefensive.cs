@@ -10,6 +10,7 @@ using UnboundLib.Networking;
 using System.Collections;
 using HarmonyLib;
 using HDC.MonoBehaviours;
+using HDC.Utilities;
 
 namespace HDC.Cards
 {
@@ -42,8 +43,8 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                HDC.FormatStat(true,"Block Cooldown",-block_cooldown,CardInfoStat.SimpleAmount.Some),
-                HDC.FormatStat(false,"Ammo",-ammo_change,CardInfoStat.SimpleAmount.notAssigned)
+                CardTools.FormatStat(true,"Block Cooldown",-block_cooldown),
+                CardTools.FormatStat(false,"Ammo",-ammo_change)
             };
         }
         protected override GameObject GetCardArt()

@@ -9,6 +9,7 @@ using UnityEngine;
 using UnboundLib.Networking;
 using System.Collections;
 using HDC.MonoBehaviours;
+using HDC.Utilities;
 
 namespace HDC.Cards
 {
@@ -63,8 +64,8 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                HDC.FormatStat(true,"Block Cooldown",-block_cooldown,CardInfoStat.SimpleAmount.lower),
-                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.Some)
+                CardTools.FormatStat(true,"Block Cooldown",-block_cooldown),
+                CardTools.FormatStat(true,"Health",health_boost)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

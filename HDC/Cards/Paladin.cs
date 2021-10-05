@@ -7,6 +7,7 @@ using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
 using HDC.MonoBehaviours;
+using HDC.Utilities;
 
 namespace HDC.Cards
 {
@@ -60,7 +61,7 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                HDC.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.aHugeAmountOf)
+                CardTools.FormatStat(true,"Health",health_boost)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
