@@ -39,6 +39,10 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+#### Pterodactyl
+
+-Adds flight and a minor speed boost
+
 #### Raptor
 
 -Adds speed speed speed
@@ -49,7 +53,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 #### Triceratops
 
--Adds plenty of defense and block
+-Adds plenty of defense and block and horns damage
 
 ### Signature Cards
 
@@ -75,6 +79,22 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v0.1.2
+
+-----------
+
+-New Card
+
+	-Got bullied into adding another card. Pterodactyl - Has unlimited flight and a minor speed boost
+
+### v0.1.1
+
+------------
+
+-Changes
+
+	-Updated Triceratops, now has horns damage
 
 ### v0.1.0
 

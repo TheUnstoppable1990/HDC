@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using HDC.Cards;
 using HDC.MonoBehaviours;
+using HDC.RoundsEffects;
 
 namespace HDC.Extentions
 {
@@ -63,6 +64,14 @@ namespace HDC.Extentions
                 if(hle != null)
                 {
                     hle.Destroy();
+                }
+            }
+            TriceratopsEffect[] tr_Effects = gameObject.GetComponents<TriceratopsEffect>();
+            foreach (TriceratopsEffect tre in tr_Effects)
+            {
+                if(tre != null)
+                {
+                    tre.Destroy();
                 }
             }
         }

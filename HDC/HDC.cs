@@ -27,7 +27,7 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "0.1.0";
+        public const string ModVersion = "0.1.2";
         internal static AssetBundle ArtAssets;
         void Awake()
         {
@@ -82,6 +82,7 @@ namespace HDC
             CustomCard.BuildCard<Rex>();
             CustomCard.BuildCard<Raptor>();
             CustomCard.BuildCard<Triceratops>();
+            CustomCard.BuildCard<Pterodactyl>();
 
             
          

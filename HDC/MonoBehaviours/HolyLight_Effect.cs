@@ -152,6 +152,12 @@ namespace HDC.MonoBehaviours
             this.colorEffect.SetColor(HLConst.color);
             this.radiance = base.player.gameObject.AddComponent<HolyRadiance>();
             this.colorEffect.SetLivesToEffect(1);
+            TimeDestruction();
+        }
+        IEnumerator TimeDestruction()
+        {
+            yield return new WaitForSeconds(0.5f);
+            KillItDead();
         }
         public override void OnOnDisable()
         {

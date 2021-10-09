@@ -30,5 +30,13 @@ namespace HDC.Extentions
             "What do you call a dinosaur doing drag?\nA Mascara-tops",
             "Who do you call when you see dinosaurs committing crimes?\nThe Tricera-cops"
         };
+        static public string[] pterodactyl = new string[]
+        {
+            "What do you call a dinosaur that tells fortunes?\nA Tarot-dactyl",
+            "What do you call dinosaur with the munchies?\nA Ptera-snack-tyl",
+            "What do you call a dinosaur know-it-all?\nA Ptera-fact-yl",
+            "What do you call a dinosaur made of clay?\nA Terra-cotta-dactyl",
+            "What do you call twin dinosaurs?\nPair-odactyls"
+        };
     }
 }
