@@ -12,7 +12,20 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ## Cards Added
 -------------
 
+### Basic Cards
+
+---------------
+
+#### Lil Defensive
+
+-Reduces block cooldown and maximum ammo
+
+#### Lil Offensive
+
+-Increase block cooldown and maximum ammo
+
 ### Angel Cards
+
 ---------------
 
 #### Divine Blessing
@@ -37,7 +50,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ### Dino Pun Cards
 
------------------
+---------------
 
 #### Pterodactyl
 
@@ -57,23 +70,15 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ### Signature Cards
 
-------------------
+---------------
 
 #### Behind You
 
--Teleports you behind an enemy player when you block. Increases Block Cooldown by 50%
+-Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
 
 #### Point Blank
 
 -Very short range, very deadly
-
-#### Lil Defensive
-
--Reduces block cooldown and maximum ammo
-
-#### Lil Offensive
-
--Increase block cooldown and maximum ammo
 
 
 ### Version Notes

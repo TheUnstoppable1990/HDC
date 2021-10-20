@@ -84,6 +84,7 @@ namespace HDC.MonoBehaviours
             HealthHandler healthHandler = this.data.healthHandler;
             healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff)); //Adds a reset to character on revive?
             base.GetComponentInParent<ChildRPC>().childRPCs.Add("Celestial", new Action(this.RPCA_Activate));
+            
             this.lastPosition = this.data.playerVel.position;
             this.teamColors = this.player.transform.root.GetComponentsInChildren <SetTeamColor>();
         }

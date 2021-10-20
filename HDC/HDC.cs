@@ -34,6 +34,7 @@ namespace HDC
             var harmony = new Harmony(ModID);
             harmony.PatchAll();
             GameModeManager.AddHook(GameModeHooks.HookGameEnd, ResetEffects); //Thank you Willis for this Code :)
+            //GameModeManager.AddHook(GameModeHooks.HookPointStart, ResetHolyLight);
             
         }
         IEnumerator ResetEffects(IGameModeHandler gm)
@@ -43,6 +44,17 @@ namespace HDC
             DestroyAll<Meditation_Effect>();
             DestroyAll<BehindYou_Effect>();
             DestroyAll<DivineBlessing_Effect>();
+            yield break;
+        }
+        IEnumerator ResetHolyLight(IGameModeHandler gm)
+        {
+            Player player = gameObject.GetComponent<Player>();
+            HolyLight_Effect[] hl_Effects = player.gameObject.GetComponents<HolyLight_Effect>();
+            UnityEngine.Debug.Log("Calling Reset for Holy Light");
+            foreach (HolyLight_Effect hl in hl_Effects)
+            {
+                hl.ResetHealthCharge();
+            }
             yield break;
         }
         void DestroyAll<T>() where T : UnityEngine.Object

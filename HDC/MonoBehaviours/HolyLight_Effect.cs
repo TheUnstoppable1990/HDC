@@ -16,6 +16,8 @@ using UnityEngine.UI.ProceduralImage;
 using Photon.Pun;
 using Photon.Realtime;
 using ModdingUtils.MonoBehaviours;
+using HDC.Utilities;
+using UnboundLib.GameModes;
 
 namespace HDC.MonoBehaviours
 {
@@ -72,6 +74,13 @@ namespace HDC.MonoBehaviours
                 this.damage_charge = 0f;
             }
         }
+        public void ResetHealthCharge()
+        {
+            this.damage_charge = 0;
+#if DEBUG
+            UnityEngine.Debug.Log("Attempting to reset damage charge");
+#endif
+        }
         public Action<BlockTrigger.BlockTriggerType> GetDoBlockAction()
         {
             return delegate (BlockTrigger.BlockTriggerType trigger)
@@ -124,7 +133,7 @@ namespace HDC.MonoBehaviours
         }
         IEnumerator GlowEffect()
         {
-            holyGlow = this.player.gameObject.AddComponent<HolyGlow>();
+            holyGlow = this.player.gameObject.GetOrAddComponent<HolyGlow>();
             holyGlow.range = HLConst.range;
             yield return new WaitForSeconds(0.5f);
             if (holyGlow != null)
@@ -198,7 +207,7 @@ namespace HDC.MonoBehaviours
            
             if(lineEffect == null)
             {
-                GetLineEffect();
+                lineEffect = AssetTools.GetLineEffect("ChillingPresence");
             }
             holyEffect = Instantiate(lineEffect, holyLightObj.transform);
             var effect = holyEffect.GetComponentInChildren<LineEffect>();
@@ -219,12 +228,6 @@ namespace HDC.MonoBehaviours
             effect.raycastCollision = true;
             effect.useColorOverTime = true;
             
-        }
-        private void GetLineEffect()
-        {
-            var card = CardChoice.instance.cards.First(c => c.name.Equals("ChillingPresence"));
-            var statMods = card.gameObject.GetComponentInChildren<CharacterStatModifiers>();
-            lineEffect = statMods.AddObjectToPlayer.GetComponentInChildren<LineEffect>().gameObject;
         }
         public void Destroy()
         {
