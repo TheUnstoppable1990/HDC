@@ -12,7 +12,7 @@ namespace HDC.MonoBehaviours
 	// Token: 0x0200000B RID: 11
 	class HolyLight_Effect : MonoBehaviour
 	{
-		// Token: 0x0600002B RID: 43 RVA: 0x00002EF8 File Offset: 0x000010F8
+		
 		private void Start()
 		{
 			bool flag = this.block;
@@ -23,7 +23,7 @@ namespace HDC.MonoBehaviours
 			}
 		}
 
-		// Token: 0x0600002C RID: 44 RVA: 0x00002F54 File Offset: 0x00001154
+		
 		private void Update()
 		{
 			bool flag = this.data.health > this.previous_health && this.previous_health > 0f;
@@ -34,13 +34,13 @@ namespace HDC.MonoBehaviours
 			this.previous_health = this.data.health;
 		}
 
-		// Token: 0x0600002D RID: 45 RVA: 0x00002FBC File Offset: 0x000011BC
+		
 		private void Charge(float amount)
 		{
 			this.damage_charge += amount;
 		}
 
-		// Token: 0x0600002E RID: 46 RVA: 0x00002FD0 File Offset: 0x000011D0
+		
 		public void Discharge()
 		{
 			base.StartCoroutine(this.GlowEffect());
@@ -63,7 +63,7 @@ namespace HDC.MonoBehaviours
 			}
 		}
 
-		// Token: 0x0600002F RID: 47 RVA: 0x000030F4 File Offset: 0x000012F4
+		
 		public void ResetHealthCharge()
 		{
 			this.damage_charge = 0f;
