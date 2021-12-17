@@ -66,10 +66,9 @@ namespace HDC.MonoBehaviours
                 {
                     
                     healAmount = 5.0f + (float)Math.Pow(secondCount,2);
-                    this.data.health += healAmount;
-                    if (this.data.health > this.data.maxHealth)
+                    this.data.healthHandler.Heal(healAmount);
+                    if (this.data.health == this.data.maxHealth)
                     {
-                        this.data.health = this.data.maxHealth; // simpler way to cap health
                         secondCount = 0; //resets the exponential growth factor
                     }
                     timePass = 0.0f;

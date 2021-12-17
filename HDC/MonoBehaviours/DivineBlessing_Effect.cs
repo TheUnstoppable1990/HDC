@@ -30,7 +30,7 @@ namespace HDC.MonoBehaviours
             {
                 divineBlessingAction = new Action<BlockTrigger.BlockTriggerType>(this.GetDoBlockAction(player, block, data));
                 block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Combine(block.BlockAction, divineBlessingAction);
-                //block.BlockAction += divineBlessingAction;
+                
             }
         }
         
@@ -39,21 +39,14 @@ namespace HDC.MonoBehaviours
             return delegate (BlockTrigger.BlockTriggerType trigger)
             {
                 healAmount = data.maxHealth * healRatio;
-                if (data.health <= (data.maxHealth - healAmount))
-                {
-                    data.health += healAmount;
-                }
-                else if (data.health < data.maxHealth && data.health > (data.maxHealth - healAmount))
-                {
-                    data.health = data.maxHealth;
-                }
+                data.healthHandler.Heal(healAmount);
                 
             };
         }
         private void OnDestroy()
         {
             block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, divineBlessingAction);
-            //block.BlockAction -= divineBlessingAction;
+            
         }
         public void Destroy()
         {

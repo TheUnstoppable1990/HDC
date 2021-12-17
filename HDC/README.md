@@ -12,7 +12,20 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ## Cards Added
 -------------
 
+### Basic Cards
+
+---------------
+
+#### Lil Defensive
+
+-Reduces block cooldown and maximum ammo
+
+#### Lil Offensive
+
+-Increase block cooldown and maximum ammo
+
 ### Angel Cards
+
 ---------------
 
 #### Divine Blessing
@@ -37,7 +50,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ### Dino Pun Cards
 
------------------
+---------------
 
 #### Pterodactyl
 
@@ -57,28 +70,40 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ### Signature Cards
 
-------------------
+---------------
 
 #### Behind You
 
--Teleports you behind an enemy player when you block. Increases Block Cooldown by 50%
+-Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
 
 #### Point Blank
 
 -Very short range, very deadly
 
-#### Lil Defensive
-
--Reduces block cooldown and maximum ammo
-
-#### Lil Offensive
-
--Increase block cooldown and maximum ammo
-
 
 ### Version Notes
 
 -----------------
+
+### v0.1.4
+
+-----------
+
+-Fixes
+
+	-Got shamed into fixing the healing mechanics by willuwontu. Looks much better and functions like other healing cards now. (thanks will)
+
+	-Fixed the line of sight issue with Paladin as well making it more ~balanced~ and ~fair~ I guess :P
+
+	-Needs more tweaking but too lazy right now. It works, can just work better in future 
+
+### v0.1.3
+
+-----------
+
+-Fixes
+
+	-willuwontu, helped me fix Holy Light so its not devestatingly at full power after a death... probably still applies to phoenix revivals but i wanna leave that as a feature ;) 
 
 ### v0.1.2
 

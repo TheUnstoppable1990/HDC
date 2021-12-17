@@ -22,11 +22,20 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            
             this.paladin_effect = player.gameObject.AddComponent<Paladin_Effect>();
             this.paladin_effect.player = player;
             this.player = player;
-            data.maxHealth *= (1f + health_boost);
+            Paladin_Effect[] components = player.gameObject.GetComponents<Paladin_Effect>();
+            float num = 0f;
+            for (int i = 1; i < components.Length + 1; i++)
+            {
+                num += Paladin_Effect.baseRange / (float)i;
+            }
+            foreach (Paladin_Effect paladin_Effect in components)
+            {
+                paladin_Effect.rangeOfEffect = Paladin_Effect.baseRange * (float)components.Length;
+            }
+            data.maxHealth *= 1f + this.health_boost;
         }
         public override void OnRemoveCard()
         {

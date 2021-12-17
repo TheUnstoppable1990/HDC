@@ -1,245 +1,302 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnboundLib;
-using UnboundLib.Cards;
 using UnityEngine;
-using UnboundLib.Networking;
-using System.Collections;
-using System.ComponentModel;
-using Sonigon;
-using Sonigon.Internal;
-using UnityEngine.UI;
-using UnityEngine.UI.ProceduralImage;
-using Photon.Pun;
-using Photon.Realtime;
 using ModdingUtils.MonoBehaviours;
+using HDC.Utilities;
 
 namespace HDC.MonoBehaviours
 {
-    class HolyLight_Effect : MonoBehaviour
-    {
-        public Player player;
-        public CharacterData data;
-        public float damageRatio = 0.1f;
-        private float previous_health = 0.0f;
-        private float damage_charge = 0f;
-        public Block block;
-        private Action<BlockTrigger.BlockTriggerType> holyLightAction;
-        private HolyGlow holyGlow = null;
+	// Token: 0x0200000B RID: 11
+	class HolyLight_Effect : MonoBehaviour
+	{
+		// Token: 0x0600002B RID: 43 RVA: 0x00002EF8 File Offset: 0x000010F8
+		private void Start()
+		{
+			bool flag = this.block;
+			if (flag)
+			{
+				this.holyLightAction = new Action<BlockTrigger.BlockTriggerType>(this.GetDoBlockAction().Invoke);
+				this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Combine(this.block.BlockAction, this.holyLightAction);
+			}
+		}
 
-        private void Start()
-        {
-            
-            if (block)
-            {
-                holyLightAction = new Action<BlockTrigger.BlockTriggerType>(this.GetDoBlockAction());
-                block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Combine(block.BlockAction, holyLightAction);
-            }
-        }
-        private void Update()
-        {
-            if (this.data.health > this.previous_health && this.previous_health > 0) // checks if healing occured since last tic and not dead
-            {
-                Charge(this.damageRatio * (this.data.health - this.previous_health));
-            }
-            this.previous_health = this.data.health;
-        }
+		// Token: 0x0600002C RID: 44 RVA: 0x00002F54 File Offset: 0x00001154
+		private void Update()
+		{
+			bool flag = this.data.health > this.previous_health && this.previous_health > 0f;
+			if (flag)
+			{
+				this.Charge(this.damageRatio * (this.data.health - this.previous_health));
+			}
+			this.previous_health = this.data.health;
+		}
 
-        private void Charge(float amount)
-        {
-            this.damage_charge += amount;
-        }
+		// Token: 0x0600002D RID: 45 RVA: 0x00002FBC File Offset: 0x000011BC
+		private void Charge(float amount)
+		{
+			this.damage_charge += amount;
+		}
 
-        public void Discharge()
-        {   
-            StartCoroutine(GlowEffect());
-            if (RangeCheck()) {
-                foreach (Player enemy in GetEnemyPlayers())
-                {
-                    CharacterData enemyData = enemy.GetComponent<CharacterData>();
-                    Vector2 enemyPos = enemyData.playerVel.position;
-                    float dist = Vector2.Distance(this.data.playerVel.position, enemyPos);
-                    if (dist <= HLConst.range && PlayerManager.instance.CanSeePlayer(this.player.transform.position, enemy).canSee)// checks range
-                    {
-                        Vector2 damage = new Vector2(0, -1 * (this.damage_charge + 10f));
-                        enemyData.healthHandler.DoDamage(damage, enemyPos, Color.yellow,null, this.player, false, true, true);
-                        
-                    }
-                }
-                this.damage_charge = 0f;
-            }
-        }
-        public Action<BlockTrigger.BlockTriggerType> GetDoBlockAction()
-        {
-            return delegate (BlockTrigger.BlockTriggerType trigger)
-            {
-                this.Discharge();
-            };
-        }
+		// Token: 0x0600002E RID: 46 RVA: 0x00002FD0 File Offset: 0x000011D0
+		public void Discharge()
+		{
+			base.StartCoroutine(this.GlowEffect());
+			bool flag = this.RangeCheck();
+			if (flag)
+			{
+				foreach (Player player in this.GetEnemyPlayers())
+				{
+					CharacterData component = player.GetComponent<CharacterData>();
+					Vector2 position = component.playerVel.position;
+					float num = Vector2.Distance(this.data.playerVel.position, position);
+					bool flag2 = num <= HLConst.range && PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;
+					if (flag2)
+					{
+						Vector2 damage = new Vector2(0f, -1f * (this.damage_charge + 10f));
+						component.healthHandler.DoDamage(damage, position, Color.yellow, null, this.player, false, true, true);
+					}
+				}
+				this.damage_charge = 0f;
+			}
+		}
 
-        public void Destroy()
-        {
-            UnityEngine.Object.Destroy(this);
-            block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, holyLightAction);
-        }
-        private void Awake()
-        {
-            this.player = gameObject.GetComponent<Player>(); //might make the player setting in the card redundant but oh well at this point
-            this.data = this.player.GetComponent<CharacterData>();
-        }
+		// Token: 0x0600002F RID: 47 RVA: 0x000030F4 File Offset: 0x000012F4
+		public void ResetHealthCharge()
+		{
+			this.damage_charge = 0f;
+			UnityEngine.Debug.Log("Attempting to reset damage charge");
+		}
 
-        public List<Player> GetEnemyPlayers()
-        {
-            return PlayerManager.instance.players.Where(player => player.teamID != this.player.teamID).ToList();
-        }
-        private bool RangeCheck()
-        {
-            foreach (Player e in GetEnemyPlayers())
-            {
-                CharacterData ed = e.GetComponent<CharacterData>();
-                float dist = Vector2.Distance(this.data.playerVel.position, ed.playerVel.position);
-                if(dist <= HLConst.range && PlayerManager.instance.CanSeePlayer(this.player.transform.position,e).canSee)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        private void OnDisable()
-        {
-            if (holyGlow != null)
-            {
-                holyGlow.OnOnDestroy();
-                UnityEngine.GameObject.Destroy(holyGlow);
-                holyGlow = null;
-            }
-        }
-        private void OnDestroy()
-        {
-            block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, holyLightAction);
-            
-        }
-        IEnumerator GlowEffect()
-        {
-            holyGlow = this.player.gameObject.AddComponent<HolyGlow>();
-            holyGlow.range = HLConst.range;
-            yield return new WaitForSeconds(0.5f);
-            if (holyGlow != null)
-            {
-                holyGlow.OnOnDestroy();
-                UnityEngine.GameObject.Destroy(holyGlow);
-                holyGlow = null;
-            }
-        }
-       
-    }
-    public class HolyGlow : ReversibleEffect //Thanks Pykess for this Utility
-    {        
-        private ReversibleColorEffect colorEffect = null;
-        private HolyRadiance radiance = null;
-        public float range = HLConst.range;
+		// Token: 0x06000030 RID: 48 RVA: 0x00003110 File Offset: 0x00001310
+		public Action<BlockTrigger.BlockTriggerType> GetDoBlockAction()
+		{
+			return delegate (BlockTrigger.BlockTriggerType trigger)
+			{
+				this.Discharge();
+			};
+		}
 
-        public override void OnOnEnable()
-        {
-            KillItDead();
-        }
-        public override void OnStart()
-        {
-            this.colorEffect = base.player.gameObject.AddComponent<ReversibleColorEffect>();
-            this.colorEffect.SetColor(HLConst.color);
-            this.radiance = base.player.gameObject.AddComponent<HolyRadiance>();
-            this.colorEffect.SetLivesToEffect(1);
-            TimeDestruction();
-        }
-        IEnumerator TimeDestruction()
-        {
-            yield return new WaitForSeconds(0.5f);
-            KillItDead();
-        }
-        public override void OnOnDisable()
-        {
-            KillItDead();
-        }
-        public override void OnOnDestroy()
-        {
-            KillItDead();
-        }
-        private void KillItDead()
-        {
-            if (this.colorEffect != null)
-            {
-                this.colorEffect.Destroy();
-            }
-            if (this.radiance != null)
-            {
-                this.radiance.Destroy();
-            }
-        }
+		// Token: 0x06000031 RID: 49 RVA: 0x0000312E File Offset: 0x0000132E
+		public void Destroy()
+		{
+			UnityEngine.Object.Destroy(this);
+			this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(this.block.BlockAction, this.holyLightAction);
+		}
 
-    }
-    public class HolyRadiance : MonoBehaviour
-    {
-        private static GameObject lineEffect = null;
-        private Player player = null;
-        public GameObject holyEffect = null;
-        public GameObject holyLightObj = null;
-        
-        
-        public void Start()
-        {
-            player = gameObject.GetComponent<Player>();
-            
-            holyLightObj = new GameObject();            
-            holyLightObj.transform.SetParent(player.transform);
-            holyLightObj.transform.position = player.transform.position;
-           
-            if(lineEffect == null)
-            {
-                GetLineEffect();
-            }
-            holyEffect = Instantiate(lineEffect, holyLightObj.transform);
-            var effect = holyEffect.GetComponentInChildren<LineEffect>();
-            effect.colorOverTime = new Gradient()
-            {
-                alphaKeys = new GradientAlphaKey[]
-                {
-                    new GradientAlphaKey(1,0)
-                },
-                colorKeys = new GradientColorKey[]
-                {
-                    new GradientColorKey(HLConst.color,0)
-                },
-                mode = GradientMode.Fixed
-            };
-            effect.widthMultiplier = 1f;
-            effect.radius = HLConst.range;
-            effect.raycastCollision = true;
-            effect.useColorOverTime = true;
-            
-        }
-        private void GetLineEffect()
-        {
-            var card = CardChoice.instance.cards.First(c => c.name.Equals("ChillingPresence"));
-            var statMods = card.gameObject.GetComponentInChildren<CharacterStatModifiers>();
-            lineEffect = statMods.AddObjectToPlayer.GetComponentInChildren<LineEffect>().gameObject;
-        }
-        public void Destroy()
-        {
-            UnityEngine.GameObject.Destroy(this.holyLightObj);
-            UnityEngine.GameObject.Destroy(this.holyEffect);
-            UnityEngine.GameObject.Destroy(this);
-        }
-        
-    }
+		// Token: 0x06000032 RID: 50 RVA: 0x0000315E File Offset: 0x0000135E
+		private void Awake()
+		{
+			this.player = base.gameObject.GetComponent<Player>();
+			this.data = this.player.GetComponent<CharacterData>();
+		}
 
-    //need to make sure the asset gets removed everytime, probably hard code a removal timeout
+		// Token: 0x06000033 RID: 51 RVA: 0x00003184 File Offset: 0x00001384
+		public List<Player> GetEnemyPlayers()
+		{
+			return (from player in PlayerManager.instance.players
+					where player.teamID != this.player.teamID
+					select player).ToList<Player>();
+		}
 
-    static class HLConst
-    {
-        public static float range = 10f;//keeping it like this cuz i feel like its the range of chilling presence
-        public static Color color = new Color(0f, 0.75f, 1f);
-    }
+		// Token: 0x06000034 RID: 52 RVA: 0x000031B8 File Offset: 0x000013B8
+		private bool RangeCheck()
+		{
+			foreach (Player player in this.GetEnemyPlayers())
+			{
+				CharacterData component = player.GetComponent<CharacterData>();
+				float num = Vector2.Distance(this.data.playerVel.position, component.playerVel.position);
+				bool flag = num <= HLConst.range && PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;
+				if (flag)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		// Token: 0x06000035 RID: 53 RVA: 0x00003274 File Offset: 0x00001474
+		private void OnDisable()
+		{
+			bool flag = this.holyGlow != null;
+			if (flag)
+			{
+				this.holyGlow.OnOnDestroy();
+				UnityEngine.Object.Destroy(this.holyGlow);
+				this.holyGlow = null;
+			}
+		}
+
+		// Token: 0x06000036 RID: 54 RVA: 0x000032B3 File Offset: 0x000014B3
+		private void OnDestroy()
+		{
+			this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(this.block.BlockAction, this.holyLightAction);
+		}
+
+		// Token: 0x06000037 RID: 55 RVA: 0x000032DC File Offset: 0x000014DC
+		private IEnumerator GlowEffect()
+		{
+			this.holyGlow = ExtensionMethods.GetOrAddComponent<HolyGlow>(this.player.gameObject, false);
+			this.holyGlow.range = HLConst.range;
+			yield return new WaitForSeconds(0.5f);
+			bool flag = this.holyGlow != null;
+			if (flag)
+			{
+				this.holyGlow.OnOnDestroy();
+				UnityEngine.Object.Destroy(this.holyGlow);
+				this.holyGlow = null;
+			}
+			yield break;
+		}
+
+		// Token: 0x04000031 RID: 49
+		public Player player;
+
+		// Token: 0x04000032 RID: 50
+		public CharacterData data;
+
+		// Token: 0x04000033 RID: 51
+		public float damageRatio = 0.1f;
+
+		// Token: 0x04000034 RID: 52
+		private float previous_health = 0f;
+
+		// Token: 0x04000035 RID: 53
+		private float damage_charge = 0f;
+
+		// Token: 0x04000036 RID: 54
+		public Block block;
+
+		// Token: 0x04000037 RID: 55
+		private Action<BlockTrigger.BlockTriggerType> holyLightAction;
+
+		// Token: 0x04000038 RID: 56
+		private HolyGlow holyGlow = null;
+	}
+	public class HolyGlow : ReversibleEffect
+	{
+		// Token: 0x0600003B RID: 59 RVA: 0x0000333E File Offset: 0x0000153E
+		public override void OnOnEnable()
+		{
+			this.KillItDead();
+		}
+
+		// Token: 0x0600003C RID: 60 RVA: 0x00003348 File Offset: 0x00001548
+		public override void OnStart()
+		{
+			this.colorEffect = this.player.gameObject.AddComponent<ReversibleColorEffect>();
+			this.colorEffect.SetColor(HLConst.color);
+			this.radiance = this.player.gameObject.AddComponent<HolyRadiance>();
+			this.colorEffect.SetLivesToEffect(1);
+			this.TimeDestruction();
+		}
+
+		// Token: 0x0600003D RID: 61 RVA: 0x000033A7 File Offset: 0x000015A7
+		private IEnumerator TimeDestruction()
+		{
+			yield return new WaitForSeconds(0.5f);
+			this.KillItDead();
+			yield break;
+		}
+
+		// Token: 0x0600003E RID: 62 RVA: 0x000033B6 File Offset: 0x000015B6
+		public override void OnOnDisable()
+		{
+			this.KillItDead();
+		}
+
+		// Token: 0x0600003F RID: 63 RVA: 0x000033C0 File Offset: 0x000015C0
+		public override void OnOnDestroy()
+		{
+			this.KillItDead();
+		}
+
+		// Token: 0x06000040 RID: 64 RVA: 0x000033CC File Offset: 0x000015CC
+		private void KillItDead()
+		{
+			bool flag = this.colorEffect != null;
+			if (flag)
+			{
+				this.colorEffect.Destroy();
+			}
+			bool flag2 = this.radiance != null;
+			if (flag2)
+			{
+				this.radiance.Destroy();
+			}
+		}
+
+		// Token: 0x04000039 RID: 57
+		private ReversibleColorEffect colorEffect = null;
+
+		// Token: 0x0400003A RID: 58
+		private HolyRadiance radiance = null;
+
+		// Token: 0x0400003B RID: 59
+		public float range = HLConst.range;
+	}
+	public class HolyRadiance : MonoBehaviour
+	{
+		// Token: 0x06000042 RID: 66 RVA: 0x00003438 File Offset: 0x00001638
+		public void Start()
+		{
+			this.player = base.gameObject.GetComponent<Player>();
+			this.holyLightObj = new GameObject();
+			this.holyLightObj.transform.SetParent(this.player.transform);
+			this.holyLightObj.transform.position = this.player.transform.position;
+			bool flag = HolyRadiance.lineEffect == null;
+			if (flag)
+			{
+				HolyRadiance.lineEffect = AssetTools.GetLineEffect("ChillingPresence");
+			}
+			this.holyEffect = UnityEngine.Object.Instantiate<GameObject>(HolyRadiance.lineEffect, this.holyLightObj.transform);
+			LineEffect componentInChildren = this.holyEffect.GetComponentInChildren<LineEffect>();
+			componentInChildren.colorOverTime = new Gradient
+			{
+				alphaKeys = new GradientAlphaKey[]
+				{
+					new GradientAlphaKey(1f, 0f)
+				},
+				colorKeys = new GradientColorKey[]
+				{
+					new GradientColorKey(HLConst.color, 0f)
+				},
+				mode = GradientMode.Fixed
+			};
+			componentInChildren.widthMultiplier = 1f;
+			componentInChildren.radius = HLConst.range;
+			componentInChildren.raycastCollision = true;
+			componentInChildren.useColorOverTime = true;
+		}
+
+		// Token: 0x06000043 RID: 67 RVA: 0x00003565 File Offset: 0x00001765
+		public void Destroy()
+		{
+			UnityEngine.Object.Destroy(this.holyLightObj);
+			UnityEngine.Object.Destroy(this.holyEffect);
+			UnityEngine.Object.Destroy(this);
+		}
+
+		// Token: 0x0400003C RID: 60
+		private static GameObject lineEffect;
+
+		// Token: 0x0400003D RID: 61
+		private Player player = null;
+
+		// Token: 0x0400003E RID: 62
+		public GameObject holyEffect = null;
+
+		// Token: 0x0400003F RID: 63
+		public GameObject holyLightObj = null;
+	}
+	internal static class HLConst
+	{
+		// Token: 0x04000040 RID: 64
+		public static float range = 10f;
+
+		// Token: 0x04000041 RID: 65
+		public static Color color = new Color(0f, 0.75f, 1f);
+	}
 }
