@@ -85,6 +85,12 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.1.5
+
+-----------
+
+DESTROYED EVERYTHING PAST 0.1.2 AND HAD TO GET IT BACK FROM A DECOMPILE
+
 ### v0.1.4
 
 -----------
