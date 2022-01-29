@@ -27,8 +27,10 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "0.1.5";
+        public const string ModVersion = "0.5.0";
         internal static AssetBundle ArtAssets;
+        //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
+
         void Awake()
         {
             var harmony = new Harmony(ModID);
@@ -64,7 +66,8 @@ namespace HDC
                 new string[] {"TheUnstoppable1990 (HatchetDaddy himself)" }, 
                 new string[] { "GitHub",                                        "Have Some Bad Dinosaur Jokes" }, 
                 new string[] { "https://github.com/TheUnstoppable1990/HDC",     "https://baddinopuns.tumblr.com/" });
-            HDC.ArtAssets = AssetUtils.LoadAssetBundleFromResources("test_angel_card", typeof(HDC).Assembly);
+            //ART PART
+            HDC.ArtAssets = AssetUtils.LoadAssetBundleFromResources("hdc_card_asset_bundle", typeof(HDC).Assembly);
 
             //
             CustomCard.BuildCard<DivineBlessing>();

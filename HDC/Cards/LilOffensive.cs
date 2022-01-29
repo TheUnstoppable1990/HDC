@@ -16,12 +16,12 @@ namespace HDC.Cards
 {
     class LilOffensive : CustomCard
     {
-        private float block_cooldown = 0.35f;
+        private float reload_cooldown = 0.35f;
         private int ammo_change = 2;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             //block.InvokeMethod("ResetStats");
-            block.cdMultiplier = 1f + block_cooldown;
+            gun.reloadTime = 1f - reload_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -43,8 +43,8 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(false,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Ammo",ammo_change)
+                CardTools.FormatStat(true,"Ammo",ammo_change),
+                CardTools.FormatStat(true,"Reload Time",-reload_cooldown)
             };
         }
         protected override GameObject GetCardArt()

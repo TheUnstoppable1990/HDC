@@ -48,7 +48,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return null;            
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Raptor");     
         }
         protected override CardInfo.Rarity GetRarity()
         {

@@ -85,6 +85,12 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.5.0
+
+----------
+
+Just a minor update, dun worry about it
+
 ### v0.1.5
 
 -----------

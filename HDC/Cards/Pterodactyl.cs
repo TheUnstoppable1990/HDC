@@ -26,12 +26,12 @@ namespace HDC.Cards
         {
             InAirJumpEffect flight = player.gameObject.GetOrAddComponent<InAirJumpEffect>();
             flight.SetJumpMult(0.1f);
-            flight.AddJumps(1000000);
+            flight.AddJumps(100);
             flight.SetCostPerJump(1);
             flight.SetContinuousTrigger(true);
             flight.SetResetOnWallGrab(true);
             flight.SetInterval(0.1f);
-            gravity.gravityForce = 0f;
+            gravity.gravityForce = 0.01f;
         }
         public override void OnRemoveCard()
         {
@@ -48,7 +48,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return null;            
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Pterodactyl");
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -59,7 +59,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Movement Speed",speed_boost),
-                CardTools.FormatStat(true,"","Flight!")
+                CardTools.FormatStat(true,"","Flight! (kinda, its more of a glide now)")
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

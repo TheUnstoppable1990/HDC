@@ -19,174 +19,6 @@ using HDC.Utilities;
 
 namespace HDC.MonoBehaviours
 {
-
-	/*
-    class Paladin_Effect : MonoBehaviour
-    {
-        public Player player;
-        public CharacterData data;
-        public float rangeOfEffect = 10f;
-        private List<Player> enemiesInRange = new List<Player>();
-        private List<Player> alliesInRange = new List<Player>();
-        private int numOfEnemies = 0;
-        private int previousNumOfEnemies = 0;
-        private float startHealth = 100f;
-        private float startMaxHealth = 100f;
-        //private float healthChange = 1f;
-        private float multiplier = 0.15f;
-        private float timePass = 0.0f;
-        private float healAmount = 0.0f;
-        private float allyRatio = 0.10f;
-        private void Start()
-        {
-
-        }
-        private void OnDestroy()
-        {
-
-        }
-        public void Destroy()
-        {
-            UnityEngine.Object.Destroy(this);
-        }
-        private void Awake()
-        {
-            this.player = gameObject.GetComponent<Player>(); //might make the player setting in the card redundant but oh well at this point
-            this.data = this.player.GetComponent<CharacterData>();
-
-        }
-        private void OnEnable()
-        {
-            this.startHealth = this.data.health;
-            this.startMaxHealth = this.data.maxHealth;
-        }
-        private void OnDisable()
-        {
-            //resets health on disable?
-            this.data.health = this.startHealth;
-            this.data.maxHealth = this.startMaxHealth;
-        }
-        private void Update()
-        {
-            //ConsoleLog(this.data);
-            foreach (Player otherPlayer in GetOtherPlayers())
-            {
-                CharacterData otherData = otherPlayer.GetComponent<CharacterData>();
-                float dist = Vector2.Distance(this.data.playerVel.position, otherData.playerVel.position);
-                
-                foreach(Player enemy in this.enemiesInRange)
-                {
-                    CharacterData enemyData = enemy.GetComponent<CharacterData>();
-                    if (enemyData.dead)//first attempt at correcting the dead thing
-                    {
-                        this.enemiesInRange.Remove(enemy);
-                    }
-                }
-                if(dist < rangeOfEffect)
-                {
-                    //Player is in range. Is it Friend or Foe?
-                    if(this.player.teamID == otherPlayer.teamID)
-                    {
-                        //Ok it's a friend
-                        if (!this.alliesInRange.Contains(otherPlayer))//only if it's not already on the list
-                        {                            
-                            this.alliesInRange.Add(otherPlayer);
-                        }
-                    }
-                    else
-                    {
-                        //Ok not a friend!
-                        if (!this.enemiesInRange.Contains(otherPlayer))//only if it's not already on the list
-                        {
-                            this.enemiesInRange.Add(otherPlayer);
-                        }
-                    }
-                }
-                else
-                {
-                    if (this.player.teamID == otherPlayer.teamID)
-                    {
-                        if (this.alliesInRange.Contains(otherPlayer))
-                        {
-                            this.alliesInRange.Remove(otherPlayer);
-                        }
-                    }
-                    else
-                    {
-                        if (this.enemiesInRange.Contains(otherPlayer))
-                        {
-                            this.enemiesInRange.Remove(otherPlayer);
-                        }
-                    }
-                }
-
-                
-            }
-            this.numOfEnemies = this.enemiesInRange.Count;
-
-
-            // start for new code
-            this.timePass += Time.deltaTime;
-            if (this.timePass > 1.0f)  //every second
-            {
-                //primary efect of healing self
-                healAmount = this.enemiesInRange.Count * multiplier * this.data.maxHealth;
-                this.data.health += healAmount;
-
-                //secondary effect of healing allies
-                if(this.alliesInRange.Count > 0)
-                {
-                    if(this.data.health > (this.data.maxHealth * (0.5f + this.allyRatio)))//always more than half health after ally healing
-                    {
-                        foreach(Player ally in alliesInRange)
-                        {
-                            CharacterData allyData = ally.GetComponent<CharacterData>();
-                            if(allyData.health < allyData.maxHealth)
-                            {
-                                allyData.health += this.data.maxHealth * this.allyRatio;
-                                this.data.health -= this.data.maxHealth * this.allyRatio;
-                                if(allyData.health > allyData.maxHealth)
-                                {
-                                    this.data.health += (allyData.health - allyData.maxHealth);// corrects for over healing
-                                    allyData.health = allyData.maxHealth;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                this.timePass = 0.0f; //resets the second
-            }
-
-                
-
-                
-            this.previousNumOfEnemies = this.numOfEnemies;
-
-            if (this.data.health > this.data.maxHealth)
-            {
-                this.data.health = this.data.maxHealth;
-            }//checks at the end of the update that health isnt greater than max health
-        }
-        public List<Player> GetEnemyPlayers()
-        {
-            return PlayerManager.instance.players.Where(player => player.teamID != this.player.teamID).ToList();
-        }
-        public List<Player> GetAllyPlayers()
-        {
-            return PlayerManager.instance.players.Where(player => (player.teamID == this.player.teamID && player.playerID != this.player.playerID)).ToList();
-        }
-        public List<Player> GetOtherPlayers()
-        {
-            return PlayerManager.instance.players.Where(player => player.playerID != this.player.playerID).ToList();
-        }
-
-        private void ConfigureMassAndSize()
-        {
-            base.transform.localScale = Vector3.one * 1.2f * Mathf.Pow(this.data.maxHealth / 100f * 1.2f, 0.2f) * 1f;//size multiplier? not sure if static or not
-        }
-    }
-    */
 	class Paladin_Effect : MonoBehaviour
 	{
 		// Token: 0x0600004B RID: 75 RVA: 0x000036E6 File Offset: 0x000018E6
@@ -232,34 +64,29 @@ namespace HDC.MonoBehaviours
 		{
 			foreach (Player player in this.GetOtherPlayers())
 			{
-				CharacterData component = player.GetComponent<CharacterData>();
-				float num = Vector2.Distance(this.data.playerVel.position, component.playerVel.position);
-				foreach (Player player2 in this.enemiesInRange)
+				CharacterData pData = player.GetComponent<CharacterData>();
+				float num = Vector2.Distance(this.data.playerVel.position, pData.playerVel.position);
+				foreach (Player enemy in this.enemiesInRange)
 				{
-					CharacterData component2 = player2.GetComponent<CharacterData>();
-					bool dead = component2.dead;
-					if (dead)
+					CharacterData eData = enemy.GetComponent<CharacterData>();
+					if (eData.dead)
 					{
-						this.enemiesInRange.Remove(player2);
+						this.enemiesInRange.Remove(enemy);
 					}
 				}
-				bool canSee = PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;
-				bool flag = num < this.rangeOfEffect && canSee;
-				if (flag)
-				{
-					bool flag2 = this.player.teamID == player.teamID;
-					if (flag2)
-					{
-						bool flag3 = !this.alliesInRange.Contains(player);
-						if (flag3)
+				bool canSee = PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;				
+				if (num < this.rangeOfEffect && canSee)
+				{					
+					if (this.player.teamID == player.teamID)
+					{						
+						if (!this.alliesInRange.Contains(player))
 						{
 							this.alliesInRange.Add(player);
 						}
 					}
 					else
 					{
-						bool flag4 = !this.enemiesInRange.Contains(player);
-						if (flag4)
+						if (!this.enemiesInRange.Contains(player))
 						{
 							this.enemiesInRange.Add(player);
 						}
@@ -267,19 +94,16 @@ namespace HDC.MonoBehaviours
 				}
 				else
 				{
-					bool flag5 = this.player.teamID == player.teamID;
-					if (flag5)
+					if (this.player.teamID == player.teamID)
 					{
-						bool flag6 = this.alliesInRange.Contains(player);
-						if (flag6)
+						if (this.alliesInRange.Contains(player))
 						{
 							this.alliesInRange.Remove(player);
 						}
 					}
 					else
 					{
-						bool flag7 = this.enemiesInRange.Contains(player);
-						if (flag7)
+						if (this.enemiesInRange.Contains(player))
 						{
 							this.enemiesInRange.Remove(player);
 						}
@@ -288,26 +112,23 @@ namespace HDC.MonoBehaviours
 			}
 			this.numOfEnemies = this.enemiesInRange.Count;
 			this.timePass += Time.deltaTime;
-			bool flag8 = this.timePass > 1f;
-			if (flag8)
+			if (this.timePass > 1f)
 			{
 				this.healAmount = (float)this.enemiesInRange.Count * this.multiplier * this.data.maxHealth;
 				this.data.healthHandler.Heal(this.healAmount);
-				bool flag9 = this.alliesInRange.Count > 0;
-				if (flag9)
+				if (this.alliesInRange.Count > 0)
 				{
-					bool flag10 = this.data.health > this.data.maxHealth * (0.5f + this.allyRatio);
-					if (flag10)
+
+					if (this.data.health > this.data.maxHealth * (0.5f + this.allyRatio))
 					{
-						foreach (Player player3 in this.alliesInRange)
+						foreach (Player ally in this.alliesInRange)
 						{
-							CharacterData component3 = player3.GetComponent<CharacterData>();
-							bool flag11 = component3.health < component3.maxHealth;
-							if (flag11)
+							CharacterData aData = ally.GetComponent<CharacterData>();
+							if (aData.health < aData.maxHealth)
 							{
-								float num2 = this.data.maxHealth * this.allyRatio;
-								component3.healthHandler.Heal(num2);
-								Vector2 damage = new Vector2(0f, -1f * num2);
+								float healAmount = this.data.maxHealth * this.allyRatio;
+								aData.healthHandler.Heal(healAmount);
+								Vector2 damage = new Vector2(0f, -1f * healAmount);
 								this.data.healthHandler.DoDamage(damage, this.data.playerVel.position, Color.cyan, null, null, false, false, true);
 							}
 						}

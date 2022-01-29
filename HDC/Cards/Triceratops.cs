@@ -19,7 +19,7 @@ namespace HDC.Cards
         private float speed_boost = 0.1f;
         private float block_cooldown = -0.25f;
         private float add_reload_time = 0.25f; //seconds
-        private float horns_damage = 0.2f; //percent delt back as Horns Damage
+        private float horns_damage = 0.3f; //percent delt back as Horns Damage
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
@@ -49,7 +49,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return null;            
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Triceratops");            
         }
         protected override CardInfo.Rarity GetRarity()
         {
