@@ -49,7 +49,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return null;
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Lil_Defensive");
         }
         protected override CardInfo.Rarity GetRarity()
         {

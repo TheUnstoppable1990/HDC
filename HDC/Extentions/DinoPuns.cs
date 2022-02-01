@@ -38,5 +38,18 @@ namespace HDC.Extentions
             "What do you call a dinosaur made of clay?\nA Terra-cotta-dactyl",
             "What do you call twin dinosaurs?\nPair-odactyls"
         };
+        static public string[] stegosaurus = new string[]
+        {
+            "What do you call a dinosaur that makes waffles?\nAn Eggo-saurus",
+            "What do you call a dinosaur that’s fun at parties?\nA Keg-osaurus",
+            "What should you never call an expecting mother?\nA Preggo-saurus"
+        };
+        static public string[] brontosaurus = new string[]
+        {
+            "What do you call an impatient dinosaur?\nA Pronto-saurus",
+            "What do you call a dinosaur trapped in a computer?\nA Tron-tosaurus",
+            "What do you call a dinosaur that likes to show off?\nA Flaunt-osaurus",
+            "What do you call a dinosaur with good handwriting?\nA Font-osaurus"
+        };
     }
 }

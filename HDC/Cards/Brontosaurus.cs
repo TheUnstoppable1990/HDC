@@ -12,21 +12,20 @@ using HDC.Extentions;
 
 namespace HDC.Cards
 {
-    class Raptor : CustomCard
+    class Brontosaurus : CustomCard
     {
-        private float speed_boost = 1f;
-        private float reload_time = -0.5f;
-        private float attack_speed = -0.5f;
-        private float bullet_speed = 0.5f;
-        private float damage_boost = -0.5f;
-
+        private float health_boost = 3f;
+        private float movement_reduction = -0.5f;        
+        private float add_reload_time = 1f; //seconds
+        private float regeneration = 5f;
+        private float damageOT = 5f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            statModifiers.movementSpeed = 1 + speed_boost;
-            gun.reloadTime = 1 + reload_time;
-            gun.attackSpeed = 1 + attack_speed;
-            gun.projectileSpeed = 1 + bullet_speed;
-            gun.damage = 1 + damage_boost;
+            statModifiers.movementSpeed = 1 + movement_reduction;
+            statModifiers.secondsToTakeDamageOver = damageOT;
+            statModifiers.health = 1f + health_boost;      
+            gun.reloadTimeAdd = add_reload_time;
+            statModifiers.regen = regeneration;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -40,15 +39,15 @@ namespace HDC.Cards
         }
         protected override string GetTitle()
         {
-            return "Raptor";
+            return "Brontosaurus";
         }
         protected override string GetDescription()
         {
-            return CardTools.RandomDescription(DinoPuns.raptor);
+            return CardTools.RandomDescription(DinoPuns.brontosaurus);
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Raptor");     
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Brontosaurus");
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -57,12 +56,13 @@ namespace HDC.Cards
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
-            {
-                CardTools.FormatStat(true,"Movement Speed",speed_boost),
-                CardTools.FormatStat(true,"Reload Time",reload_time),
-                CardTools.FormatStat(true,"Attack Speed",-attack_speed),
-                CardTools.FormatStat(true,"Bullet Speed",bullet_speed),
-                CardTools.FormatStat(false,"Damage",damage_boost)                
+            {                
+                CardTools.FormatStat(true,"Health",health_boost),
+                CardTools.FormatStat(true,"Regen",$"{regeneration} hp/s"),
+                CardTools.FormatStat(true,"Damage Taken Over",$"{damageOT}s"),
+                CardTools.FormatStat(false,"Movement Speed",movement_reduction),
+                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
+
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

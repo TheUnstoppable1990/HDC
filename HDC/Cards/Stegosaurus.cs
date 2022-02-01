@@ -9,29 +9,25 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
+using HDC.RoundsEffects;
 
 namespace HDC.Cards
 {
-    class Raptor : CustomCard
+    class Stegosaurus : CustomCard
     {
-        private float speed_boost = 1f;
-        private float reload_time = -0.5f;
-        private float attack_speed = -0.5f;
-        private float bullet_speed = 0.5f;
-        private float damage_boost = -0.5f;
+        public static float plate_reduction = 0.5f;
+        private int plateNum = 1;
+        private float speed_boost = -0.1f; //Speed Reduction in truth          
+        private int extra_blocks = 2;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            block.additionalBlocks = extra_blocks;
             statModifiers.movementSpeed = 1 + speed_boost;
-            gun.reloadTime = 1 + reload_time;
-            gun.attackSpeed = 1 + attack_speed;
-            gun.projectileSpeed = 1 + bullet_speed;
-            gun.damage = 1 + damage_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            
-            
+            characterStats.GetAdditionalData().stegoPlates += plateNum ;
         }
         public override void OnRemoveCard()
         {
@@ -40,15 +36,15 @@ namespace HDC.Cards
         }
         protected override string GetTitle()
         {
-            return "Raptor";
+            return "Stegosaurus";
         }
         protected override string GetDescription()
         {
-            return CardTools.RandomDescription(DinoPuns.raptor);
+            return CardTools.RandomDescription(DinoPuns.stegosaurus);
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Raptor");     
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Stegosaurus");            
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -58,11 +54,10 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Movement Speed",speed_boost),
-                CardTools.FormatStat(true,"Reload Time",reload_time),
-                CardTools.FormatStat(true,"Attack Speed",-attack_speed),
-                CardTools.FormatStat(true,"Bullet Speed",bullet_speed),
-                CardTools.FormatStat(false,"Damage",damage_boost)                
+                CardTools.FormatStat(true,"Extra Blocks",extra_blocks),
+                CardTools.FormatStat(false,"Movement Speed",speed_boost),
+                CardTools.FormatStat(true,"Plates",plateNum),
+                CardTools.FormatStat(true,"Dmg Red / Plate",plate_reduction)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

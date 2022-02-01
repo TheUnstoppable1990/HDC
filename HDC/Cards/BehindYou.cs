@@ -45,8 +45,8 @@ namespace HDC.Cards
             return "Find yourself behind enemy lines when you block.";
         }
         protected override GameObject GetCardArt()
-        {   
-            return null;
+        {
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Behind_You");
         }
         protected override CardInfo.Rarity GetRarity()
         {

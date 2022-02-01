@@ -52,6 +52,15 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ---------------
 
+### Brontosaurus
+
+-Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
+
+#### Stegosaurus
+
+-Adds additional blocks and damage reducing plates
+	-Each plate reduces damage by 50% its like doubling your health but way harder to code and doesn't increase your size :D 
+
 #### Pterodactyl
 
 -Adds flight and a minor speed boost
@@ -85,11 +94,23 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
-### v0.5.0
+### v0.5.3
 
 ----------
 
-Just a minor update, dun worry about it
+Added Brontosaurus because we need more overpowered cards
+
+### v0.5.2
+
+----------
+
+Added Stegosaurus Because MOAR BLOCK CARDS
+
+### v0.5.0 - v0.5.1
+
+----------
+
+Just a minor update, dun worry about it. just working on stuff shhhh
 
 ### v0.1.5
 

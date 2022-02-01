@@ -16,7 +16,7 @@ using System.Linq;
 
 namespace HDC.MonoBehaviours
 {
-    class BehindYou_Effect : MonoBehaviour
+    class BehindYou_Effect : MonoBehaviour 
     {
         public Block block;
         public Player player;
