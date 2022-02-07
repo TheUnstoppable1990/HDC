@@ -31,6 +31,8 @@ namespace HDC
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
+        public static HDC instance { get; private set; }
+
         void Awake()
         {
             var harmony = new Harmony(ModID);
