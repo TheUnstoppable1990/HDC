@@ -94,6 +94,12 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.5.4
+
+---------
+
+-Adressing the "Bronto Problem"
+
 ### v0.5.3
 
 ----------
