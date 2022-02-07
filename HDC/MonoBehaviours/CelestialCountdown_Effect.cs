@@ -273,6 +273,7 @@ namespace HDC.MonoBehaviours
         }
 
     }
+    /*
     public class CelestialCountdown_Effect : MonoBehaviour
     {
         public SoundEvent soundCelestialChargeLoop;
@@ -495,6 +496,7 @@ namespace HDC.MonoBehaviours
         
     }
 
+    */
     public class CelestialGlow : ReversibleEffect //Thanks Pykess for this Utility
     {
         private readonly Color color = new Color(0.75f, 1f, 1f, 0.75f); //light bluish i think?

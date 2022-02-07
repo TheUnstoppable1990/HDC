@@ -43,7 +43,7 @@ namespace HDC
         IEnumerator ResetEffects(IGameModeHandler gm)
         {
             DestroyAll<Paladin_Effect>();
-            DestroyAll<CelestialCountdown_Effect>();
+            DestroyAll<CelestialCountdown_Effect_2>();
             DestroyAll<Meditation_Effect>();
             DestroyAll<BehindYou_Effect>();
             DestroyAll<DivineBlessing_Effect>();
@@ -62,6 +62,7 @@ namespace HDC
         
         void Start()
         {
+            instance = this;
 
             //Cards go here
             Unbound.RegisterCredits(ModName, 

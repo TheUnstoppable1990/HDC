@@ -26,12 +26,13 @@ namespace HDC.Extentions
                     pe.Destroy();
                 }
             }
-            CelestialCountdown_Effect[] cc_Effects = gameObject.GetComponents<CelestialCountdown_Effect>();
-            foreach (CelestialCountdown_Effect cce in cc_Effects)
+            CelestialCountdown_Effect_2[] cc_Effects = gameObject.GetComponents<CelestialCountdown_Effect_2>();
+            foreach (CelestialCountdown_Effect_2 cce in cc_Effects)
             {
                 if(cce != null)
                 {
                     cce.Destroy();
+
                 }
             }
             Meditation_Effect[] meditation_Effects = gameObject.GetComponents<Meditation_Effect>();

@@ -13,9 +13,7 @@ using UnityEngine.UI.ProceduralImage;
 namespace HDC.Cards
 {
     class CelestialCountdown : CustomCard
-    {
-        private Player thisPlayer;
-        private CelestialCountdown_Effect countdown;
+    {        
         private CelestialCountdown_Effect_2 cel_countdown;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
@@ -39,13 +37,13 @@ namespace HDC.Cards
             cel_countdown.soundUpgradeChargeLoop = abyssal.soundAbyssalChargeLoop;
             cel_countdown.counter = 0;
             cel_countdown.timeToFill = 7f;
-            cel_countdown.timeToEmpty = 3f;
+            cel_countdown.timeToEmpty = 10f;
             cel_countdown.outerRing = abyssal.outerRing;
             cel_countdown.fill = abyssal.fill;
             cel_countdown.rotator = abyssal.rotator;
             cel_countdown.still = abyssal.still;
             cel_countdown.player = player;
-            cel_countdown.duration = 10f;
+            cel_countdown.duration = 5f;
             cel_countdown.hpMultiplier = 10f;
             cel_countdown.gun = gun;
             cel_countdown.gunAmmo = gunAmmo;
@@ -53,49 +51,6 @@ namespace HDC.Cards
             cel_countdown.characterStats = characterStats;
             cel_countdown.gravity = gravity;
 
-
-
-            //UnityEngine.Debug.Log(data);
-            /*
-            this.thisPlayer = player;
-            this.countdown = player.gameObject.AddComponent<CelestialCountdown_Effect>();
-            countdown.player = player;
-            countdown.duration = 10f;
-            countdown.hpMultiplier = 10f;
-            countdown.celestialObjects = new GameObject[] { };
-            countdown.gun = gun;
-            countdown.gunAmmo = gunAmmo;
-            countdown.defaultRLTime = gun.reloadTime;
-            countdown.characterStats = characterStats;
-            countdown.gravity = gravity;
-            */
-            //Regeneration regeneration = player.gameObject.AddComponent<Regeneration>();
-            //data.maxHealth *= 1.25f;
-
-
-            /*
-            HDC.instance.ExecuteAfterFrames(5, () =>
-            {
-                
-                UnityEngine.GameObject.Destroy(abyssal);
-
-                var COs = celObj.GetComponentsInChildren<Transform>().Where(child => child.parent == celObj.transform).Select(child => child.gameObject).ToArray();
-
-                foreach (var CO in COs)
-                {
-                    if (CO.transform.gameObject != celObj.transform.Find("Canvas").gameObject)
-                    {
-                        UnityEngine.GameObject.Destroy(CO);
-                    }
-                }
-
-                cel_countdown.outerRing.color = new Color32(255, 255, 200, 255);
-                cel_countdown.fill.color = new Color32(0, 255, 255, 10);
-                cel_countdown.rotator.gameObject.GetComponentInChildren<ProceduralImage>().color = cel_countdown.outerRing.color;
-                cel_countdown.still.gameObject.GetComponentInChildren<ProceduralImage>().color = cel_countdown.outerRing.color;
-                celObj.transform.Find("Canvas/Size/BackRing").GetComponent<ProceduralImage>().color = new Color32(33, 255, 255, 29);
-            });
-            */
             HDC.instance.ExecuteAfterFrames(5, () =>
             {
                 try
@@ -139,7 +94,6 @@ namespace HDC.Cards
         public override void OnRemoveCard()
         {
             //throw new NotImplementedException();
-            Destroy(this.countdown);
             Destroy(this.cel_countdown);
             
         }
