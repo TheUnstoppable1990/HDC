@@ -94,35 +94,53 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.5.5
+
+---------
+
+-Fixes
+
+	-willuwontu fixed Celestial Countdown so it actually has the cooldown disk now
+
 ### v0.5.4
 
 ---------
 
--Adressing the "Bronto Problem"
+-Fixes
+
+	-Adressing the "Bronto Problem"
 
 ### v0.5.3
 
 ----------
 
-Added Brontosaurus because we need more overpowered cards
+-Changes
+
+	-Added Brontosaurus because we need more overpowered cards
 
 ### v0.5.2
 
 ----------
 
-Added Stegosaurus Because MOAR BLOCK CARDS
+-Changes
+
+	Added Stegosaurus Because MOAR BLOCK CARDS
 
 ### v0.5.0 - v0.5.1
 
 ----------
 
-Just a minor update, dun worry about it. just working on stuff shhhh
+-Changes
+
+	Just a minor update, dun worry about it. just working on stuff shhhh
 
 ### v0.1.5
 
 -----------
 
-DESTROYED EVERYTHING PAST 0.1.2 AND HAD TO GET IT BACK FROM A DECOMPILE
+-Changes
+
+	DESTROYED EVERYTHING PAST 0.1.2 AND HAD TO GET IT BACK FROM A DECOMPILE
 
 ### v0.1.4
 
