@@ -41,9 +41,7 @@ namespace HDC.MonoBehaviours
 
         public float hpMultiplier = 2f;
 
-        public int upgradeLevel = 0;
-
-        public int currentUpgradeLevel = 0;
+        
 
         public ProceduralImage outerRing;
 
@@ -55,11 +53,11 @@ namespace HDC.MonoBehaviours
 
         private CharacterData data;
 
-        public GameObject[] upgradeObjects;
+        
 
         private float remainingDuration;
 
-        //private bool isUpgrading;
+        
 
         private bool isCelestialForm;
 
@@ -71,9 +69,6 @@ namespace HDC.MonoBehaviours
         public Gravity gravity;
 
         public float defaultRLTime;
-        //private float reloadModifier = 0.001f;
-        //private float aSpeedModifier = 0.25f;        
-        private float healthFix;
         public Player player;
 
         private CelestialGlow celestialGlow = null;
@@ -124,9 +119,7 @@ namespace HDC.MonoBehaviours
         {
             this.SoundStop();
             this.remainingDuration = 0f;
-            this.counter = 0f;
-            this.upgradeLevel = 0;
-            this.currentUpgradeLevel = 0;
+            this.counter = 0f;            
             if (this.isCelestialForm)
             {
                 this.isCelestialForm = false;
@@ -137,18 +130,15 @@ namespace HDC.MonoBehaviours
         private void alterStats(bool enable)
         {
             if (enable)
-            {
-                
-                celestialGlow = player.gameObject.AddComponent<CelestialGlow>();
+            {                
+                celestialGlow = player.gameObject.AddComponent<CelestialGlow>();             
 
             }
             else
             {
                 if (celestialGlow != null)
-                {                    
-                                   
-                    UnityEngine.Object.Destroy(celestialGlow);
-                    
+                {
+                    UnityEngine.Object.Destroy(celestialGlow);                    
                     celestialGlow = null;
                 }
             }
@@ -156,8 +146,7 @@ namespace HDC.MonoBehaviours
         }
 
         private void RPCA_Activate()
-        {
-            //this.upgradeLevel += 1;
+        {            
             this.remainingDuration = this.duration;
         }
 
@@ -254,6 +243,7 @@ namespace HDC.MonoBehaviours
         }
         public void Destroy()
         {
+            ResetStuff();
             UnityEngine.Object.Destroy(this);
         }
         private void ConfigureMassAndSize()
@@ -282,10 +272,10 @@ namespace HDC.MonoBehaviours
         }
         public override void OnStart()
         {
-            //ADD HEALTH THING HERE AGAIN EVENTUALLY
-            //Will fix this when modding utils is fixed
+            
             //this.characterDataModifier.maxHealth_mult = 2f;
             //this.characterDataModifier.health_mult = 2f;
+            
 
             this.gunAmmoStatModifier.reloadTimeMultiplier_mult = this.reloadModifier;
             this.gunStatModifier.attackSpeed_mult = this.aSpeedModifier;            
