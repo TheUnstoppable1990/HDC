@@ -16,6 +16,7 @@ namespace HDC.Cards
         private Paladin_Effect paladin_effect;
         private Player player;
         private float health_boost = 2f;
+        private float regen_percentage = 0.15f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
 
@@ -48,7 +49,7 @@ namespace HDC.Cards
         }
         protected override string GetDescription()
         {
-            return "Regain vitality for each nearby enemy and rally your allies when they are near.";
+            return "Regain health for each nearby enemy and heal your allies when they are near.";
         }
         protected override GameObject GetCardArt()
         {
@@ -70,7 +71,8 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Health",health_boost)
+                CardTools.FormatStat(true,"Max Health",health_boost),
+                CardTools.FormatStat(true,"Regen",$"{regen_percentage*100}% per enemy in range")
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
