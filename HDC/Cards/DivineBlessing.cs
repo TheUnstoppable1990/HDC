@@ -46,15 +46,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            try
-            {
-                return HDC.ArtAssets.LoadAsset<GameObject>("C_AngelCard");
-            }
-            catch
-            {
-                UnityEngine.Debug.Log("Something went wrong with card art");
-                return null;
-            }
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Divine_Blessing");
         }
         protected override CardInfo.Rarity GetRarity()
         {

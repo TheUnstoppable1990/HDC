@@ -17,7 +17,7 @@ namespace HDC.Cards
     class LilDefensive : CustomCard
     {
         private float block_cooldown = 0.35f;
-        private float health_change = 0.25f;
+        private float health_change = 0.50f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             //block.InvokeMethod("ResetStats");
@@ -53,7 +53,7 @@ namespace HDC.Cards
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Common;
+            return CardInfo.Rarity.Uncommon;
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {

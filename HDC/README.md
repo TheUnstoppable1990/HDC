@@ -18,11 +18,11 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 #### Lil Defensive
 
--Reduces block cooldown and maximum ammo
+-Reduces block cooldown
 
 #### Lil Offensive
 
--Increase block cooldown and maximum ammo
+-Increase maximum ammo
 
 ### Angel Cards
 
@@ -94,9 +94,27 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.0.0
+
+---------
+
+-Changes
+
+	-ALL CARDS HAVE ART
+
+	-All cards going forward will have art
+
+	-Minor tweaks here and there
+
+	-Did I mention ART?
+
 ### v0.6.0
 
 ---------
+
+-Changes
+
+	-Changed Rarity/Balance of Lil Offensive and Defensive 
 
 -Fixes
 
