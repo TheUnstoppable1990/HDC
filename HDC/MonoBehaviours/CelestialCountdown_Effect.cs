@@ -32,37 +32,19 @@ namespace HDC.MonoBehaviours
 
         [Range(0f, 1f)]
         public float counter;
-
         public float timeToFill = 5f;
-
         public float timeToEmpty = 1f;
-
         public float duration = 1;
-
-        public float hpMultiplier = 2f;
-
-        
+        public float hpMultiplier = 2f;        
 
         public ProceduralImage outerRing;
-
         public ProceduralImage fill;
-
         public Transform rotator;
-
         public Transform still;
-
         private CharacterData data;
-
-        
-
         private float remainingDuration;
-
-        
-
         private bool isCelestialForm;
-
         private float startCounter;
-
         public Gun gun;
         public GunAmmo gunAmmo;
         public CharacterStatModifiers characterStats;
@@ -255,11 +237,11 @@ namespace HDC.MonoBehaviours
     
     public class CelestialGlow : ReversibleEffect //Thanks Pykess for this Utility
     {
-        private readonly Color color = new Color(0.5f, 1f, 1f, 0.75f); //light bluish i think?
+        private readonly Color color = new Color(1f, 1f, 0.25f, 0.75f); //light yellowish i think?
         private ReversibleColorEffect colorEffect = null;        
-        public float hpMultiplier = 2f;
+        private float dmgMultiplier = 2f;
         private float reloadModifier = 0.001f;
-        private float aSpeedModifier = 0.25f;
+        private float aSpeedModifier = 0.125f;
         public CharacterData charData;
         
         public override void OnOnEnable()
@@ -272,11 +254,7 @@ namespace HDC.MonoBehaviours
         }
         public override void OnStart()
         {
-            
-            //this.characterDataModifier.maxHealth_mult = 2f;
-            //this.characterDataModifier.health_mult = 2f;
-            
-
+            this.gunStatModifier.damage_mult = this.dmgMultiplier;
             this.gunAmmoStatModifier.reloadTimeMultiplier_mult = this.reloadModifier;
             this.gunStatModifier.attackSpeed_mult = this.aSpeedModifier;            
             this.gravityModifier.gravityForce_mult = 0.5f;            
@@ -288,16 +266,14 @@ namespace HDC.MonoBehaviours
             this.colorEffect.SetLivesToEffect(1);
         }
         public override void OnOnDisable()
-        {
-            
+        {            
             if (this.colorEffect != null)
             {
                 this.colorEffect.Destroy();
             }
         }
         public override void OnOnDestroy()
-        {
-            
+        {            
             if (this.colorEffect != null)
             {
                 this.colorEffect.Destroy();

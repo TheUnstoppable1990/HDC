@@ -94,6 +94,14 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v0.6.0
+
+---------
+
+-Fixes
+
+	-fixed celestial countdown persistence bug and added art
+
 ### v0.5.5
 
 ---------

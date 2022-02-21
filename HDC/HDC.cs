@@ -81,8 +81,8 @@ namespace HDC
 
             //Signature Cards
             CustomCard.BuildCard<BehindYou>();
-            CustomCard.BuildCard<LilDefensive>();
-            CustomCard.BuildCard<LilOffensive>();
+            //CustomCard.BuildCard<LilDefensive>();
+            //CustomCard.BuildCard<LilOffensive>();
             CustomCard.BuildCard<PointBlank>();
 
 
