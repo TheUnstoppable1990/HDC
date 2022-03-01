@@ -10,9 +10,12 @@ namespace HDC.Extentions
     public class CharacterStatModifiersAdditionalData //making a place for additional stats
     {
         public int stegoPlates;
+        public float holyLightCharge;
+         
         public CharacterStatModifiersAdditionalData()
         {
             stegoPlates = 0;
+            holyLightCharge = 0f;
         }
 
     }
@@ -43,6 +46,7 @@ namespace HDC.Extentions
         private static void Prefix(CharacterStatModifiers __instance)
         {
             __instance.GetAdditionalData().stegoPlates = 0;
+            __instance.GetAdditionalData().holyLightCharge = 0f;
 
         }
     }

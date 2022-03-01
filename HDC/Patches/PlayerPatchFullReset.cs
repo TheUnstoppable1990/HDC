@@ -15,6 +15,7 @@ namespace HDC.Patches
     {
         private static void Prefix(Player __instance)
         {
+            //__instance.data.stats.GetAdditionalData().holyLightCharge = 0f;
             CustomEffects.DestroyAllEffects(__instance.gameObject);
         }
     }

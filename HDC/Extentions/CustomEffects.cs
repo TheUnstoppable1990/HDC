@@ -17,7 +17,7 @@ namespace HDC.Extentions
             DestroyAllAppliedEffects(gameObject);
         }
         public static void DestroyAllAppliedEffects(GameObject gameObject)
-        {
+        {            
             Paladin_Effect[] paladin_Effects = gameObject.GetComponents<Paladin_Effect>();
             foreach (Paladin_Effect pe in paladin_Effects)
             {

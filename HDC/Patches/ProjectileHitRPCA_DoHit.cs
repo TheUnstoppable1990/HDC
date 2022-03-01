@@ -36,10 +36,10 @@ namespace HDC.Patches
                 hitInfo.transform = hitInfo.collider.transform;
             }
 
-            HealthHandler healthHandler = null;
+            global::HealthHandler healthHandler = null;
             if (hitInfo.transform)
             {
-                healthHandler = hitInfo.transform.GetComponent<HealthHandler>();
+                healthHandler = hitInfo.transform.GetComponent<global::HealthHandler>();
             }
             if (healthHandler && healthHandler.GetComponent<CharacterData>() && healthHandler.GetComponent<Block>())
             {
