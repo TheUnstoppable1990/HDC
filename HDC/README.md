@@ -94,6 +94,20 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.0.1
+
+---------
+
+-Fixes
+	
+	-Tweaked Holy Light and the way it works, should be more balanced and less buggy
+
+	-Tweaked the background of some of the Art
+
+-To Do
+
+	-Fix Growing countdown thing on celestial countdown, but seems to just be aesthetic so nbd at the moment
+
 ### v1.0.0
 
 ---------

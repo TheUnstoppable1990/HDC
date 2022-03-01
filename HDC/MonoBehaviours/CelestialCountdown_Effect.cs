@@ -66,7 +66,7 @@ namespace HDC.MonoBehaviours
         public void OnDestroy()
         {
             HealthHandler healthHandler = this.data.healthHandler;
-            healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff));
+            healthHandler.reviveAction = (Action)Delegate.Remove(healthHandler.reviveAction, new Action(this.ResetStuff));
             base.GetComponentInParent<ChildRPC>().childRPCs.Remove("Celestial");
             this.SoundStop();
         }

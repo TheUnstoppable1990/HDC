@@ -28,6 +28,8 @@ namespace HDC.MonoBehaviours
 				this.holyLightAction = new Action<BlockTrigger.BlockTriggerType>(this.GetDoBlockAction().Invoke);
 				this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Combine(this.block.BlockAction, this.holyLightAction);
 			}
+			HealthHandler healthHandler = this.data.healthHandler;
+			healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff));
 		}
 
 		
@@ -39,6 +41,11 @@ namespace HDC.MonoBehaviours
 			}
 			this.previous_health = this.data.health;
 		}
+
+		private void ResetStuff()
+        {
+			this.data.stats.GetAdditionalData().holyLightCharge = 0f;
+        }
 
 		
 		private void Charge(float amount)
@@ -99,6 +106,8 @@ namespace HDC.MonoBehaviours
 		{
 			UnityEngine.Object.Destroy(this);
 			this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(this.block.BlockAction, this.holyLightAction);
+			HealthHandler healthHandler = this.data.healthHandler;
+			healthHandler.reviveAction = (Action)Delegate.Remove(healthHandler.reviveAction, new Action(this.ResetStuff));
 			player.data.stats.GetAdditionalData().holyLightCharge = 0f;
 		}
 
@@ -143,6 +152,8 @@ namespace HDC.MonoBehaviours
 		{
 			this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(this.block.BlockAction, this.holyLightAction);
 			player.data.stats.GetAdditionalData().holyLightCharge = 0f;
+			HealthHandler healthHandler = this.data.healthHandler;
+			healthHandler.reviveAction = (Action)Delegate.Remove(healthHandler.reviveAction, new Action(this.ResetStuff));			
 		}
 
 		private IEnumerator GlowEffect()

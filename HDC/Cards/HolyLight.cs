@@ -26,6 +26,7 @@ namespace HDC.Cards
 
             this.holyLight_effect = player.gameObject.AddComponent<HolyLight_Effect>();
             this.holyLight_effect.player = player;
+            this.holyLight_effect.data = data;
             this.holyLight_effect.damageRatio = this.damage_ratio;
             this.holyLight_effect.block = block;
             this.player = player;
