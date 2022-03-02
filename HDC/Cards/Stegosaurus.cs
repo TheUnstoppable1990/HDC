@@ -19,20 +19,23 @@ namespace HDC.Cards
         private int plateNum = 1;
         private float speed_boost = -0.1f; //Speed Reduction in truth          
         private int extra_blocks = 2;
+        private CharacterStatModifiers stats;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+
             block.additionalBlocks = extra_blocks;
             statModifiers.movementSpeed = 1 + speed_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
+            stats = characterStats;
             characterStats.GetAdditionalData().stegoPlates += plateNum ;
         }
         public override void OnRemoveCard()
-        {
-            //throw new NotImplementedException();
-                     
+        {            
+            stats.GetAdditionalData().stegoPlates -= plateNum;
         }
         protected override string GetTitle()
         {
@@ -54,10 +57,10 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Extra Blocks",extra_blocks),
-                CardTools.FormatStat(false,"Movement Speed",speed_boost),
+                CardTools.FormatStat(true,"Extra Blocks",extra_blocks),                
                 CardTools.FormatStat(true,"Plates",plateNum),
-                CardTools.FormatStat(true,"Dmg Red / Plate",plate_reduction)
+                CardTools.FormatStat(true,"Dmg Red / Plate",plate_reduction),
+                CardTools.FormatStat(false,"Movement Speed",speed_boost)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

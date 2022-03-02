@@ -52,6 +52,10 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ---------------
 
+### Paleontologist
+
+-Grabs a Random Dinosaur card to give to the player 
+
 ### Brontosaurus
 
 -Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
@@ -93,6 +97,20 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v1.0.2
+
+---------
+
+-Fixes
+
+	-Adjusted the Dinosaur Art
+
+	-Complete rebalance of Dinosaur Card Stats
+
+-Changes
+	
+	-Added Paleontologist, gives a random Dinosaur Card 
 
 ### v1.0.1
 

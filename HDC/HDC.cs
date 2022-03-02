@@ -21,13 +21,14 @@ namespace HDC
 {
     [BepInDependency("com.willis.rounds.unbound", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("pykess.rounds.plugins.moddingutils",BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency("pykess.rounds.plugins.cardchoicespawnuniquecardpatch", BepInDependency.DependencyFlags.HardDependency)] //for paleontologist
     [BepInPlugin(ModID, ModName, ModVersion)]
     [BepInProcess("Rounds.exe")]
     public class HDC : BaseUnityPlugin
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.0.1";
+        public const string ModVersion = "1.0.2";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -94,7 +95,7 @@ namespace HDC
             CustomCard.BuildCard<Stegosaurus>();
             CustomCard.BuildCard<Brontosaurus>();
 
-            
+            CustomCard.BuildCard<Paleontologist>();
          
         }
 

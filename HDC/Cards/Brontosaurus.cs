@@ -14,23 +14,25 @@ namespace HDC.Cards
 {
     class Brontosaurus : CustomCard
     {
-        private float health_boost = 3f;
+        private float health_boost = 2f;
         private float size_boost = 1f;
-        private float movement_reduction = -0.75f;
-        private float jump_reduction = -0.75f;
-        private float add_reload_time = 2f; //seconds
+        private float movement_reduction = -0.5f;
+        private float jump_reduction = -0.5f;
+        //private float add_reload_time = 2f; //seconds
         private float regeneration = 3f;
         private float damageOT = 3f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            statModifiers.movementSpeed = 1 + movement_reduction;
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+
+            statModifiers.movementSpeed = 1f + movement_reduction;
             statModifiers.secondsToTakeDamageOver = damageOT;
 
             statModifiers.health = 1f + health_boost;      
-            gun.reloadTimeAdd = add_reload_time;
+            //gun.reloadTimeAdd = add_reload_time;
             statModifiers.regen = regeneration;
             statModifiers.sizeMultiplier = 1f + size_boost;
-            statModifiers.jump = 1f - jump_reduction;
+            statModifiers.jump = 1f + jump_reduction;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -62,13 +64,13 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {                
-                CardTools.FormatStat(true,"Health",health_boost),
-                CardTools.FormatStat(true,"Size",size_boost),
+                CardTools.FormatStat(true,"Health",health_boost),                
                 CardTools.FormatStat(true,"Regen",$"{regeneration} hp/s"),
                 CardTools.FormatStat(true,"Damage Taken Over",$"{damageOT}s"),
+                CardTools.FormatStat(false,"Size",size_boost),
                 CardTools.FormatStat(false,"Movement Speed",movement_reduction),
-                CardTools.FormatStat(false,"Jump Height",jump_reduction),
-                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
+                CardTools.FormatStat(false,"Jump Height",jump_reduction)
+                //CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
 
             };
         }

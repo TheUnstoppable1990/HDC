@@ -16,7 +16,7 @@ namespace HDC.MonoBehaviours
 		public CharacterData data;
 		public float damageRatio = 0.1f;
 		private float previous_health = 0f;
-		private float damage_charge = 0f;
+		//private float damage_charge = 0f;
 		public Block block;
 		private Action<BlockTrigger.BlockTriggerType> holyLightAction;
 		private HolyGlow holyGlow = null;
@@ -30,28 +30,14 @@ namespace HDC.MonoBehaviours
 			}
 			HealthHandler healthHandler = this.data.healthHandler;
 			healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff));
-		}
-
+		}	
 		
-		private void Update()
-		{			
-			if (this.data.health > this.previous_health && this.previous_health > 0f)
-			{
-				this.Charge(this.damageRatio * (this.data.health - this.previous_health));
-			}
-			this.previous_health = this.data.health;
-		}
 
 		private void ResetStuff()
         {
 			this.data.stats.GetAdditionalData().holyLightCharge = 0f;
-        }
-
-		
-		private void Charge(float amount)
-		{
-			this.damage_charge += amount;
-		}		
+        }		
+			
 		public void Discharge()
 		{
 			base.StartCoroutine(this.GlowEffect());			
@@ -88,8 +74,7 @@ namespace HDC.MonoBehaviours
 
 		
 		public void ResetHealthCharge()
-		{
-			this.damage_charge = 0f;
+		{			
 			player.data.stats.GetAdditionalData().holyLightCharge = 0f;
 			UnityEngine.Debug.Log("Attempting to reset damage charge");
 		}

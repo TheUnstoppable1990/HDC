@@ -15,7 +15,7 @@ namespace HDC.Cards
 {
     class Triceratops : CustomCard
     {
-        private float health_boost = 0.5f;
+        //private float health_boost = 0.5f;
         private float speed_boost = 0.1f;
         private float block_cooldown = -0.25f;
         private float add_reload_time = 0.25f; //seconds
@@ -23,8 +23,10 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+
             statModifiers.movementSpeed = 1 + speed_boost;
-            statModifiers.health = 1f + health_boost;                        
+            //statModifiers.health = 1f + health_boost;                        
             gun.reloadTimeAdd = add_reload_time;
             block.cdMultiplier = 1f + block_cooldown;
         }
@@ -60,7 +62,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Health",health_boost),
+                //CardTools.FormatStat(true,"Health",health_boost),
                 CardTools.FormatStat(true,"Movement Speed",speed_boost),                
                 CardTools.FormatStat(true,"Horns Damage",horns_damage),
                 CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")

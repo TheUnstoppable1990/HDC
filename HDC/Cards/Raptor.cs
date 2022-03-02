@@ -15,13 +15,15 @@ namespace HDC.Cards
     class Raptor : CustomCard
     {
         private float speed_boost = 1f;
-        private float reload_time = -0.5f;
+        private float reload_time = -0.75f;
         private float attack_speed = -0.5f;
         private float bullet_speed = 0.5f;
-        private float damage_boost = -0.5f;
+        private float damage_boost = -0.75f;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+
             statModifiers.movementSpeed = 1 + speed_boost;
             gun.reloadTime = 1 + reload_time;
             gun.attackSpeed = 1 + attack_speed;

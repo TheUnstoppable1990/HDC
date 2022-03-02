@@ -15,13 +15,15 @@ namespace HDC.Cards
     class Rex : CustomCard
     {
         private float health_boost = 1f;
-        private float dmg_boost = 1f;
+        private float dmg_boost = 2f;
         private float distance = 0.5f;
         private float add_reload_time = 0.25f; //seconds
         private float size = 0.5f;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+
             statModifiers.sizeMultiplier = 1f + size;
             statModifiers.health = 1f + health_boost;
             gun.damage = 1f + dmg_boost;
@@ -58,9 +60,9 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Size",size),
                 CardTools.FormatStat(true,"Health",health_boost),
                 CardTools.FormatStat(true,"Damage",dmg_boost),
+                CardTools.FormatStat(false,"Size",size),
                 CardTools.FormatStat(false,"Range","Reduced"),
                 CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
             };

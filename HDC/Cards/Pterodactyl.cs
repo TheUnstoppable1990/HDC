@@ -15,10 +15,14 @@ namespace HDC.Cards
 {
     class Pterodactyl : CustomCard
     {
-        private float speed_boost = 0.30f;       
+        private float speed_boost = 0.30f;
+        private float health_boost = -0.5f;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+
+            statModifiers.health = 1f + health_boost;
             statModifiers.movementSpeed = 1 + speed_boost;
             cardInfo.allowMultiple = false;
         }
@@ -57,9 +61,10 @@ namespace HDC.Cards
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
-            {
+            {                
                 CardTools.FormatStat(true,"Movement Speed",speed_boost),
-                CardTools.FormatStat(true,"","Flight! (kinda, its more of a glide now)")
+                CardTools.FormatStat(true,"(Kinda)","Flight!"),
+                CardTools.FormatStat(false,"Health",health_boost)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

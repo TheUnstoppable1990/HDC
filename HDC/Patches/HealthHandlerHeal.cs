@@ -22,12 +22,12 @@ namespace HDC.Patches
             var maxHealth = ___player.data.maxHealth;
             if (healAmount > 0f && health < maxHealth) 
             {
-                UnityEngine.Debug.Log($"{healAmount} Healing Called for Player {___player.playerID}");
+                //UnityEngine.Debug.Log($"{healAmount} Healing Called for Player {___player.playerID}");
                 var holyLight = ___player.GetComponent<HolyLight_Effect>();                
                 if (holyLight)
                 {
                     ___player.data.stats.GetAdditionalData().holyLightCharge += healAmount;
-                    UnityEngine.Debug.Log($"Holy Light Charge: {___player.data.stats.GetAdditionalData().holyLightCharge}");
+                    //UnityEngine.Debug.Log($"Holy Light Charge: {___player.data.stats.GetAdditionalData().holyLightCharge}");
                 }
             }
             
