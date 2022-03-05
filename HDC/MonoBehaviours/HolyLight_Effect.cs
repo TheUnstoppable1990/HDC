@@ -15,8 +15,6 @@ namespace HDC.MonoBehaviours
 		public Player player;
 		public CharacterData data;
 		public float damageRatio = 0.1f;
-		private float previous_health = 0f;
-		//private float damage_charge = 0f;
 		public Block block;
 		private Action<BlockTrigger.BlockTriggerType> holyLightAction;
 		private HolyGlow holyGlow = null;

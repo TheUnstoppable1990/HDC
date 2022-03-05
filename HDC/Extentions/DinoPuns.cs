@@ -8,6 +8,7 @@ namespace HDC.Extentions
 {
     static class DinoPuns
     {
+        static public string[] blankDesc = new string[] {""};
         static public string[] rex = new string[]
         {
             "What do you call glasses for dinosuars?\nTyrannosaurus Specs",
@@ -50,6 +51,10 @@ namespace HDC.Extentions
             "What do you call a dinosaur trapped in a computer?\nA Tron-tosaurus",
             "What do you call a dinosaur that likes to show off?\nA Flaunt-osaurus",
             "What do you call a dinosaur with good handwriting?\nA Font-osaurus"
+        };
+        static public string[] pachycephalosaurus = new string[]
+        {
+            "What do you call a dinosaur thats also a helicopter?\nAn Apache-cephalosaurus"
         };
     }
 }

@@ -15,7 +15,7 @@ using UnboundLib.GameModes;
 using Jotunn.Utils;
 using HDC.MonoBehaviours;
 
-
+//need to add blockforce patch as dependency
 
 namespace HDC
 {
@@ -28,7 +28,7 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.0.2";
+        public const string ModVersion = "1.0.3";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -94,6 +94,7 @@ namespace HDC
             CustomCard.BuildCard<Pterodactyl>();
             CustomCard.BuildCard<Stegosaurus>();
             CustomCard.BuildCard<Brontosaurus>();
+            CustomCard.BuildCard<Pachycephalosaurus>();
 
             CustomCard.BuildCard<Paleontologist>();
          

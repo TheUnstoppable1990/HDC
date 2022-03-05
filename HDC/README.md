@@ -56,6 +56,10 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Grabs a Random Dinosaur card to give to the player 
 
+### Pachycephalosaurus
+
+-Reduces block cooldown, adds health, and gives you a BIG headbutt on block
+
 ### Brontosaurus
 
 -Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
@@ -97,6 +101,14 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v1.0.2
+
+---------
+
+-Changes
+
+	-Added Pachycephalosaurus
 
 ### v1.0.2
 
