@@ -15,40 +15,37 @@ using UnityEngine.UI;
 using UnityEngine.UI.ProceduralImage;
 using Photon.Pun;
 using Photon.Realtime;
+using ModdingUtils.MonoBehaviours;
+using ModdingUtils.Extensions;
 using HDC.Utilities;
 
 namespace HDC.MonoBehaviours
 {
-	class Paladin_Effect : MonoBehaviour
-	{
-		public static float baseRange = 10f;
-		public Player player;
-		public CharacterData data;
-		public float rangeOfEffect = 10f;
+    class Parasaurolophus_Effect : MonoBehaviour
+    {
+		public static float baseRange = 5f;
+		public float rangeOfEffect = 5f;
+		private Player player;
+		private CharacterData data;
+		private PanicAura pa;
+		public float panic_speed = 0.5f;
+		public float panic_regen = 0.25f;
+		public float panic_block_cd = -0.25f;
+		private float timePass = 0f;
+
 		private List<Player> enemiesInRange = new List<Player>();
 		private List<Player> alliesInRange = new List<Player>();
-		private int numOfEnemies = 0;
-		private int previousNumOfEnemies = 0;
-		private float startHealth = 100f;
-		private float startMaxHealth = 100f;
-		private float multiplier = 0.15f;
-		private float timePass = 0f;
-		private float healAmount = 0f;
-		private float allyRatio = 0.1f;
-		private Paladin_Effect.PaladinAura pa;
+
+		private PanicGlow panicGlow = null;
 
 		private void Start()
 		{
-			this.pa = this.player.gameObject.AddComponent<Paladin_Effect.PaladinAura>();
+			this.pa = this.player.gameObject.AddComponent<PanicAura>();
 		}
-
-		private void OnDestroy()
-		{
-		}
-
 		public void Destroy()
 		{
-			UnityEngine.Object.Destroy(this);
+			Destroy(this.pa);
+			Destroy(this);			
 		}
 
 		private void Awake()
@@ -59,16 +56,13 @@ namespace HDC.MonoBehaviours
 
 		private void OnEnable()
 		{
-			this.startHealth = this.data.health;
-			this.startMaxHealth = this.data.maxHealth;
+			
 		}
 
 		private void OnDisable()
 		{
-			this.data.health = this.startHealth;
-			this.data.maxHealth = this.startMaxHealth;
+						
 		}
-
 		private void Update()
 		{
 			foreach (Player player in this.GetOtherPlayers())
@@ -83,11 +77,11 @@ namespace HDC.MonoBehaviours
 						this.enemiesInRange.Remove(enemy);
 					}
 				}
-				bool canSee = PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;				
+				bool canSee = PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;
 				if (num < this.rangeOfEffect && canSee)
-				{					
+				{
 					if (this.player.teamID == player.teamID)
-					{						
+					{
 						if (!this.alliesInRange.Contains(player))
 						{
 							this.alliesInRange.Add(player);
@@ -119,44 +113,34 @@ namespace HDC.MonoBehaviours
 					}
 				}
 			}
-			this.numOfEnemies = this.enemiesInRange.Count;
 			this.timePass += Time.deltaTime;
-			if (this.timePass > 1f)
-			{
-				this.healAmount = (float)this.enemiesInRange.Count * this.multiplier * this.data.maxHealth;
-				this.data.healthHandler.Heal(this.healAmount);
-				if (this.alliesInRange.Count > 0)
-				{
-
-					if (this.data.health > this.data.maxHealth * (0.5f + this.allyRatio))
-					{
-						foreach (Player ally in this.alliesInRange)
-						{
-							CharacterData aData = ally.GetComponent<CharacterData>();
-							if (aData.health < aData.maxHealth)
-							{
-								float healAmount = this.data.maxHealth * this.allyRatio;
-								aData.healthHandler.Heal(healAmount);
-								Vector2 damage = new Vector2(0f, -1f * healAmount);
-								this.data.healthHandler.DoDamage(damage, this.data.playerVel.position, Color.cyan, null, null, false, false, true);
-							}
-						}
-					}
-				}
-				this.timePass = 0f;
+			if (enemiesInRange.Count > 0)
+			{				
+				if(panicGlow == null)
+                {
+					panicGlow = player.gameObject.GetOrAddComponent<PanicGlow>();
+					panicGlow.panic_speed = panic_speed;
+					panicGlow.panic_regen = panic_regen;
+					panicGlow.panic_block_cd = panic_block_cd;
+                }
+				if(timePass > 1)
+                {
+					this.data.healthHandler.Heal(panic_regen * this.data.maxHealth);
+					timePass = 0;
+                }
 			}
-			this.previousNumOfEnemies = this.numOfEnemies;
+            else
+            {
+				if (panicGlow != null)
+                {
+					Destroy(panicGlow);
+					panicGlow = null;
+                }
+            }
+			
+			
 		}
 
-		// Token: 0x06000052 RID: 82 RVA: 0x00003B30 File Offset: 0x00001D30
-		public List<Player> GetEnemyPlayers()
-		{
-			return (from player in PlayerManager.instance.players
-					where player.teamID != this.player.teamID
-					select player).ToList<Player>();
-		}
-
-		// Token: 0x06000053 RID: 83 RVA: 0x00003B64 File Offset: 0x00001D64
 		public List<Player> GetAllyPlayers()
 		{
 			return (from player in PlayerManager.instance.players
@@ -172,16 +156,22 @@ namespace HDC.MonoBehaviours
 					select player).ToList<Player>();
 		}
 
-		// Token: 0x04000048 RID: 72
-		
-		// Token: 0x0200002A RID: 42
-		public class PaladinAura : MonoBehaviour
+		// Token: 0x06000052 RID: 82 RVA: 0x00003B30 File Offset: 0x00001D30
+		public List<Player> GetEnemyPlayers()
+		{
+			return (from player in PlayerManager.instance.players
+					where player.teamID != this.player.teamID
+					select player).ToList<Player>();
+		}
+
+
+		public class PanicAura : MonoBehaviour
 		{
 			private static GameObject lineEffect;
 			private Player player = null;
 			public GameObject holyEffect = null;
 			public GameObject holyLightObj = null;
-			
+
 			public void Start()
 			{
 				this.player = base.gameObject.GetComponent<Player>();
@@ -198,11 +188,11 @@ namespace HDC.MonoBehaviours
 				{
 					alphaKeys = new GradientAlphaKey[]
 					{
-						new GradientAlphaKey(1f, 0f)
+						new GradientAlphaKey(0.5f, 0f)
 					},
 					colorKeys = new GradientColorKey[]
 					{
-						new GradientColorKey(HLConst.color, 0f)
+						new GradientColorKey(Color.green, 0f)
 					},
 					mode = GradientMode.Fixed
 				};
@@ -219,8 +209,54 @@ namespace HDC.MonoBehaviours
 				UnityEngine.Object.Destroy(this);
 			}
 
-			
+
 		}
+		public class PanicGlow : ReversibleEffect //Thanks Pykess for this Utility
+		{
+			private readonly Color color = Color.green; //light yellowish i think?
+			private ReversibleColorEffect colorEffect = null;
+			public float panic_speed = 0.5f;
+			public float panic_block_cd = -0.25f;
+			public float panic_regen = 10f;
+			//public CharacterData charData;
+
+			public override void OnOnEnable()
+			{
+
+				if (this.colorEffect != null)
+				{
+					this.colorEffect.Destroy();
+				}
+			}
+			public override void OnStart()
+			{	
+				UnityEngine.Debug.Log($"Panic Speed is {panic_speed}, Panic Regen is {panic_regen*100}%/s, Panic Block Cooldown is {panic_block_cd}");
+				this.characterStatModifiersModifier.movementSpeed_mult = (1f + panic_speed);
+				this.blockModifier.cdMultiplier_mult = (1f + panic_block_cd);
+				//this.characterStatModifiersModifier.regen_add = panic_regen;		
+
+
+				this.colorEffect = base.player.gameObject.AddComponent<ReversibleColorEffect>();
+				this.colorEffect.SetColor(this.color);
+				this.colorEffect.SetLivesToEffect(1);
+			}
+			public override void OnOnDisable()
+			{
+				if (this.colorEffect != null)
+				{
+					this.colorEffect.Destroy();
+				}
+			}
+			public override void OnOnDestroy()
+			{
+				if (this.colorEffect != null)
+				{
+					this.colorEffect.Destroy();
+				}
+			}
+
+
+		}
+
 	}
 }
-

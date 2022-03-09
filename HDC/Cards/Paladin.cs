@@ -14,7 +14,7 @@ namespace HDC.Cards
     class Paladin : CustomCard
     {
         private Paladin_Effect paladin_effect;
-        private Player player;
+        //private Player player;
         private float health_boost = 2f;
         private float regen_percentage = 0.15f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
@@ -25,7 +25,7 @@ namespace HDC.Cards
         {
             this.paladin_effect = player.gameObject.AddComponent<Paladin_Effect>();
             this.paladin_effect.player = player;
-            this.player = player;
+            //this.player = player;
             Paladin_Effect[] components = player.gameObject.GetComponents<Paladin_Effect>();
             float num = 0f;
             for (int i = 1; i < components.Length + 1; i++)

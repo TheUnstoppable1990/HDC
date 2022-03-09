@@ -9,48 +9,44 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
+using ModdingUtils.MonoBehaviours;
 using HDC.RoundsEffects;
 
 namespace HDC.Cards
 {
-    class Triceratops : CustomCard
+    class Ankylosaurus : CustomCard
     {
+        private float knockback_boost = 2.0f;
+        private float horns_damage = 0.5f;
         private float health_boost = 0.5f;
-        private float speed_boost = 0.25f;
-        private float block_cooldown = -0.25f;
-        private float add_reload_time = 0.25f; //seconds
-       // private float horns_damage = 0.3f; //percent delt back as Horns Damage
-        
-
+        private float speed_boost = -0.25f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-
+            statModifiers.health = 1 + health_boost;
             statModifiers.movementSpeed = 1 + speed_boost;
-            statModifiers.health = 1f + health_boost;                        
-            gun.reloadTimeAdd = add_reload_time;
-            block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {            
-            
+        {
+            gun.knockback += knockback_boost * Math.Abs(gun.knockback);
+            AnkylosaurusEffect ankyEffect = player.gameObject.GetOrAddComponent<AnkylosaurusEffect>();
+            ankyEffect.damage_percent += horns_damage;
         }
         public override void OnRemoveCard()
         {
-            //throw new NotImplementedException();
                      
         }
         protected override string GetTitle()
         {
-            return "Triceratops";
+            return "Ankylosaurus";
         }
         protected override string GetDescription()
         {
-            return CardTools.RandomDescription(DinoPuns.triceratops);
+            return CardTools.RandomDescription(DinoPuns.ankylosaurus);
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Triceratops");            
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Ankylosaurus");
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -60,11 +56,10 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Health",health_boost),
-                CardTools.FormatStat(true,"Movement Speed",speed_boost),                
-                //CardTools.FormatStat(true,"Horns Damage",horns_damage),
-                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
+               CardTools.FormatStat(true,"Knockback",knockback_boost),
+               CardTools.FormatStat(true,"Thorns Damage",horns_damage),
+               CardTools.FormatStat(true,"Health",health_boost),
+               CardTools.FormatStat(false,"Movement Speed",speed_boost)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

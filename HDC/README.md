@@ -48,42 +48,43 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Charge by healing, smite by blocking
 
-### Dino Pun Cards
+<details>
+<summary>Dino Pun Cards</summary>
 
----------------
+Paleontologist
+	-Grabs a Random Dinosaur card to give to the player 
 
-### Paleontologist
+Ankylosaurus
+	-Does Thorns damage, lots of knockback
 
--Grabs a Random Dinosaur card to give to the player 
+Parasaurolophus
+	-Increases stats a crazy amount when near an enemy
 
-### Pachycephalosaurus
+Pachycephalosaurus
+	-Reduces block cooldown, adds health, and gives you a BIG headbutt on block
 
--Reduces block cooldown, adds health, and gives you a BIG headbutt on block
+Brontosaurus
+	-Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
 
-### Brontosaurus
+Stegosaurus
+	-Adds additional blocks and damage reducing plates
+		-Each plate reduces damage by 50% its like doubling your health but way harder to code and doesn't increase your size :D 
 
--Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
+Pterodactyl
+	-Adds flight and a minor speed boost
 
-#### Stegosaurus
+Raptor
+	-Adds speed speed speed
 
--Adds additional blocks and damage reducing plates
-	-Each plate reduces damage by 50% its like doubling your health but way harder to code and doesn't increase your size :D 
+Rex
+	-Adds size and power!
 
-#### Pterodactyl
+Triceratops
+	-Adds plenty of defense and block
 
--Adds flight and a minor speed boost
+---
 
-#### Raptor
-
--Adds speed speed speed
-
-#### Rex
-
--Adds size and power!
-
-#### Triceratops
-
--Adds plenty of defense and block and horns damage
+</details>
 
 ### Signature Cards
 
@@ -101,6 +102,16 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v1.1.0
+
+---------
+
+-Changes
+	
+	-Added Ankylosaurus and Parasaurolophus
+
+	-Tweaked Pachycephalosaurus and Triceratops
 
 ### v1.0.4
 

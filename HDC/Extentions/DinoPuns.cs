@@ -61,5 +61,19 @@ namespace HDC.Extentions
             "What do you call a quilted dinosaur?\nA Patchy-cephalosaurus",
             "What do you call an angelic dinosaur?\nA Pachyceph-halo-saurus"
         };
+        static public string[] ankylosaurus = new string[]
+        {
+            "What do you call a dinosaur that loves April Fools Day?\nA Prank-ylosaurus",
+            "What do you call a dinosaur with heavy artillery?\nA Tank-ylosaurus",
+            "What do you call a dinosaur with a sports injury?\nAn Anky-so-sore-us",
+            "What dinosaur sleeps the best?\nA Tranq-ylosaurus",
+            "What do you call a dinosaur that woke up too soon?\nA Cranky-losaurus",
+            "What happens to bad dinosaur children?\nThey get a Spanky-so-sore-ass"
+        };
+        static public string[] parasaurolophus = new string[]
+        {
+            "What's a dinosaur's favorite movie?\nParasaur-mal Activity",
+            "Why are duckbill dinosaurs so loud?\nThey're always making a Parasaurolo-fuss"
+        };
     }
 }

@@ -67,8 +67,8 @@ namespace HDC.Extentions
                     hle.Destroy();
                 }
             }
-            TriceratopsEffect[] tr_Effects = gameObject.GetComponents<TriceratopsEffect>();
-            foreach (TriceratopsEffect tre in tr_Effects)
+            AnkylosaurusEffect[] tr_Effects = gameObject.GetComponents<AnkylosaurusEffect>();
+            foreach (AnkylosaurusEffect tre in tr_Effects)
             {
                 if(tre != null)
                 {

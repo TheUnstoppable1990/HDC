@@ -18,7 +18,7 @@ namespace HDC.MonoBehaviours
     class Pachycephalosaurus_Effect : MonoBehaviour
     {
 	
-		private float forceMult = 500000f;
+		private float forceMult = 250000f;
 		private float knockbackMult = 500f;
 		private Vector2 forceDir;
 		private float range = 50f;
@@ -26,6 +26,7 @@ namespace HDC.MonoBehaviours
         private CharacterData data;
 		public Player player;
 		private bool headbuttActive = false;
+
         private void Start()
         {
             this.data = base.GetComponentInParent<CharacterData>();

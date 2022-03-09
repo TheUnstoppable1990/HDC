@@ -9,48 +9,46 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using HDC.RoundsEffects;
+using ModdingUtils.MonoBehaviours;
 
 namespace HDC.Cards
 {
-    class Triceratops : CustomCard
+    class Parasaurolophus : CustomCard
     {
-        private float health_boost = 0.5f;
-        private float speed_boost = 0.25f;
-        private float block_cooldown = -0.25f;
-        private float add_reload_time = 0.25f; //seconds
-       // private float horns_damage = 0.3f; //percent delt back as Horns Damage
-        
+        //private float speed_boost = 0.25f;
+        private float panic_speed = 0.5f;
+        private float panic_regen = 0.25f;
+        private float panic_block_cd = -0.75f;
+
+        private Parasaurolophus_Effect panic_effect;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-
-            statModifiers.movementSpeed = 1 + speed_boost;
-            statModifiers.health = 1f + health_boost;                        
-            gun.reloadTimeAdd = add_reload_time;
-            block.cdMultiplier = 1f + block_cooldown;
+            //statModifiers.movementSpeed = 1f + speed_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {            
-            
+        {
+            panic_effect = player.gameObject.GetOrAddComponent<Parasaurolophus_Effect>();
+            panic_effect.panic_speed = this.panic_speed;
+            panic_effect.panic_regen = this.panic_regen;
+            panic_effect.panic_block_cd = this.panic_block_cd;
         }
         public override void OnRemoveCard()
         {
-            //throw new NotImplementedException();
-                     
+            Destroy(panic_effect);
         }
         protected override string GetTitle()
         {
-            return "Triceratops";
+            return "Parasaurolophus";
         }
         protected override string GetDescription()
         {
-            return CardTools.RandomDescription(DinoPuns.triceratops);
+            return CardTools.RandomDescription(DinoPuns.parasaurolophus);
         }
         protected override GameObject GetCardArt()
-        {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Triceratops");            
+        {            
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Parasaurolophus");
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -60,11 +58,11 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Health",health_boost),
-                CardTools.FormatStat(true,"Movement Speed",speed_boost),                
-                //CardTools.FormatStat(true,"Horns Damage",horns_damage),
-                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
+               //CardTools.FormatStat(true,"Speed",speed_boost),
+               CardTools.FormatStat(true,"","When Panicking:"),
+               CardTools.FormatStat(true,"Speed",panic_speed),
+               CardTools.FormatStat(true,"Regeneration",$"{panic_regen*100}%/s"),
+               CardTools.FormatStat(true,"Block Cooldown",panic_block_cd)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

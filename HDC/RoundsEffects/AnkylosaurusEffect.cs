@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace HDC.RoundsEffects
 {
-    class TriceratopsEffect : WasHitEffect
+    class AnkylosaurusEffect : WasHitEffect
     {
         public float damage_percent = 0f;
         public override void WasDealtDamage(Vector2 damage, bool selfDamage)

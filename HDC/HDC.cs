@@ -28,7 +28,7 @@ namespace HDC
     {        
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.0.4";
+        public const string ModVersion = "1.1.0";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -95,6 +95,8 @@ namespace HDC
             CustomCard.BuildCard<Stegosaurus>();
             CustomCard.BuildCard<Brontosaurus>();
             CustomCard.BuildCard<Pachycephalosaurus>();
+            CustomCard.BuildCard<Ankylosaurus>();
+            CustomCard.BuildCard<Parasaurolophus>();
 
             CustomCard.BuildCard<Paleontologist>();
          
