@@ -1,12 +1,11 @@
 {
   "name": "HDC",
-  "version_number": "1.0.3",
+  "version_number": "1.0.4",
   "website_url": "https://github.com/TheUnstoppable1990/HDC",
   "description": "Adds new themed cards to the game",
   "dependencies": [
     "willis81808-UnboundLib-2.10.2",
-    "Pykess-ModdingUtils-0.2.6",
-    "willuwontu-BlockForcePatch-1.0.1",
+    "Pykess-ModdingUtils-0.2.6",    
     "Pykess-CardChoiceSpawnUniqueCardPatch-0.1.7"
   ]
 }

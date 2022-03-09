@@ -21,7 +21,8 @@ namespace HDC.Extentions
             "What do you call a dinosaur that works in retail?\nA Sell-ociraptor",
             "What do you call GPS for dinosaurs?\nVeloci-map-tor",
             "What do you call a dinosaur that steals music?\nA Veloci-napster\n(Some of y'all too young for this reference)",
-            "What do you call a dinosaur that wears too much perfume?\nA Smell-ociraptor"
+            "What do you call a dinosaur that wears too much perfume?\nA Smell-ociraptor",
+            "What do you call a demonic dinosaur?\nA Hell-ociraptor"
         };
         static public string[] triceratops = new string[]
         {
@@ -47,6 +48,7 @@ namespace HDC.Extentions
         };
         static public string[] brontosaurus = new string[]
         {
+            "What do you call a dinosaur with lots of muscles?\nA Brawn-tosaurus",
             "What do you call an impatient dinosaur?\nA Pronto-saurus",
             "What do you call a dinosaur trapped in a computer?\nA Tron-tosaurus",
             "What do you call a dinosaur that likes to show off?\nA Flaunt-osaurus",
@@ -54,7 +56,10 @@ namespace HDC.Extentions
         };
         static public string[] pachycephalosaurus = new string[]
         {
-            "What do you call a dinosaur thats also a helicopter?\nAn Apache-cephalosaurus"
+            "What do you call a dinosaur thats also a helicopter?\nAn Apache-cephalosaurus",
+            "What do you call a dinosaur that loves boardgames?\nA Parcheesi-cephalosaurus",
+            "What do you call a quilted dinosaur?\nA Patchy-cephalosaurus",
+            "What do you call an angelic dinosaur?\nA Pachyceph-halo-saurus"
         };
     }
 }

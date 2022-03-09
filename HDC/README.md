@@ -102,6 +102,16 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.0.4
+
+---------
+
+-Changes
+
+	-Rework to Pachy
+
+	-Removed block patch as dependency
+
 ### v1.0.2
 
 ---------
@@ -383,8 +393,8 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ---------------
 
--Add Card art
+~-Add Card art~
 
 -Add particle effects 
 
--Add countdown effect to Celestial Countdown
+~-Add countdown effect to Celestial Countdown~

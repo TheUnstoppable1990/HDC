@@ -22,13 +22,14 @@ namespace HDC.Cards
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-            block.forceToAdd = 15f;
+            //block.forceToAdd = 15f;
             block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //UnityEngine.Debug.Log(block.forceToAdd);
             pachy_effect = player.gameObject.GetOrAddComponent<Pachycephalosaurus_Effect>();
+            pachy_effect.player = player;
         }
         public override void OnRemoveCard()
         {
@@ -58,7 +59,7 @@ namespace HDC.Cards
             {
                 CardTools.FormatStat(true,"Health",health_boost),
                 CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Headbutt","BIG")
+                CardTools.FormatStat(true,"Headbutt on Block","BIG")
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
