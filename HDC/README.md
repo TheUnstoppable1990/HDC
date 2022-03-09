@@ -49,7 +49,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 -Charge by healing, smite by blocking
 
 <details>
-<summary>Dino Pun Cards</summary>
+	<summary><h3>Dino Pun Cards</h3></summary>
 
 Paleontologist
 	-Grabs a Random Dinosaur card to give to the player 
