@@ -51,7 +51,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 <details>
 	<summary><h3>Dino Pun Cards</h3></summary>
 
-	<h3>Paleontologist</h3>
+	<strong>Paleontologist</strong>
 	-Grabs a Random Dinosaur card to give to the player 
 
 	<h4>Ankylosaurus</h4>
