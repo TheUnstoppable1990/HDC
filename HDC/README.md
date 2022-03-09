@@ -51,40 +51,39 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 <details>
 	<summary><h3>Dino Pun Cards</h3></summary>
 
-Paleontologist
+	<h4>Paleontologist</h4>
 	-Grabs a Random Dinosaur card to give to the player 
 
-Ankylosaurus
+	<h4>Ankylosaurus</h4>
 	-Does Thorns damage, lots of knockback
 
-Parasaurolophus
+	<h4>Parasaurolophus</h4>
 	-Increases stats a crazy amount when near an enemy
 
-Pachycephalosaurus
+	<h4>Pachycephalosaurus</h4>
 	-Reduces block cooldown, adds health, and gives you a BIG headbutt on block
 
-Brontosaurus
+	<h4>Brontosaurus</h4>
 	-Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
 
-Stegosaurus
+	<h4>Stegosaurus</h4>
 	-Adds additional blocks and damage reducing plates
 		-Each plate reduces damage by 50% its like doubling your health but way harder to code and doesn't increase your size :D 
 
-Pterodactyl
+	<h4>Pterodactyl</h4>
 	-Adds flight and a minor speed boost
 
-Raptor
+	<h4>Raptor</h4>
 	-Adds speed speed speed
 
-Rex
+	<h4>Rex</h4>
 	-Adds size and power!
 
-Triceratops
+	<h4>Triceratops</h4>
 	-Adds plenty of defense and block
 
----
-
 </details>
+---
 
 ### Signature Cards
 
