@@ -31,7 +31,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 	
 ---
 
-<details>
+<details open>
 	<summary><h3>Dino Pun Cards</h3></summary>
 	
 	Paleontologist: Grabs a Random Dinosaur card to give to the player 
@@ -58,7 +58,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ---
 
-<details>
+<details open>
 	<summary><h3>Signature Cards</h3></summary>
 	
 	Behind You: Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
