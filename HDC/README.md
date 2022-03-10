@@ -33,7 +33,8 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 	
 	Celestial Countdown: Stand still to unleash divine gun powers
 	
-	Paladin's Bulwark: Heals based on enemies in aura and heals your allies (if you have more than half health whether or not enemies are present)
+	Paladin's Bulwark: Heals based on enemies in aura and heals your allies 
+		(if you have more than half health whether or not enemies are present)
 	
 	Holy Light:Charge by healing, smite by blocking
 	
