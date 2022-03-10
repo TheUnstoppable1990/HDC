@@ -24,52 +24,45 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Increase maximum ammo
 
-### Angel Cards
-
----------------
-
-#### Divine Blessing
-
--Reduces block cooldown and heals the player a percentage of their max HP on block
-
-#### Meditation
-
--Heal as you stand still (healing increases the longer you stand still)
-
-#### Celestial Countdown
-
--Stand still to unleash divine gun powers
-
-#### Paladin's Bulwark
-
--Heals based on enemies in aura and heals your allies (if you have more than half health whether or not enemies are present)
-
-#### Holy Light
-
--Charge by healing, smite by blocking
+<details>
+	<summary><h3>Angel Cards</h3></summary>
+	
+	Divine Blessing: Reduces block cooldown and heals the player a percentage of their max HP on block
+	
+	Meditation: Heal as you stand still (healing increases the longer you stand still)
+	
+	Celestial Countdown: Stand still to unleash divine gun powers
+	
+	Paladin's Bulwark: Heals based on enemies in aura and heals your allies (if you have more than half health whether or not enemies are present)
+	
+	Holy Light:Charge by healing, smite by blocking
+	
+</details>
+	
+---
 
 <details>
 	<summary><h3>Dino Pun Cards</h3></summary>
 	
-	Paleontologist:		Grabs a Random Dinosaur card to give to the player 
+	Paleontologist: Grabs a Random Dinosaur card to give to the player 
 
-	Ankylosaurus: 		Does Thorns damage, lots of knockback
+	Ankylosaurus: Does Thorns damage, lots of knockback
 
-	Parasaurolophus:	Increases stats a crazy amount when near an enemy
+	Parasaurolophus: Increases stats a crazy amount when near an enemy
 
-	Pachycephalosaurus: 	Reduces block cooldown, adds health, and gives you a BIG headbutt on block
+	Pachycephalosaurus: Reduces block cooldown, adds health, and gives you a BIG headbutt on block
 
-	Brontosaurus: 		Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
+	Brontosaurus: Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
 
-	Stegosaurus: 		Adds additional blocks and damage reducing plates, each plate reduces damage by 50% its like doubling your health 
+	Stegosaurus: Adds additional blocks and damage reducing plates, each plate reduces damage by 50% its like doubling your health 
 
-	Pterodactyl: 		Adds flight and a minor speed boost
+	Pterodactyl: Adds flight and a minor speed boost
 
-	Raptor: 		Adds speed speed speed
+	Raptor: Adds speed speed speed
 
-	Rex: 			Adds size and power!
+	Rex: Adds size and power!
 
-	Triceratops: 		Adds plenty of defense and block
+	Triceratops: Adds plenty of defense and block
 
 </details>
 
