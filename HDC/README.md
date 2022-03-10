@@ -50,38 +50,26 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 <details>
 	<summary><h3>Dino Pun Cards</h3></summary>
-
 	
-	<p>Paleontologist</p>
-	-Grabs a Random Dinosaur card to give to the player 
+	Paleontologist:		Grabs a Random Dinosaur card to give to the player 
 
-	Ankylosaurus
-	-Does Thorns damage, lots of knockback
+	Ankylosaurus: 		Does Thorns damage, lots of knockback
 
-	Parasaurolophus
-	-Increases stats a crazy amount when near an enemy
+	Parasaurolophus:	Increases stats a crazy amount when near an enemy
 
-	Pachycephalosaurus
-	-Reduces block cooldown, adds health, and gives you a BIG headbutt on block
+	Pachycephalosaurus: 	Reduces block cooldown, adds health, and gives you a BIG headbutt on block
 
-	Brontosaurus
-	-Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
+	Brontosaurus: 		Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
 
-	Stegosaurus
-	-Adds additional blocks and damage reducing plates
-		-Each plate reduces damage by 50% its like doubling your health but way harder to code and doesn't increase your size :D 
+	Stegosaurus: 		Adds additional blocks and damage reducing plates, each plate reduces damage by 50% its like doubling your health 
 
-	Pterodactyl
-	-Adds flight and a minor speed boost
+	Pterodactyl: 		Adds flight and a minor speed boost
 
-	Raptor
-	-Adds speed speed speed
+	Raptor: 		Adds speed speed speed
 
-	Rex
-	-Adds size and power!
+	Rex: 			Adds size and power!
 
-	Triceratops
-	-Adds plenty of defense and block
+	Triceratops: 		Adds plenty of defense and block
 
 </details>
 
