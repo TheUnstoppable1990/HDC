@@ -13,7 +13,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 -------------
 
 
-<details>
+<details open>
 	<summary><h3>Angel Cards</h3></summary>
 	
 	Divine Blessing: Reduces block cooldown and heals the player a percentage of their max HP on block
