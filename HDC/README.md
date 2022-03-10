@@ -12,17 +12,6 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ## Cards Added
 -------------
 
-### Basic Cards
-
----------------
-
-#### Lil Defensive
-
--Reduces block cooldown
-
-#### Lil Offensive
-
--Increase maximum ammo
 
 <details>
 	<summary><h3>Angel Cards</h3></summary>
@@ -33,7 +22,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 	
 	Celestial Countdown: Stand still to unleash divine gun powers
 	
-	Paladin's Bulwark: Heals based on enemies in aura and heals your allies 
+	Paladin's Endurance: Heals based on enemies in aura and heals your allies 
 		(if you have more than half health whether or not enemies are present)
 	
 	Holy Light:Charge by healing, smite by blocking
@@ -69,18 +58,20 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ---
 
-### Signature Cards
+<details>
+	<summary><h3>Signature Cards</h3></summary>
+	
+	Behind You: Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
+	
+	Point Blank: Very short range, very deadly
+	
+	Lil Defensive: Reduces block cooldown
+	
+	Lil Offensive: Increase maximum ammo
+	
+</details>
 
----------------
-
-#### Behind You
-
--Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
-
-#### Point Blank
-
--Very short range, very deadly
-
+---
 
 ### Version Notes
 
