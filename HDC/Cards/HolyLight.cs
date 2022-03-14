@@ -14,12 +14,12 @@ namespace HDC.Cards
     class HolyLight : CustomCard
     {
         private HolyLight_Effect holyLight_effect;
-        private Player player;
+        //private Player player;
         private float health_boost = 0.25f;
         private float damage_ratio = 1f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-
+            statModifiers.health = 1f + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -29,8 +29,7 @@ namespace HDC.Cards
             this.holyLight_effect.data = data;
             this.holyLight_effect.damageRatio = this.damage_ratio;
             this.holyLight_effect.block = block;
-            this.player = player;
-            data.maxHealth *= (1f + health_boost);
+            //this.player = player;
         }
         public override void OnRemoveCard()
         {

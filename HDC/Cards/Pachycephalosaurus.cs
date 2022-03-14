@@ -15,26 +15,29 @@ namespace HDC.Cards
 {
     class Pachycephalosaurus : CustomCard
     {
-        private float block_cooldown = -0.25f;
+        private float block_cooldown = 0.25f;
         private float health_boost = 0.25f;
         private Pachycephalosaurus_Effect pachy_effect;
+        private float knockbackMult = 100f;
+        private float range = 10f;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-            //block.forceToAdd = 15f;
             block.cdMultiplier = 1f + block_cooldown;
+            statModifiers.health = 1f + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //UnityEngine.Debug.Log(block.forceToAdd);
-            pachy_effect = player.gameObject.GetOrAddComponent<Pachycephalosaurus_Effect>();
+            pachy_effect = player.gameObject.GetOrAddComponent<Pachycephalosaurus_Effect>();            
             pachy_effect.player = player;
+            pachy_effect.knockbackMult += knockbackMult;
+            pachy_effect.range += range;
+            HDC.Log(pachy_effect.GetStats());
         }
         public override void OnRemoveCard()
         {
-            //throw new NotImplementedException();
-                     
+            Destroy(pachy_effect);
         }
         protected override string GetTitle()
         {
@@ -58,8 +61,8 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Health",health_boost),
-                CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
-                CardTools.FormatStat(true,"Headbutt on Block","BIG")
+                CardTools.FormatStat(true,"Headbutt on Block","BIG"),
+                CardTools.FormatStat(false,"Block Cooldown",block_cooldown)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

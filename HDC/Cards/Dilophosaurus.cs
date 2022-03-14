@@ -6,55 +6,53 @@ using System.Threading.Tasks;
 using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
-using UnboundLib.Networking;
-using System.Collections;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
+using HDC.Extentions;
+using ModdingUtils.MonoBehaviours;
 
 namespace HDC.Cards
 {
-    class Meditation : CustomCard
+    class Dilophosaurus : CustomCard
     {
-        private float health_boost = 0.25f;
-        private Meditation_Effect regeneration;
+
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            statModifiers.health = 1f + health_boost;
+            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            regeneration = player.gameObject.AddComponent<Meditation_Effect>();            
         }
         public override void OnRemoveCard()
         {
-            Destroy(regeneration);
+                     
         }
         protected override string GetTitle()
         {
-            return "Meditation";
+            return "Dilophosaurus";
         }
         protected override string GetDescription()
         {
-            return "Regenerate health slowly as you stand still";
+            return CardTools.RandomDescription(DinoPuns.dilophosaurus);
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Meditation");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Dilophosaurus");
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Uncommon;
+            return CardInfo.Rarity.Rare;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Health",health_boost)
+               //CardTools.FormatStat(true,"Block Cooldown",block_cooldown)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.ColdBlue;
+            return CardThemeColor.CardThemeColorType.PoisonGreen;
         }
         public override string GetModName()
         {

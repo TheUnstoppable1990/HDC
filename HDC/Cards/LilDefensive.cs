@@ -17,15 +17,16 @@ namespace HDC.Cards
     class LilDefensive : CustomCard
     {
         private float block_cooldown = 0.35f;
-        private float health_change = 0.50f;
+        private float health_boost = 0.50f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             //block.InvokeMethod("ResetStats");
             block.cdMultiplier = 1f - block_cooldown;
+            statModifiers.health = 1f + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            data.maxHealth *= (1 + health_change);
+
         }
         public override void OnRemoveCard()
         {
@@ -44,7 +45,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Block Cooldown",-block_cooldown),
-                CardTools.FormatStat(true,"Health",health_change)
+                CardTools.FormatStat(true,"Health",health_boost)
             };
         }
         protected override GameObject GetCardArt()

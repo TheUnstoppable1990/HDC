@@ -22,6 +22,7 @@ namespace HDC.Cards
         {
             block.InvokeMethod("ResetStats");
             block.cdMultiplier = 1-block_cooldown;
+            statModifiers.health = 1f + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -30,7 +31,6 @@ namespace HDC.Cards
             divineBlessing.data = data;
             divineBlessing.block = block;
             divineBlessing.healRatio = health_restore;
-            data.maxHealth *= (1+health_boost);
         }      
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {

@@ -25,14 +25,19 @@ namespace HDC
     [BepInPlugin(ModID, ModName, ModVersion)]
     [BepInProcess("Rounds.exe")]
     public class HDC : BaseUnityPlugin
-    {        
+    {                
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.1.0";
+        public const string ModVersion = "1.1.1";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
         public static HDC instance { get; private set; }
+
+        //Remember to change this before release
+
+        private static bool debugging = false;
+
 
         void Awake()
         {
@@ -86,6 +91,10 @@ namespace HDC
             CustomCard.BuildCard<LilOffensive>();
             CustomCard.BuildCard<PointBlank>();
 
+            if (debugging) { 
+                CustomCard.BuildCard<Hatchet>(); 
+            }
+            
 
             //Dino Cards
             CustomCard.BuildCard<Rex>();
@@ -101,7 +110,17 @@ namespace HDC
             CustomCard.BuildCard<Paleontologist>();
          
         }
-
+        internal static void Log(string message)
+        {            
+            if (debugging)
+            {
+                UnityEngine.Debug.Log(message);
+            }
+        }
+        internal static void LogException(Exception e)
+        {
+            UnityEngine.Debug.LogException(e);
+        }
         static public string FormatStat(float value)
         {
 

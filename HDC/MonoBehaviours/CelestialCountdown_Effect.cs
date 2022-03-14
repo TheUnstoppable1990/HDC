@@ -189,8 +189,8 @@ namespace HDC.MonoBehaviours
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.Log("First Catch");
-                UnityEngine.Debug.LogException(e);
+                HDC.Log("First Catch");
+                HDC.LogException(e);
             }
             try
             {
@@ -203,8 +203,8 @@ namespace HDC.MonoBehaviours
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.Log("Second Catch");
-                UnityEngine.Debug.LogException(e);
+                HDC.Log("Second Catch");
+                HDC.LogException(e);
             }
             try
             {
@@ -219,8 +219,8 @@ namespace HDC.MonoBehaviours
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.Log("Last Catch");
-                UnityEngine.Debug.LogException(e);
+                HDC.Log("Last Catch");
+                HDC.LogException(e);
             }
         }
         public void Destroy()

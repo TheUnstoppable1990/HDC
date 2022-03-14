@@ -21,7 +21,7 @@ namespace HDC.Cards
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             //block.InvokeMethod("ResetStats");
-            gun.reloadTime = 1f - reload_cooldown;
+            gun.reloadTime = 1f - reload_cooldown;            
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {

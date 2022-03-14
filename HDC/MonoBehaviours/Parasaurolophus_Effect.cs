@@ -230,7 +230,7 @@ namespace HDC.MonoBehaviours
 			}
 			public override void OnStart()
 			{	
-				UnityEngine.Debug.Log($"Panic Speed is {panic_speed}, Panic Regen is {panic_regen*100}%/s, Panic Block Cooldown is {panic_block_cd}");
+				HDC.Log($"Panic Speed is {panic_speed}, Panic Regen is {panic_regen*100}%/s, Panic Block Cooldown is {panic_block_cd}");
 				this.characterStatModifiersModifier.movementSpeed_mult = (1f + panic_speed);
 				this.blockModifier.cdMultiplier_mult = (1f + panic_block_cd);
 				//this.characterStatModifiersModifier.regen_add = panic_regen;		

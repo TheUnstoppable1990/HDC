@@ -12,96 +12,80 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ## Cards Added
 -------------
 
-### Basic Cards
 
----------------
+<details open>
+	<summary><h3>Angel Cards</h3></summary>
+	
+	Divine Blessing: Reduces block cooldown and heals the player a percentage of their max HP on block
+	
+	Meditation: Heal as you stand still (healing increases the longer you stand still)
+	
+	Celestial Countdown: Stand still to unleash divine gun powers
+	
+	Paladin's Endurance: Heals based on enemies in aura and heals your allies 
+		(if you have more than half health whether or not enemies are present)
+	
+	Holy Light:Charge by healing, smite by blocking
+	
+</details>
+	
+---
 
-#### Lil Defensive
-
--Reduces block cooldown
-
-#### Lil Offensive
-
--Increase maximum ammo
-
-### Angel Cards
-
----------------
-
-#### Divine Blessing
-
--Reduces block cooldown and heals the player a percentage of their max HP on block
-
-#### Meditation
-
--Heal as you stand still (healing increases the longer you stand still)
-
-#### Celestial Countdown
-
--Stand still to unleash divine gun powers
-
-#### Paladin's Bulwark
-
--Heals based on enemies in aura and heals your allies (if you have more than half health whether or not enemies are present)
-
-#### Holy Light
-
--Charge by healing, smite by blocking
-
-<details>
+<details open>
 	<summary><h3>Dino Pun Cards</h3></summary>
+	
+	Paleontologist: Grabs a Random Dinosaur card to give to the player 
 
-	Paleontologist
-	-Grabs a Random Dinosaur card to give to the player 
+	Ankylosaurus: Does Thorns damage, lots of knockback
 
-	Ankylosaurus
-	-Does Thorns damage, lots of knockback
+	Parasaurolophus: Increases stats a crazy amount when near an enemy
 
-	Parasaurolophus
-	-Increases stats a crazy amount when near an enemy
+	Pachycephalosaurus: Reduces block cooldown, adds health, and gives you a BIG headbutt on block
 
-	Pachycephalosaurus
-	-Reduces block cooldown, adds health, and gives you a BIG headbutt on block
+	Brontosaurus: Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
 
-	Brontosaurus
-	-Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
+	Stegosaurus: Adds additional blocks and damage reducing plates, each plate reduces damage by 50% its like doubling your health 
 
-	Stegosaurus
-	-Adds additional blocks and damage reducing plates
-		-Each plate reduces damage by 50% its like doubling your health but way harder to code and doesn't increase your size :D 
+	Pterodactyl: Adds flight and a minor speed boost
 
-	Pterodactyl
-	-Adds flight and a minor speed boost
+	Raptor: Adds speed speed speed
 
-	Raptor
-	-Adds speed speed speed
+	Rex: Adds size and power!
 
-	Rex
-	-Adds size and power!
-
-	Triceratops
-	-Adds plenty of defense and block
+	Triceratops: Adds plenty of defense and block
 
 </details>
 
 ---
 
-### Signature Cards
+<details open>
+	<summary><h3>Signature Cards</h3></summary>
+	
+	Behind You: Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
+	
+	Point Blank: Very short range, very deadly
+	
+	Lil Defensive: Reduces block cooldown
+	
+	Lil Offensive: Increase maximum ammo
+	
+</details>
 
----------------
-
-#### Behind You
-
--Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
-
-#### Point Blank
-
--Very short range, very deadly
-
+---
 
 ### Version Notes
 
 -----------------
+
+### v1.1.1
+
+---
+
+-Changes
+	
+	-Pachycephalosaurus rebalance
+
+	-Fixed the art on Behind You
 
 ### v1.1.0
 

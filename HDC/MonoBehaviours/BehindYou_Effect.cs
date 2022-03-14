@@ -40,7 +40,7 @@ namespace HDC.MonoBehaviours
                 Vector3 playerPosition = player.transform.position;
                 if (enemies.Count < 1)
                 {
-                    UnityEngine.Debug.Log("No Enemies");
+                    HDC.Log("No Enemies");
                     return;
                 }
                 System.Random rand = new System.Random();

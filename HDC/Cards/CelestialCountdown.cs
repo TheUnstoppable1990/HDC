@@ -69,8 +69,8 @@ namespace HDC.Cards
                 }
                 catch (Exception e)
                 {
-                    UnityEngine.Debug.Log("First Catch");
-                    UnityEngine.Debug.LogException(e);
+                    HDC.Log("First Catch");
+                    HDC.LogException(e);
                 }
                 try
                 {
@@ -82,20 +82,18 @@ namespace HDC.Cards
                 }
                 catch (Exception e)
                 {
-                    UnityEngine.Debug.Log("Last Catch");
-                    UnityEngine.Debug.LogException(e);
+                    HDC.Log("Last Catch");
+                    HDC.LogException(e);
                 }
             });
 
             //HDC.instance.DebugLog($"[{HDC.ModInitials}][Card] {GetTitle()} Added to Player {player.playerID}");
-            UnityEngine.Debug.Log("I added the thing!");
+            HDC.Log("I added the thing!");
 
         }
         public override void OnRemoveCard()
         {
-            //throw new NotImplementedException();
-            Destroy(this.cel_countdown);
-            
+            Destroy(this.cel_countdown);            
         }
         protected override string GetTitle()
         {

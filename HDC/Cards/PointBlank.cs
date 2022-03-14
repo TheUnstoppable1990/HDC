@@ -22,7 +22,7 @@ namespace HDC.Cards
             gun.damage = 1f+damage;
             gun.destroyBulletAfter = 0.1f;
             gun.spread = 0f;
-            gun.ammo = this.ammo;
+            gun.ammo = this.ammo;            
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {

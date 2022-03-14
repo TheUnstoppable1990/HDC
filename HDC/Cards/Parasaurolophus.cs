@@ -15,7 +15,6 @@ namespace HDC.Cards
 {
     class Parasaurolophus : CustomCard
     {
-        //private float speed_boost = 0.25f;
         private float panic_speed = 0.5f;
         private float panic_regen = 0.25f;
         private float panic_block_cd = -0.75f;
@@ -25,7 +24,6 @@ namespace HDC.Cards
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-            //statModifiers.movementSpeed = 1f + speed_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -58,7 +56,6 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-               //CardTools.FormatStat(true,"Speed",speed_boost),
                CardTools.FormatStat(true,"","When Panicking:"),
                CardTools.FormatStat(true,"Speed",panic_speed),
                CardTools.FormatStat(true,"Regeneration",$"{panic_regen*100}%/s"),

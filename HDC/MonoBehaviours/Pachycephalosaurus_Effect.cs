@@ -18,15 +18,26 @@ namespace HDC.MonoBehaviours
     class Pachycephalosaurus_Effect : MonoBehaviour
     {
 	
-		private float forceMult = 250000f;
-		private float knockbackMult = 500f;
+		public float forceMult = 500f;
+		public float knockbackMult = 0f;
 		private Vector2 forceDir;
-		private float range = 50f;
+		public float range = 0f;
 		private float damageMult = 0.1f;
         private CharacterData data;
 		public Player player;
 		private bool headbuttActive = false;
+		private float enemyXDistance = 0f;
+		private float enemyYDistance = 0f;
+		private float rangeCoeff = 11f;
 
+		public string GetStats()
+        {
+			return
+				$"Knockback Multiplyer: {knockbackMult}\n" +
+				$"Force Multiplyer: {forceMult}\n" +
+				$"Damage Multiplyer: {damageMult}\n"+
+				$"Range: {range}";
+        }
         private void Start()
         {
             this.data = base.GetComponentInParent<CharacterData>();
@@ -38,6 +49,7 @@ namespace HDC.MonoBehaviours
         }
         private void OnDestroy()
         {
+			HDC.Log("DESTROYING PACHY EFFECT");
             PlayerCollision component = this.data.GetComponent<PlayerCollision>();
             component.collideWithPlayerAction = (Action<Vector2, Vector2, Player>)Delegate.Remove(component.collideWithPlayerAction, new Action<Vector2, Vector2, Player>(this.Collide));
             base.GetComponentInParent<ChildRPC>().childRPCsVector2Vector2Int.Remove("PachyHeadbutt");
@@ -58,7 +70,7 @@ namespace HDC.MonoBehaviours
 			{
 				float damage = this.data.maxHealth * this.damageMult;
 				float knockBack = this.data.maxHealth * this.knockbackMult;
-				enemyData.healthHandler.TakeDamage(this.forceDir * damage, this.data.playerVel.position);
+				enemyData.healthHandler.TakeDamage(this.forceDir * damage, this.data.playerVel.position,null,this.player,true);
 				enemyData.healthHandler.TakeForce(this.forceDir * knockBack);
 				headbuttActive = false;
 			}
@@ -75,12 +87,16 @@ namespace HDC.MonoBehaviours
 			}
 			return null;
 		}
-
+		public void Destroy()
+        {
+			Destroy(this);
+        }
 	
 		public void DoBlock(BlockTrigger.BlockTriggerType trigger)
 		{
-			this.forceDir = GetTarget();
-			this.data.playerVel.InvokeMethod("AddForce", new Type[] {typeof(Vector2)}, this.forceMult * this.forceDir);
+			
+			this.forceDir = GetTarget();			
+			this.data.playerVel.SetFieldValue("velocity", this.forceDir.normalized * this.range * rangeCoeff);
 			headbuttActive = true;
 			base.StartCoroutine(resetHeadbutt());
 		}
@@ -100,6 +116,8 @@ namespace HDC.MonoBehaviours
 		{
 			float shortest = this.range;
 			Player target = null;
+			enemyXDistance = range * this.data.aimDirection.normalized.x;
+			enemyYDistance = range * this.data.aimDirection.normalized.y;
 			Vector2 aimDir = this.data.aimDirection;
 			foreach (Player player in this.GetEnemyPlayers())
 			{
@@ -115,9 +133,9 @@ namespace HDC.MonoBehaviours
 			}
 			if (target != null)
             {
-				float xDir = target.data.playerVel.position.x - this.data.playerVel.position.x;
-				float yDir = target.data.playerVel.position.y - this.data.playerVel.position.y;
-				aimDir = new Vector2(xDir, yDir);
+				enemyXDistance = target.data.playerVel.position.x - this.data.playerVel.position.x;
+				enemyYDistance = target.data.playerVel.position.y - this.data.playerVel.position.y;
+				aimDir = new Vector2(enemyXDistance, enemyYDistance);
             }
 			return aimDir;
 		}

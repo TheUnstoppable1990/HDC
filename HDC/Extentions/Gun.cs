@@ -12,17 +12,19 @@ namespace HDC.Extentions
 {
     [Serializable]
     public class GunAdditionalData //may be borrowing this idea from PCE
-    {
-        public bool smiteActive;
+    {        
+        public float hatchetReach;
 
         public GunAdditionalData()
         {
-            smiteActive = false;
+            hatchetReach = 0f;
         }
     }
+
     public static class GunExtension
     {
-        public static readonly ConditionalWeakTable<Gun, GunAdditionalData> data = new ConditionalWeakTable<Gun, GunAdditionalData>();
+        public static readonly ConditionalWeakTable<Gun, GunAdditionalData> data =
+            new ConditionalWeakTable<Gun, GunAdditionalData>();
 
         public static GunAdditionalData GetAdditionalData(this Gun gun)
         {
@@ -36,6 +38,15 @@ namespace HDC.Extentions
                 data.Add(gun, value);
             }
             catch (Exception) { }
+        }
+    }
+   
+    [HarmonyPatch(typeof(Gun),"ResetStats")]
+    class GunPatchResetStats
+    {
+        private static void Prefix(Gun __instance)
+        {
+            __instance.GetAdditionalData().hatchetReach = 0f;
         }
     }
 }

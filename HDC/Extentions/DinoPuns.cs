@@ -75,5 +75,9 @@ namespace HDC.Extentions
             "What's a dinosaur's favorite movie?\nParasaur-mal Activity",
             "Why are duckbill dinosaurs so loud?\nThey're always making a Parasaurolo-fuss"
         };
+        static public string[] dilophosaurus = new string[]
+        {
+
+        };
     }
 }

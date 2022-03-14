@@ -32,7 +32,7 @@ namespace HDC.Utilities
 			ProceduralImage[] componentsInChildren = componentInChildren.AddObjectToPlayer.GetComponentsInChildren<ProceduralImage>();
 			foreach (ProceduralImage proceduralImage in componentsInChildren)
 			{
-				UnityEngine.Debug.Log(proceduralImage.ToString());
+				HDC.Log(proceduralImage.ToString());
 			}
 			return componentsInChildren[index];
 		}

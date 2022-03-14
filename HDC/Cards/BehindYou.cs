@@ -30,7 +30,7 @@ namespace HDC.Cards
             BehindYou_Effect behindYou = player.gameObject.GetOrAddComponent<BehindYou_Effect>();
             behindYou.player = player;
             behindYou.block = block;
-            behindYou.data = data;            
+            behindYou.data = data;           
         }
         public override void OnRemoveCard()
         {

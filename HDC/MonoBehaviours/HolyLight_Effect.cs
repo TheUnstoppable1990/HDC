@@ -42,7 +42,7 @@ namespace HDC.MonoBehaviours
 			if (this.RangeCheck())
 			{
 				var holyLightDamage = player.data.stats.GetAdditionalData().holyLightCharge / 2;				
-				UnityEngine.Debug.Log($"Holy Light Damage: {holyLightDamage}");
+				HDC.Log($"Holy Light Damage: {holyLightDamage}");
 				foreach (Player player in this.GetEnemyPlayers())
 				{
 					
@@ -74,7 +74,7 @@ namespace HDC.MonoBehaviours
 		public void ResetHealthCharge()
 		{			
 			player.data.stats.GetAdditionalData().holyLightCharge = 0f;
-			UnityEngine.Debug.Log("Attempting to reset damage charge");
+			HDC.Log("Attempting to reset damage charge");
 		}
 
 		public Action<BlockTrigger.BlockTriggerType> GetDoBlockAction()

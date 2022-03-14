@@ -74,7 +74,23 @@ namespace HDC.Extentions
                 {
                     tre.Destroy();
                 }
-            }            
+            }
+            Pachycephalosaurus_Effect[] pachycephalosaurus_Effects = gameObject.GetComponents<Pachycephalosaurus_Effect>();
+            foreach (Pachycephalosaurus_Effect pe in pachycephalosaurus_Effects)
+            {
+                if(pe != null)
+                {
+                    pe.Destroy();
+                }
+            }
+            Parasaurolophus_Effect[] parasaurolophus_Effects = gameObject.GetComponents<Parasaurolophus_Effect>();
+            foreach (Parasaurolophus_Effect pse in parasaurolophus_Effects)
+            {
+                if (pse != null)
+                {
+                    pse.Destroy();
+                }
+            }
         }
        
     }
