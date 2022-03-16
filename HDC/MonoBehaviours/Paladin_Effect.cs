@@ -25,12 +25,12 @@ namespace HDC.MonoBehaviours
 		public Player player;
 		public CharacterData data;
 		public float rangeOfEffect = 10f;
-		private List<Player> enemiesInRange = new List<Player>();
-		private List<Player> alliesInRange = new List<Player>();
-		private int numOfEnemies = 0;
-		private int previousNumOfEnemies = 0;
-		private float startHealth = 100f;
-		private float startMaxHealth = 100f;
+		//private List<Player> enemiesInRange = new List<Player>();
+		//private List<Player> alliesInRange = new List<Player>();
+		//private int numOfEnemies = 0;
+		//private int previousNumOfEnemies = 0;
+		//private float startHealth = 100f;
+		//private float startMaxHealth = 100f;
 		private float multiplier = 0.15f;
 		private float timePass = 0f;
 		private float healAmount = 0f;
@@ -59,80 +59,35 @@ namespace HDC.MonoBehaviours
 
 		private void OnEnable()
 		{
-			this.startHealth = this.data.health;
-			this.startMaxHealth = this.data.maxHealth;
+			//this.startHealth = this.data.health;
+			//this.startMaxHealth = this.data.maxHealth;
 		}
 
 		private void OnDisable()
 		{
-			this.data.health = this.startHealth;
-			this.data.maxHealth = this.startMaxHealth;
+			//this.data.health = this.startHealth;
+			//this.data.maxHealth = this.startMaxHealth;
 		}
 
 		private void Update()
 		{
-			foreach (Player player in this.GetOtherPlayers())
-			{
-				CharacterData pData = player.GetComponent<CharacterData>();
-				float num = Vector2.Distance(this.data.playerVel.position, pData.playerVel.position);
-				foreach (Player enemy in this.enemiesInRange)
-				{
-					CharacterData eData = enemy.GetComponent<CharacterData>();
-					if (eData.dead)
-					{
-						this.enemiesInRange.Remove(enemy);
-					}
-				}
-				bool canSee = PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;				
-				if (num < this.rangeOfEffect && canSee)
-				{					
-					if (this.player.teamID == player.teamID)
-					{						
-						if (!this.alliesInRange.Contains(player))
-						{
-							this.alliesInRange.Add(player);
-						}
-					}
-					else
-					{
-						if (!this.enemiesInRange.Contains(player))
-						{
-							this.enemiesInRange.Add(player);
-						}
-					}
-				}
-				else
-				{
-					if (this.player.teamID == player.teamID)
-					{
-						if (this.alliesInRange.Contains(player))
-						{
-							this.alliesInRange.Remove(player);
-						}
-					}
-					else
-					{
-						if (this.enemiesInRange.Contains(player))
-						{
-							this.enemiesInRange.Remove(player);
-						}
-					}
-				}
-			}
-			this.numOfEnemies = this.enemiesInRange.Count;
+			List<Player> enInRange = GetLivingEnemyPlayersInRange(this.rangeOfEffect);
+			List<Player> alInRange = GetLivingAllyPlayersInRange(this.rangeOfEffect);
+			//float numOfEnemies = enInRange.Count;
+			
 			this.timePass += Time.deltaTime;
-			if (this.timePass > 1f)
+			if (this.timePass > 1f) //second counter
 			{
-				this.healAmount = (float)this.enemiesInRange.Count * this.multiplier * this.data.maxHealth;
-				this.data.healthHandler.Heal(this.healAmount);
-				if (this.alliesInRange.Count > 0)
+				this.healAmount = (float)enInRange.Count * this.multiplier * this.data.maxHealth; 
+				this.data.healthHandler.Heal(this.healAmount);//heal for each enemy in range
+				if(alInRange.Count > 0)
 				{
-
 					if (this.data.health > this.data.maxHealth * (0.5f + this.allyRatio))
-					{
-						foreach (Player ally in this.alliesInRange)
+					{						
+						foreach (Player ally in alInRange)
 						{
 							CharacterData aData = ally.GetComponent<CharacterData>();
+							
 							if (aData.health < aData.maxHealth)
 							{
 								float healAmount = this.data.maxHealth * this.allyRatio;
@@ -145,8 +100,39 @@ namespace HDC.MonoBehaviours
 				}
 				this.timePass = 0f;
 			}
-			this.previousNumOfEnemies = this.numOfEnemies;
+			//this.previousNumOfEnemies = this.numOfEnemies;
 		}
+
+		private List<Player> GetLivingEnemyPlayersInRange(float range)
+		{
+			return (
+				from player in PlayerManager.instance.players
+				where player.teamID != this.player.teamID && CanSee(this.player, player) && InRange(this.player, player, range) && IsAlive(player)
+				select player
+				).ToList<Player>();
+		}
+		private List<Player> GetLivingAllyPlayersInRange(float range)
+        {
+			return (
+				from player in PlayerManager.instance.players
+				where player.teamID == this.player.teamID && CanSee(this.player, player) && InRange(this.player, player, range) && IsAlive(player) && player.playerID != this.player.playerID
+				select player
+				).ToList<Player>();
+		}
+		private bool CanSee(Player myPlayer, Player otherPlayer)
+		{
+			return PlayerManager.instance.CanSeePlayer(myPlayer.transform.position, otherPlayer).canSee;
+		}
+		private bool InRange(Player myPlayer, Player otherPlayer, float range)
+		{
+			float num = Vector2.Distance(myPlayer.data.playerVel.position, otherPlayer.data.playerVel.position);
+			return (num <= range);
+		}
+		private bool IsAlive(Player player)
+		{
+			return !player.data.dead;
+		}
+
 
 		// Token: 0x06000052 RID: 82 RVA: 0x00003B30 File Offset: 0x00001D30
 		public List<Player> GetEnemyPlayers()
@@ -207,7 +193,7 @@ namespace HDC.MonoBehaviours
 					mode = GradientMode.Fixed
 				};
 				componentInChildren.widthMultiplier = 1f;
-				componentInChildren.radius = baseRange / 1.5f;
+				componentInChildren.radius = baseRange / HDC.auraConst;
 				componentInChildren.raycastCollision = true;
 				componentInChildren.useColorOverTime = true;
 			}

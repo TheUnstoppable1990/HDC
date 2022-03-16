@@ -23,7 +23,7 @@ namespace HDC.Cards
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-
+            cardInfo.allowMultiple = false;
             statModifiers.sizeMultiplier = 1f + size;
             statModifiers.health = 1f + health_boost;
             gun.damage = 1f + dmg_boost;

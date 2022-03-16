@@ -24,7 +24,7 @@ namespace HDC.Cards
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
-
+            cardInfo.allowMultiple = false;
             statModifiers.movementSpeed = 1f + movement_reduction;
             statModifiers.secondsToTakeDamageOver = damageOT;
 

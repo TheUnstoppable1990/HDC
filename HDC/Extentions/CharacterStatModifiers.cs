@@ -11,11 +11,13 @@ namespace HDC.Extentions
     {
         public int stegoPlates;
         public float holyLightCharge;
+        public int panicAuras;
          
         public CharacterStatModifiersAdditionalData()
         {
             stegoPlates = 0;
             holyLightCharge = 0f;
+            panicAuras = 0;
         }
 
     }
@@ -47,6 +49,7 @@ namespace HDC.Extentions
         {
             __instance.GetAdditionalData().stegoPlates = 0;
             __instance.GetAdditionalData().holyLightCharge = 0f;
+            __instance.GetAdditionalData().panicAuras = 0;
 
         }
     }

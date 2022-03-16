@@ -24,17 +24,15 @@ namespace HDC.MonoBehaviours
     class Parasaurolophus_Effect : MonoBehaviour
     {
 		public static float baseRange = 5f;
-		public float rangeOfEffect = 5f;
+		public float rangeOfEffect = baseRange;
 		private Player player;
 		private CharacterData data;
 		private PanicAura pa;
-		public float panic_speed = 0.5f;
-		public float panic_regen = 0.25f;
-		public float panic_block_cd = -0.25f;
+		public float panic_speed = 0f;
+		public float panic_regen = 0f;
+		public float panic_block_cd = 0f;
 		private float timePass = 0f;
-
-		private List<Player> enemiesInRange = new List<Player>();
-		private List<Player> alliesInRange = new List<Player>();
+	
 
 		private PanicGlow panicGlow = null;
 
@@ -65,56 +63,9 @@ namespace HDC.MonoBehaviours
 		}
 		private void Update()
 		{
-			foreach (Player player in this.GetOtherPlayers())
-			{
-				CharacterData pData = player.GetComponent<CharacterData>();
-				float num = Vector2.Distance(this.data.playerVel.position, pData.playerVel.position);
-				foreach (Player enemy in this.enemiesInRange)
-				{
-					CharacterData eData = enemy.GetComponent<CharacterData>();
-					if (eData.dead)
-					{
-						this.enemiesInRange.Remove(enemy);
-					}
-				}
-				bool canSee = PlayerManager.instance.CanSeePlayer(this.player.transform.position, player).canSee;
-				if (num < this.rangeOfEffect && canSee)
-				{
-					if (this.player.teamID == player.teamID)
-					{
-						if (!this.alliesInRange.Contains(player))
-						{
-							this.alliesInRange.Add(player);
-						}
-					}
-					else
-					{
-						if (!this.enemiesInRange.Contains(player))
-						{
-							this.enemiesInRange.Add(player);
-						}
-					}
-				}
-				else
-				{
-					if (this.player.teamID == player.teamID)
-					{
-						if (this.alliesInRange.Contains(player))
-						{
-							this.alliesInRange.Remove(player);
-						}
-					}
-					else
-					{
-						if (this.enemiesInRange.Contains(player))
-						{
-							this.enemiesInRange.Remove(player);
-						}
-					}
-				}
-			}
+			List<Player> enInRange = GetLivingEnemyPlayersInRange(this.rangeOfEffect);			
 			this.timePass += Time.deltaTime;
-			if (enemiesInRange.Count > 0)
+			if (enInRange.Count > 0)
 			{				
 				if(panicGlow == null)
                 {
@@ -139,52 +90,58 @@ namespace HDC.MonoBehaviours
             }
 			
 			
-		}
-
-		public List<Player> GetAllyPlayers()
+		}		
+		private List<Player> GetLivingEnemyPlayersInRange(float range)
 		{
-			return (from player in PlayerManager.instance.players
-					where player.teamID == this.player.teamID && player.playerID != this.player.playerID
-					select player).ToList<Player>();
+			return (
+				from player in PlayerManager.instance.players
+				where player.teamID != this.player.teamID && CanSee(this.player, player) && InRange(this.player,player,range) && IsAlive(player)
+				select player
+				).ToList<Player>();
 		}
-
-		// Token: 0x06000054 RID: 84 RVA: 0x00003B98 File Offset: 0x00001D98
-		public List<Player> GetOtherPlayers()
-		{
-			return (from player in PlayerManager.instance.players
-					where player.playerID != this.player.playerID
-					select player).ToList<Player>();
+		private bool CanSee(Player myPlayer, Player otherPlayer)
+        {
+			return PlayerManager.instance.CanSeePlayer(myPlayer.transform.position, otherPlayer).canSee;
 		}
-
-		// Token: 0x06000052 RID: 82 RVA: 0x00003B30 File Offset: 0x00001D30
-		public List<Player> GetEnemyPlayers()
-		{
-			return (from player in PlayerManager.instance.players
-					where player.teamID != this.player.teamID
-					select player).ToList<Player>();
+		private bool InRange(Player myPlayer, Player otherPlayer, float range)
+        {
+			float num = Vector2.Distance(myPlayer.data.playerVel.position, otherPlayer.data.playerVel.position);
+			return (num <= range);
 		}
-
+		private bool IsAlive(Player player)
+        {
+			return !player.data.dead;
+        }
+		public void AdjustSize(int num)
+        {
+			if(pa != null)
+            {
+				pa.AdjustSize(num);
+				this.rangeOfEffect = baseRange * num;
+            }			
+        }
 
 		public class PanicAura : MonoBehaviour
 		{
 			private static GameObject lineEffect;
 			private Player player = null;
-			public GameObject holyEffect = null;
-			public GameObject holyLightObj = null;
+			public GameObject panicEffect = null;
+			public GameObject panicObj = null;
+			private LineEffect panicLineEffect;
 
 			public void Start()
 			{
 				this.player = base.gameObject.GetComponent<Player>();
-				this.holyLightObj = new GameObject();
-				this.holyLightObj.transform.SetParent(this.player.transform);
-				this.holyLightObj.transform.position = this.player.transform.position;
+				this.panicObj = new GameObject();
+				this.panicObj.transform.SetParent(this.player.transform);
+				this.panicObj.transform.position = this.player.transform.position;
 				if (lineEffect == null)
 				{
 					lineEffect = AssetTools.GetLineEffect("Lifestealer");
 				}
-				this.holyEffect = UnityEngine.Object.Instantiate<GameObject>(lineEffect, this.holyLightObj.transform);
-				LineEffect componentInChildren = this.holyEffect.GetComponentInChildren<LineEffect>();
-				componentInChildren.colorOverTime = new Gradient
+				this.panicEffect = UnityEngine.Object.Instantiate<GameObject>(lineEffect, this.panicObj.transform);
+				this.panicLineEffect = this.panicEffect.GetComponentInChildren<LineEffect>();
+				this.panicLineEffect.colorOverTime = new Gradient
 				{
 					alphaKeys = new GradientAlphaKey[]
 					{
@@ -196,18 +153,23 @@ namespace HDC.MonoBehaviours
 					},
 					mode = GradientMode.Fixed
 				};
-				componentInChildren.widthMultiplier = 1f;
-				componentInChildren.radius = baseRange / 1.5f;
-				componentInChildren.raycastCollision = true;
-				componentInChildren.useColorOverTime = true;
+				this.panicLineEffect.widthMultiplier = 1f;
+				this.panicLineEffect.radius = baseRange / HDC.auraConst;
+				this.panicLineEffect.raycastCollision = true;
+				this.panicLineEffect.useColorOverTime = true;
 			}
 
 			public void Destroy()
 			{
-				UnityEngine.Object.Destroy(this.holyLightObj);
-				UnityEngine.Object.Destroy(this.holyEffect);
+				UnityEngine.Object.Destroy(this.panicObj);
+				UnityEngine.Object.Destroy(this.panicEffect);
 				UnityEngine.Object.Destroy(this);
 			}
+			public void AdjustSize(int num)
+            {
+				HDC.Log($"Adjusting size for {num} panic aura(s)");
+				this.panicLineEffect.radius = baseRange * num / HDC.auraConst;
+            }
 
 
 		}

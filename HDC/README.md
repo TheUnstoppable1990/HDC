@@ -78,6 +78,23 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.1.2
+
+---
+
+-Fixes
+
+	-Corrected the collection error in Parasaur and applied those changes to paladin to prevent future errors
+
+	
+-Changes
+
+	-Made Parasaur stackable
+
+	-Reduced Block Cooldown amount per Parasaur card (trust me it gets crazy quick with 2)
+
+	-Due to level size restrictions, bronto and rex can only be taken 1 time (trust me its for the best)
+
 ### v1.1.1
 
 ---

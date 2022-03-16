@@ -17,7 +17,8 @@ namespace HDC.Cards
     {
         private float panic_speed = 0.5f;
         private float panic_regen = 0.25f;
-        private float panic_block_cd = -0.75f;
+        private float panic_block_cd = -0.6f;
+        private CharacterStatModifiers stats;
 
         private Parasaurolophus_Effect panic_effect;
 
@@ -27,14 +28,34 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
+            this.stats = characterStats;
+            this.stats.GetAdditionalData().panicAuras++;
+            int pa = this.stats.GetAdditionalData().panicAuras;
             panic_effect = player.gameObject.GetOrAddComponent<Parasaurolophus_Effect>();
-            panic_effect.panic_speed = this.panic_speed;
-            panic_effect.panic_regen = this.panic_regen;
-            panic_effect.panic_block_cd = this.panic_block_cd;
+
+            float adjustedBCD = (float)Math.Pow(1f + panic_block_cd, pa) - 1f; //gets the multiplier value
+            HDC.Log(adjustedBCD.ToString());
+            panic_effect.panic_speed += this.panic_speed/pa;
+            panic_effect.panic_regen += this.panic_regen/pa;
+            panic_effect.panic_block_cd = adjustedBCD; //returns it to the original format
+
+            panic_effect.AdjustSize(pa);
         }
         public override void OnRemoveCard()
         {
-            Destroy(panic_effect);
+            
+            
+            int pa = this.stats.GetAdditionalData().panicAuras;
+            panic_effect.panic_speed -= this.panic_speed / pa; //adjust before changing number
+            panic_effect.panic_regen -= this.panic_regen / pa;
+            panic_effect.panic_block_cd -= this.panic_block_cd / pa;
+            this.stats.GetAdditionalData().panicAuras--;
+            pa = this.stats.GetAdditionalData().panicAuras;
+            panic_effect.AdjustSize(pa);            
+            if (pa < 1)
+            {
+                Destroy(panic_effect);
+            }
         }
         protected override string GetTitle()
         {
