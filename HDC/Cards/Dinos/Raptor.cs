@@ -22,7 +22,7 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
 
             statModifiers.movementSpeed = 1 + speed_boost;
             gun.reloadTime = 1 + reload_time;

@@ -22,7 +22,7 @@ namespace HDC.Cards
 {
     class DigSite : CustomCard
     {
-        public static CardCategory[] dinoCards = new CardCategory[] { CustomCardCategories.instance.CardCategory("Dinosaur") };
+        public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
 
         public override void Callback()
@@ -44,8 +44,11 @@ namespace HDC.Cards
                 CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
                 randomCard = ModdingUtils.Utils.Cards.instance.DrawRandomCardWithCondition(allCards, player, null, null, null, null, null, null, null, this.condition);
             }
-            ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
-            ModdingUtils.Utils.CardBarUtils.instance.ShowAtEndOfPhase(player, randomCard);
+            HDC.instance.ExecuteAfterFrames(20, () =>
+            {
+                ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
+                ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);
+            });            
         }
         public override void OnRemoveCard()
         {

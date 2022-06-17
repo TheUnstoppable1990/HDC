@@ -60,9 +60,15 @@ namespace HDC.Cards
                 // if there is no valid card, then try drawing from the list of all cards (inactive + active) but still make sure it is compatible
                 CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
                 randomCard = ModdingUtils.Utils.Cards.instance.DrawRandomCardWithCondition(allCards, player, null, null, null, null, null, null, null, this.condition);
-            }
-            ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
-            ModdingUtils.Utils.CardBarUtils.instance.ShowAtEndOfPhase(player, randomCard);
+            }            
+
+            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
+            HDC.instance.ExecuteAfterFrames(20, () =>
+            {
+                ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
+                ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);
+            });
+
         }
 
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -184,14 +190,16 @@ namespace HDC.MonoBehaviours
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
             var multiplier = Paleontologist.multiplier * dinos + 1f;
-            characterStatModifiersModifier.health_mult = multiplier;
+            characterDataModifier.maxHealth_mult = multiplier;
+            characterDataModifier.health_mult = multiplier;
             characterStatModifiersModifier.movementSpeed_mult = multiplier;
             gunStatModifier.damage_mult = multiplier;
-            HDC.Log("ADDING DINO MODIFIER");    
+            HDC.Log("ADDING DINO MODIFIER");            
             ApplyModifiers();
-
+            HDC.Log($"Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
             CheckIfValid();
-        }
+            
+         }
 
         public void OnPointEnd()
         {

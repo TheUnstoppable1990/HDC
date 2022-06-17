@@ -22,7 +22,7 @@ namespace HDC.Cards
         private float speed_boost = -0.25f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
             statModifiers.health = 1 + health_boost;
             statModifiers.movementSpeed = 1 + speed_boost;
         }

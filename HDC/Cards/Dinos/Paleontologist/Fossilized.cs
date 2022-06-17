@@ -9,45 +9,36 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using HDC.RoundsEffects;
+using ModdingUtils.MonoBehaviours;
 
 namespace HDC.Cards
 {
-    class Stegosaurus : CustomCard
+    class Fossilized : CustomCard
     {
-        public static float plate_reduction = 0.33f;
-        private int plateNum = 1;
-        private float speed_boost = -0.1f; //Speed Reduction in truth          
-        private int extra_blocks = 2;
-        private CharacterStatModifiers stats;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
-
-            block.additionalBlocks = extra_blocks;
-            statModifiers.movementSpeed = 1 + speed_boost;
+            //cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            stats = characterStats;
-            characterStats.GetAdditionalData().stegoPlates += plateNum ;
         }
         public override void OnRemoveCard()
-        {            
-            stats.GetAdditionalData().stegoPlates -= plateNum;
+        {
+
         }
         protected override string GetTitle()
         {
-            return "Stegosaurus";
+            return "Fossilized";
         }
         protected override string GetDescription()
         {
-            return CardTools.RandomDescription(DinoPuns.stegosaurus);
+            return "Those old bones are making you slow and brittle.";
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Stegosaurus");            
+            return null;
+            //return HDC.ArtAssets.LoadAsset<GameObject>("C_Dino");
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -57,10 +48,7 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Extra Blocks",extra_blocks),                
-                CardTools.FormatStat(true,"Plates",plateNum),
-                CardTools.FormatStat(true,"Damage Reduction / Plate",plate_reduction),
-                CardTools.FormatStat(false,"Movement Speed",speed_boost)
+               //CardTools.FormatStat(true,"Block Cooldown",block_cooldown)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

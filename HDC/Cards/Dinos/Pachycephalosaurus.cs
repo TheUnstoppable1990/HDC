@@ -23,7 +23,7 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
             block.cdMultiplier = 1f + block_cooldown;
             statModifiers.health = 1f + health_boost;
         }
@@ -35,10 +35,6 @@ namespace HDC.Cards
             pachy_effect.range += range;
             HDC.Log(pachy_effect.GetStats());
         }
-        //public override void OnRemoveCard()
-        //{
-        //Destroy(pachy_effect);
-        //}
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {            
             Destroy(player.gameObject.GetComponentInChildren<Pachycephalosaurus_Effect>());

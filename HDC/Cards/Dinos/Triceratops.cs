@@ -24,7 +24,7 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
 
             statModifiers.movementSpeed = 1 + speed_boost;
             statModifiers.health = 1f + health_boost;                        
@@ -62,8 +62,7 @@ namespace HDC.Cards
             {
                 CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
                 CardTools.FormatStat(true,"Health",health_boost),
-                CardTools.FormatStat(true,"Movement Speed",speed_boost),                
-                //CardTools.FormatStat(true,"Horns Damage",horns_damage),
+                CardTools.FormatStat(true,"Movement Speed",speed_boost),                                
                 CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
             };
         }
