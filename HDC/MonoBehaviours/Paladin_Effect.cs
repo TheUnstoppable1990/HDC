@@ -25,13 +25,7 @@ namespace HDC.MonoBehaviours
 		public static float baseRange = 10f;
 		public Player player;
 		public CharacterData data;
-		public float rangeOfEffect = 10f;
-		//private List<Player> enemiesInRange = new List<Player>();
-		//private List<Player> alliesInRange = new List<Player>();
-		//private int numOfEnemies = 0;
-		//private int previousNumOfEnemies = 0;
-		//private float startHealth = 100f;
-		//private float startMaxHealth = 100f;
+		public float rangeOfEffect = 10f;		
 		private float multiplier = Paladin.regen_percentage; //0.1f;
 		  
 		private float timePass = 0f;
