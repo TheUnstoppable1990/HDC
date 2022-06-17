@@ -22,13 +22,15 @@ namespace HDC
     [BepInDependency("com.willis.rounds.unbound", BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("pykess.rounds.plugins.moddingutils",BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("pykess.rounds.plugins.cardchoicespawnuniquecardpatch", BepInDependency.DependencyFlags.HardDependency)] //for paleontologist
+    [BepInDependency("root.classes.manager.reborn",BepInDependency.DependencyFlags.HardDependency)]//for new class cards
+    [BepInDependency("root.rarity.lib", BepInDependency.DependencyFlags.HardDependency)]//for new class cards
     [BepInPlugin(ModID, ModName, ModVersion)]
     [BepInProcess("Rounds.exe")]
     public class HDC : BaseUnityPlugin
     {                
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.1.2";
+        public const string ModVersion = "1.1.3";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -36,9 +38,9 @@ namespace HDC
 
         //Remember to change this before release
 
-        private static bool debugging = false;
+        private static bool debugging = true;
 
-        public static float auraConst = 1.375f;
+        public static float auraConst = 1.375f;// stil trying to tweak this
 
         void Awake()
         {
@@ -92,10 +94,7 @@ namespace HDC
             CustomCard.BuildCard<LilOffensive>();
             CustomCard.BuildCard<PointBlank>();
 
-            if (debugging) { 
-                CustomCard.BuildCard<Hatchet>(); 
-            }
-            
+                   
 
             //Dino Cards
             CustomCard.BuildCard<Rex>();
@@ -108,7 +107,9 @@ namespace HDC
             CustomCard.BuildCard<Ankylosaurus>();
             CustomCard.BuildCard<Parasaurolophus>();
 
-            CustomCard.BuildCard<Paleontologist>();
+            CustomCard.BuildCard<Paleontologist>(cardInfo => { Paleontologist.card = cardInfo; });
+
+            CustomCard.BuildCard<DigSite>(cardInfo => {DigSite.card = cardInfo; });
          
         }
         internal static void Log(string message)

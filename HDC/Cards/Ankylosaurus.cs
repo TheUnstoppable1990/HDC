@@ -32,9 +32,17 @@ namespace HDC.Cards
             AnkylosaurusEffect ankyEffect = player.gameObject.GetOrAddComponent<AnkylosaurusEffect>();
             ankyEffect.damage_percent += horns_damage;
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-                     
+            if (player.gameObject.GetComponent<AnkylosaurusEffect>() != null)
+            {
+                var ankyEffect = player.gameObject.GetComponent<AnkylosaurusEffect>();
+                ankyEffect.damage_percent -= horns_damage;
+                if(ankyEffect.damage_percent <= 0)
+                {
+                    Destroy(player.gameObject.GetComponentInChildren<AnkylosaurusEffect>());
+                }
+            }                      
         }
         protected override string GetTitle()
         {

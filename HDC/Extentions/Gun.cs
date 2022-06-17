@@ -14,10 +14,11 @@ namespace HDC.Extentions
     public class GunAdditionalData //may be borrowing this idea from PCE
     {        
         public float hatchetReach;
-
+        public bool disabled = false;
         public GunAdditionalData()
         {
             hatchetReach = 0f;
+            disabled = false;
         }
     }
 
@@ -47,6 +48,7 @@ namespace HDC.Extentions
         private static void Prefix(Gun __instance)
         {
             __instance.GetAdditionalData().hatchetReach = 0f;
+            __instance.GetAdditionalData().disabled = false;
         }
     }
 }

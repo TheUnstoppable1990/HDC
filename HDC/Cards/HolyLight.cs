@@ -31,10 +31,14 @@ namespace HDC.Cards
             this.holyLight_effect.block = block;
             //this.player = player;
         }
-        public override void OnRemoveCard()
-        {
+        //public override void OnRemoveCard()
+        //{
             //throw new NotImplementedException();
-            Destroy(holyLight_effect);
+          //  Destroy(holyLight_effect);
+        //}
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {            
+            Destroy(player.gameObject.GetComponentInChildren<HolyLight_Effect>());
         }
         protected override string GetTitle()
         {

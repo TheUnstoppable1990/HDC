@@ -32,9 +32,9 @@ namespace HDC.Cards
             behindYou.block = block;
             behindYou.data = data;           
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            
+            Destroy(player.gameObject.GetComponentInChildren<BehindYou_Effect>());
         }
         protected override string GetTitle()
         {

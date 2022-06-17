@@ -235,7 +235,7 @@ namespace HDC.MonoBehaviours
 
     }
     
-    public class CelestialGlow : ReversibleEffect //Thanks Pykess for this Utility
+    public class CelestialGlow : ModdingUtils.MonoBehaviours.ReversibleEffect //Thanks Pykess for this Utility
     {
         private readonly Color color = new Color(1f, 1f, 0.25f, 0.75f); //light yellowish i think?
         private ReversibleColorEffect colorEffect = null;        

@@ -25,9 +25,13 @@ namespace HDC.Cards
         {
             regeneration = player.gameObject.AddComponent<Meditation_Effect>();            
         }
-        public override void OnRemoveCard()
-        {
-            Destroy(regeneration);
+        //public override void OnRemoveCard()
+        //{
+            //Destroy(regeneration);
+        //}
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {           
+            Destroy(player.gameObject.GetComponentInChildren<Meditation_Effect>());
         }
         protected override string GetTitle()
         {

@@ -20,7 +20,7 @@ namespace HDC.Cards
         private float panic_block_cd = -0.6f;
         private CharacterStatModifiers stats;
 
-        private Parasaurolophus_Effect panic_effect;
+        public Parasaurolophus_Effect panic_effect;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
@@ -41,10 +41,9 @@ namespace HDC.Cards
 
             panic_effect.AdjustSize(pa);
         }
-        public override void OnRemoveCard()
-        {
-            
-            
+        
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {         
             int pa = this.stats.GetAdditionalData().panicAuras;
             panic_effect.panic_speed -= this.panic_speed / pa; //adjust before changing number
             panic_effect.panic_regen -= this.panic_regen / pa;
@@ -54,7 +53,8 @@ namespace HDC.Cards
             panic_effect.AdjustSize(pa);            
             if (pa < 1)
             {
-                Destroy(panic_effect);
+                //Destroy(panic_effect);
+                Destroy(player.gameObject.GetComponentInChildren<Parasaurolophus_Effect>());
             }
         }
         protected override string GetTitle()

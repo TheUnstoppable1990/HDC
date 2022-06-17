@@ -10,6 +10,7 @@ using UnboundLib.Networking;
 using System.Collections;
 using HDC.MonoBehaviours;
 using UnityEngine.UI.ProceduralImage;
+using UnboundLib.Utils;
 namespace HDC.Cards
 {
     class CelestialCountdown : CustomCard
@@ -23,7 +24,8 @@ namespace HDC.Cards
         {
 
             //Will's code
-            var abyssalCard = CardChoice.instance.cards.First(c => c.name.Equals("AbyssalCountdown"));
+            //var abyssalCard = CardChoice.instance.cards.First(c => c.name.Equals("AbyssalCountdown"));
+            var abyssalCard = CardManager.cards.Values.Select(card => card.cardInfo).First(c => c.name.Equals("AbyssalCountdown"));
             var statMods = abyssalCard.gameObject.GetComponentInChildren<CharacterStatModifiers>();
             var abyssalObj = statMods.AddObjectToPlayer;
 
@@ -91,10 +93,14 @@ namespace HDC.Cards
             HDC.Log("I added the thing!");
 
         }
-        public override void OnRemoveCard()
-        {
-            Destroy(this.cel_countdown);            
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {            
+            Destroy(player.gameObject.GetComponentInChildren<CelestialCountdown_Effect_2>());
         }
+        //public override void OnRemoveCard()
+        //{
+            //Destroy(this.cel_countdown);            
+        //}
         protected override string GetTitle()
         {
             return "Celestial Countdown";

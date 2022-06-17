@@ -13,9 +13,11 @@ namespace HDC.Cards
 {
     class Paladin : CustomCard
     {
-        private Paladin_Effect paladin_effect;
-        private float health_boost = 2f;
-        private float regen_percentage = 0.15f;
+        public Paladin_Effect paladin_effect;
+        private float health_boost = 0.5f;
+        //static public float regen_mult = 0.1f;
+        static public float regen_percentage = 0.1f;
+
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             statModifiers.health = 1f + this.health_boost;
@@ -35,9 +37,10 @@ namespace HDC.Cards
                 paladin_Effect.rangeOfEffect = Paladin_Effect.baseRange * (float)components.Length;
             }
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-           Destroy(paladin_effect);                
+            //Destroy(paladin_effect);
+            Destroy(player.gameObject.GetComponentInChildren<Paladin_Effect>());
         }
         protected override string GetTitle()
         {

@@ -155,7 +155,7 @@ namespace HDC.MonoBehaviours
 	
 		
 	}
-	public class HolyGlow : ReversibleEffect
+	public class HolyGlow : ModdingUtils.MonoBehaviours.ReversibleEffect
 	{
 		public override void OnOnEnable()
 		{

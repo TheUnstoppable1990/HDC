@@ -14,17 +14,26 @@ using CardChoiceSpawnUniqueCardPatch;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using UnboundLib.Utils;
+using CardChoiceSpawnUniqueCardPatch.CustomCategories;
+using ClassesManagerReborn.Util;
+using HDC.Class;
 
 namespace HDC.Cards
 {
-    class Paleontologist : CustomCard
+    class DigSite : CustomCard
     {
-        public static CardCategory[] dinoCards = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+        public static CardCategory[] dinoCards = new CardCategory[] { CustomCardCategories.instance.CardCategory("Dinosaur") };
+        public static CardInfo card = null;
+
+        public override void Callback()
+        {
+            gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
+        }
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
             cardInfo.GetAdditionalData().canBeReassigned = false;
-            cardInfo.categories = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("CardManipulation") };
+            cardInfo.categories = new CardCategory[] { CustomCardCategories.instance.CardCategory("CardManipulation") };
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -44,7 +53,7 @@ namespace HDC.Cards
         }
         protected override string GetTitle()
         {
-            return "Paleontologist";
+            return "Dig Site";
         }
         protected override GameObject GetCardArt()
         {
@@ -74,7 +83,7 @@ namespace HDC.Cards
 
         public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            return card.categories.Intersect(Paleontologist.dinoCards).Any();
+            return card.categories.Intersect(DigSite.dinoCards).Any();
         }
 
     }

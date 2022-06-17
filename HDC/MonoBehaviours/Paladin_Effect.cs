@@ -16,6 +16,7 @@ using UnityEngine.UI.ProceduralImage;
 using Photon.Pun;
 using Photon.Realtime;
 using HDC.Utilities;
+using HDC.Cards;
 
 namespace HDC.MonoBehaviours
 {
@@ -31,7 +32,8 @@ namespace HDC.MonoBehaviours
 		//private int previousNumOfEnemies = 0;
 		//private float startHealth = 100f;
 		//private float startMaxHealth = 100f;
-		private float multiplier = 0.15f;
+		private float multiplier = Paladin.regen_percentage; //0.1f;
+		  
 		private float timePass = 0f;
 		private float healAmount = 0f;
 		private float allyRatio = 0.1f;
@@ -134,7 +136,6 @@ namespace HDC.MonoBehaviours
 		}
 
 
-		// Token: 0x06000052 RID: 82 RVA: 0x00003B30 File Offset: 0x00001D30
 		public List<Player> GetEnemyPlayers()
 		{
 			return (from player in PlayerManager.instance.players
@@ -142,7 +143,6 @@ namespace HDC.MonoBehaviours
 					select player).ToList<Player>();
 		}
 
-		// Token: 0x06000053 RID: 83 RVA: 0x00003B64 File Offset: 0x00001D64
 		public List<Player> GetAllyPlayers()
 		{
 			return (from player in PlayerManager.instance.players
@@ -150,7 +150,7 @@ namespace HDC.MonoBehaviours
 					select player).ToList<Player>();
 		}
 
-		// Token: 0x06000054 RID: 84 RVA: 0x00003B98 File Offset: 0x00001D98
+		
 		public List<Player> GetOtherPlayers()
 		{
 			return (from player in PlayerManager.instance.players
@@ -158,9 +158,7 @@ namespace HDC.MonoBehaviours
 					select player).ToList<Player>();
 		}
 
-		// Token: 0x04000048 RID: 72
 		
-		// Token: 0x0200002A RID: 42
 		public class PaladinAura : MonoBehaviour
 		{
 			private static GameObject lineEffect;

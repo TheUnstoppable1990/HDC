@@ -173,7 +173,7 @@ namespace HDC.MonoBehaviours
 
 
 		}
-		public class PanicGlow : ReversibleEffect //Thanks Pykess for this Utility
+		public class PanicGlow : ModdingUtils.MonoBehaviours.ReversibleEffect //Thanks Pykess for this Utility
 		{
 			private readonly Color color = Color.green; //light yellowish i think?
 			private ReversibleColorEffect colorEffect = null;

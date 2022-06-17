@@ -34,7 +34,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 <details open>
 	<summary><h3>Dino Pun Cards</h3></summary>
 	
-	Paleontologist: Grabs a Random Dinosaur card to give to the player 
+	Dig Site: Grabs a Random Dinosaur card to give to the player 
 
 	Ankylosaurus: Does Thorns damage, lots of knockback
 
@@ -77,6 +77,35 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v1.2.0
+
+---
+
+-Changes
+	
+	-Paleontologist is now called Dig Site
+
+
+### v1.1.3
+
+---
+
+-Fixes
+
+	-(HOPEFULLY) Corrected the persistence issues in some of the cards
+
+-Changes
+
+	-Reduced the rarity of Paleontologist to common
+
+	-Divine Blessing Nerf 15% to 10%
+
+	-Paladin's Endurance nerf maximum health 200% to 50% and regeneration per enemy from 15% to 10%
+
+	-Brontosaurus max health 200% to 100% and removed regeneration entirely, reduced movement/jump reduction & damage over 5s
+
+	-Stegosaurus has less damage reduction per plate
 
 ### v1.1.2
 

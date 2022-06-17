@@ -15,7 +15,7 @@ namespace HDC.Cards
 {
     class Stegosaurus : CustomCard
     {
-        public static float plate_reduction = 0.5f;
+        public static float plate_reduction = 0.33f;
         private int plateNum = 1;
         private float speed_boost = -0.1f; //Speed Reduction in truth          
         private int extra_blocks = 2;
@@ -59,7 +59,7 @@ namespace HDC.Cards
             {
                 CardTools.FormatStat(true,"Extra Blocks",extra_blocks),                
                 CardTools.FormatStat(true,"Plates",plateNum),
-                CardTools.FormatStat(true,"Dmg Red / Plate",plate_reduction),
+                CardTools.FormatStat(true,"Damage Reduction / Plate",plate_reduction),
                 CardTools.FormatStat(false,"Movement Speed",speed_boost)
             };
         }

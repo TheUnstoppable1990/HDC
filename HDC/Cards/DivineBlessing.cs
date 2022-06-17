@@ -17,7 +17,7 @@ namespace HDC.Cards
     {
         private float block_cooldown = 0.25f;
         private float health_boost = 0.50f;
-        private float health_restore = 0.15f;
+        private float health_restore = 0.1f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             block.InvokeMethod("ResetStats");
