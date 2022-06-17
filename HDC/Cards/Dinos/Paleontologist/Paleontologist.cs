@@ -93,7 +93,7 @@ namespace HDC.Cards
                 CardTools.FormatStat(true,"Health/Dino",multiplier),
                 CardTools.FormatStat(true,"Damage/Dino",multiplier),
                 CardTools.FormatStat(true,"Speed/Dino",multiplier),
-                CardTools.FormatStat(true,"Dinosaurs","+1")
+                CardTools.FormatStat(true,"Dino Card","+1")
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
