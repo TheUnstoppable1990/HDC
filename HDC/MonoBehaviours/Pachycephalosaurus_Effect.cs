@@ -70,8 +70,10 @@ namespace HDC.MonoBehaviours
 			{
 				float damage = this.data.maxHealth * this.damageMult;
 				float knockBack = this.data.maxHealth * this.knockbackMult;
-				enemyData.healthHandler.TakeDamage(this.forceDir * damage, this.data.playerVel.position,null,this.player,true);
-				enemyData.healthHandler.TakeForce(this.forceDir * knockBack);
+				//enemyData.healthHandler.TakeDamage(this.forceDir * damage, this.data.playerVel.position,null,this.player,true);
+				enemyData.healthHandler.CallTakeDamage(this.forceDir * damage, this.data.playerVel.position, null, this.player, true);
+				//enemyData.healthHandler.TakeForce(this.forceDir * knockBack);
+				enemyData.healthHandler.CallTakeForce(this.forceDir * knockBack);
 				headbuttActive = false;
 			}
 

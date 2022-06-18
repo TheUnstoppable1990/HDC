@@ -62,7 +62,9 @@ namespace HDC.MonoBehaviours
 							damage = new Vector2(0f, -10f); //minimum damage
                         }
 						//Vector2 damage = new Vector2(0f, -1f * (this.damage_charge + 10f));
-						component.healthHandler.DoDamage(damage, position, Color.yellow, null, this.player, false, true, true);
+						//component.healthHandler.DoDamage(damage, position, Color.yellow, null, this.player, false, true, true);
+						//component.healthHandler.TakeDamage(damage, position, null, this.player, true, true);
+						component.healthHandler.CallTakeDamage(damage, position, null, this.player, true);
 					}
 				}
 				//this.damage_charge = 0f;

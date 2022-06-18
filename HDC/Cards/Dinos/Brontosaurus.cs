@@ -33,12 +33,12 @@ namespace HDC.Cards
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //add a stomp/squish effect to bronto cuz its what the people deserve
-            
+            player.gameObject.GetOrAddComponent<BrontoStomp_Effect>();
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //throw new NotImplementedException();
-                     
+            Destroy(player.gameObject.GetComponentInChildren<BrontoStomp_Effect>());
+
         }
         protected override string GetTitle()
         {
@@ -59,7 +59,8 @@ namespace HDC.Cards
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
-            {                
+            {
+                CardTools.FormatStat(true,"Bronto Stomp",""),
                 CardTools.FormatStat(true,"Health",health_boost),                                
                 CardTools.FormatStat(true,"Damage Taken Over",$"{damageOT}s"),
                 CardTools.FormatStat(false,"Size",size_boost),
