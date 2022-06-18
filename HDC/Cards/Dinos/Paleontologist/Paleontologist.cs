@@ -26,12 +26,13 @@ namespace HDC.Cards
         public static float multiplier = 0.1f;
         public static CardInfo card = null;
 
-        public static CardCategory[] dinoCards = new CardCategory[] { CardChoiceSpawnUniqueCardPatch.CustomCategories.CustomCardCategories.instance.CardCategory("Dinosaur") };
+        public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");
+        public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };
         public const string PaleontologistClassName = "Paleontologist";
 
 
         public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");
-        public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");
+        
 
         public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -47,9 +48,7 @@ namespace HDC.Cards
         {
             cardInfo.allowMultiple = false;
             cardInfo.categories = new CardCategory[] { CustomCardCategories.instance.CardCategory("Class") , CustomCardCategories.instance.CardCategory("CardManipulation") };
-            ModdingUtils.Extensions.CardInfoExtension.GetAdditionalData(cardInfo).canBeReassigned = false;
-
-
+            ModdingUtils.Extensions.CardInfoExtension.GetAdditionalData(cardInfo).canBeReassigned = false;          
         }
 
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -70,10 +69,14 @@ namespace HDC.Cards
             });
 
         }
+        public override void OnReassignCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {
+            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
+        }
 
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            
+            Destroy(player.gameObject.GetComponentInChildren<Paleontologist_Effect>());            
         }
 
         protected override string GetTitle()
@@ -90,7 +93,7 @@ namespace HDC.Cards
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Common;
+            return CardInfo.Rarity.Rare;
         }
         protected override CardInfoStat[] GetStats()
         {
@@ -194,16 +197,16 @@ namespace HDC.MonoBehaviours
             characterDataModifier.health_mult = multiplier;
             characterStatModifiersModifier.movementSpeed_mult = multiplier;
             gunStatModifier.damage_mult = multiplier;
-            HDC.Log("ADDING DINO MODIFIER");            
+            //HDC.Log("ADDING DINO MODIFIER");            
             ApplyModifiers();
-            HDC.Log($"Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
+            HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
             CheckIfValid();
             
          }
 
         public void OnPointEnd()
         {
-            HDC.Log("REMOVING DINO MODIFIER");
+            //HDC.Log("REMOVING DINO MODIFIER");
             ClearModifiers();
         }
 

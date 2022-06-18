@@ -32,7 +32,7 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            
+            //add a stomp/squish effect to bronto cuz its what the people deserve
             
         }
         public override void OnRemoveCard()

@@ -110,6 +110,8 @@ namespace HDC
             CustomCard.BuildCard<Paleontologist>(cardInfo => { Paleontologist.card = cardInfo; });
 
             CustomCard.BuildCard<DigSite>(cardInfo => {DigSite.card = cardInfo; });
+
+            //CustomCard.BuildCard<Fossilized>(cardInfo => { Fossilized.card = cardInfo; ModdingUtils.Utils.Cards.instance.AddHiddenCard(Fossilized.card); });
          
         }
         internal static void Log(string message)
