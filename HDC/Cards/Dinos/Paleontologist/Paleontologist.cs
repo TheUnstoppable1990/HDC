@@ -127,7 +127,7 @@ namespace HDC.MonoBehaviours
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
         }
-
+        /*
         private void CheckIfValid()
         {
             var haveCard = false;
@@ -182,7 +182,7 @@ namespace HDC.MonoBehaviours
 
             yield break;
         }
-
+        */
         public void OnPlayerPickStart()
         {
             if (ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.Contains(Paleontologist.PaleontologistClass))
@@ -202,7 +202,7 @@ namespace HDC.MonoBehaviours
             //HDC.Log("ADDING DINO MODIFIER");            
             ApplyModifiers();
             HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
-            CheckIfValid();
+            //CheckIfValid();
             
          }
 

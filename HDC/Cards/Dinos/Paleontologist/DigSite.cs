@@ -48,6 +48,14 @@ namespace HDC.Cards
             statModifiers.health = 1 + multiplier;
             statModifiers.movementSpeed = 1 + multiplier;
             gun.damage = 1 + multiplier;
+
+            
+        }
+        public override void OnReassignCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {
+            data.maxHealth *= (1 + multiplier);
+            statModifiers.movementSpeed *= (1 + multiplier);
+            gun.damage *= (1 + multiplier);
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -66,6 +74,7 @@ namespace HDC.Cards
 
             //adding the fossilization effect
             fossil_effect = player.gameObject.AddComponent<Fossilized_Effect>();
+            //fossil_effect = player.gameObject.GetOrAddComponent<Fossilized_Effect>();
             
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -107,16 +116,14 @@ namespace HDC.Cards
         public override string GetModName()
         {
             return "HDC";
-        }
-
-        
+        }      
 
     }
 }
 
 namespace HDC.MonoBehaviours
 {
-    [DisallowMultipleComponent]
+    //[DisallowMultipleComponent]
     class Fossilized_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
         private int turns = 3;
@@ -140,16 +147,12 @@ namespace HDC.MonoBehaviours
         public void OnPointEnd()
         {
             turns--;
-            HDC.Log($"Fossilized Turns left: {turns}");
+            HDC.Log($"Player {player.playerID} has {turns} Fossilized Turn(s) left");
 
             if (turns <= 0)
             {
-                CardTools.RemoveFirstCardByName(player, "Dig Site");
-                //var fossilCard = player.data.currentCards.FirstOrDefault(c => c.cardName == "Dig Site");
-                //ModdingUtils.Utils.Cards.instance.RemoveCardFromPlayer(player, fossilCard, ModdingUtils.Utils.Cards.SelectionType.Oldest, true);
-
+                CardTools.RemoveFirstCardByName(player, "Dig Site");                
                 Destroy(this);
-
             }
         }
 

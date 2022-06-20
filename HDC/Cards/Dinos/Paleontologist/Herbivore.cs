@@ -44,7 +44,7 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            var carnivore_effect = player.gameObject.AddComponent<Herbivore_Effect>();
+            var herbivore_effect = player.gameObject.AddComponent<Herbivore_Effect>();
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {            
@@ -99,7 +99,7 @@ namespace HDC.MonoBehaviours
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
         }
-
+        /*
         private void CheckIfValid()
         {
             var haveCard = false;
@@ -147,14 +147,14 @@ namespace HDC.MonoBehaviours
                 }
             }
         }
-
+        
         private IEnumerator ReplaceCards(Player player, int[] indeces, CardInfo[] cards)
         {
             yield return ModdingUtils.Utils.Cards.instance.ReplaceCards(player, indeces, cards, null, true);
 
             yield break;
         }
-
+        */
         public void OnPlayerPickStart()
         {
             if (ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.Contains(Paleontologist.PaleontologistClass))
@@ -177,7 +177,7 @@ namespace HDC.MonoBehaviours
             //ApplyModifiers();
             //HDC.Log($"Player {player.playerID} has max health: {player.data.stats.health}");
             HDC.Log($"Healing effect applied for {dinos * Herbivore.healingPerCard}");
-            CheckIfValid();
+            //CheckIfValid();
 
         }
 

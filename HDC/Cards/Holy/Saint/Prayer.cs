@@ -25,9 +25,9 @@ using HDC.Class;
 
 namespace HDC.Cards
 {
-    class Prayer : CustomCard
+    /*class Prayer : CustomCard
     {
-
+        
         public static CardInfo card = null;
 
         private float mobility = -0.50f;
@@ -110,8 +110,8 @@ namespace HDC.Cards
         }
 
         
-
-    }
+        
+    }*/
 }
 
 namespace HDC.MonoBehaviours

@@ -10,6 +10,7 @@ using HDC.Cards;
 
 namespace HDC.Class
 {
+    /*
     internal class SaintClass : ClassHandler
     {
         internal static string name = "Saint";
@@ -21,4 +22,5 @@ namespace HDC.Class
             ClassesRegistry.Register(Prayer.card, CardType.Card, Saint.card);
         }
     }
+    */
 }

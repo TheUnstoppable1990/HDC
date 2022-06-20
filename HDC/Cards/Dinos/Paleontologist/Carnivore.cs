@@ -104,7 +104,7 @@ namespace HDC.MonoBehaviours
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
         }
-
+        /*
         private void CheckIfValid()
         {
             var haveCard = false;
@@ -159,7 +159,7 @@ namespace HDC.MonoBehaviours
 
             yield break;
         }
-
+        */
         public void OnPlayerPickStart()
         {
             if (ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.Contains(Paleontologist.PaleontologistClass))
@@ -176,7 +176,7 @@ namespace HDC.MonoBehaviours
             gunStatModifier.damage_mult = 1 + (Carnivore.damagePerCard * dinos);
             ApplyModifiers();
             HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
-            CheckIfValid();
+            //CheckIfValid();
 
         }
 
