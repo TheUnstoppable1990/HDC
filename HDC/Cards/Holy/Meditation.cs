@@ -19,16 +19,15 @@ namespace HDC.Cards
         private Meditation_Effect regeneration;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { Saint.HolyClass };
+
             statModifiers.health = 1f + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             regeneration = player.gameObject.AddComponent<Meditation_Effect>();            
         }
-        //public override void OnRemoveCard()
-        //{
-            //Destroy(regeneration);
-        //}
+        
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {           
             Destroy(player.gameObject.GetComponentInChildren<Meditation_Effect>());

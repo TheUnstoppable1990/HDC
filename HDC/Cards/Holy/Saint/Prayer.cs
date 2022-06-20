@@ -9,50 +9,52 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using ModdingUtils.Extensions;
-using CardChoiceSpawnUniqueCardPatch;
-using System.Collections.ObjectModel;
-using System.Reflection;
-using UnboundLib.Utils;
+using ModdingUtils.MonoBehaviours;
 using CardChoiceSpawnUniqueCardPatch.CustomCategories;
 using ClassesManagerReborn.Util;
-using HDC.Class;
-using ModdingUtils.MonoBehaviours;
-using ModdingUtils.GameModes;
+using System.Collections.ObjectModel;
+using UnboundLib.Utils;
+using System.Reflection;
 using HDC.Cards;
+using System.Collections;
+using ModdingUtils.GameModes;
+using ModdingUtils.Extensions;
+using HDC.Class;
+
+
 
 namespace HDC.Cards
 {
-    class DigSite : CustomCard
+    class Prayer : CustomCard
     {
-        public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
+
         public static CardInfo card = null;
 
-        private Fossilized_Effect fossil_effect;
+        private float mobility = -0.50f;
 
-        private float multiplier = -0.25f;
+        private Prayer_Effect prayer_effect;
 
         public override void Callback()
         {
-            gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
+            gameObject.GetOrAddComponent<ClassNameMono>().className = SaintClass.name;
         }
         public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            return card.categories.Intersect(DigSite.dinoCards).Any();
+            return card.categories.Intersect(Saint.HolyCards).Any();
         }
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.GetAdditionalData().canBeReassigned = false;
             cardInfo.categories = new CardCategory[] { CustomCardCategories.instance.CardCategory("CardManipulation") };
 
-            statModifiers.health = 1 + multiplier;
-            statModifiers.movementSpeed = 1 + multiplier;
-            gun.damage = 1 + multiplier;
+            statModifiers.movementSpeed = 1 + mobility;
+            statModifiers.jump = 1 + mobility;
         }
+
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            CardInfo randomCard = ModdingUtils.Utils.Cards.instance.NORARITY_GetRandomCardWithCondition(player, gun, gunAmmo, data, health, gravity, block, characterStats, this.condition);            
-            if(randomCard == null)
+            CardInfo randomCard = ModdingUtils.Utils.Cards.instance.NORARITY_GetRandomCardWithCondition(player, gun, gunAmmo, data, health, gravity, block, characterStats, this.condition);
+            if (randomCard == null)
             {
                 // if there is no valid card, then try drawing from the list of all cards (inactive + active) but still make sure it is compatible
                 CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
@@ -61,30 +63,30 @@ namespace HDC.Cards
             HDC.instance.ExecuteAfterFrames(20, () =>
             {
                 ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
-                ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);               
+                ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);
             });
 
-            //adding the fossilization effect
-            fossil_effect = player.gameObject.AddComponent<Fossilized_Effect>();
-            
+            //adding the prayer effect here
+            prayer_effect = player.gameObject.AddComponent<Prayer_Effect>();
         }
+
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            HDC.Log($"Removing Fossilized");
-            Destroy(player.gameObject.GetComponentInChildren<Fossilized_Effect>());
-            
+            //remove effect here
+            HDC.Log($"Removing Prayer");
+            Destroy(player.gameObject.GetComponentInChildren<Prayer_Effect>());
         }
         protected override string GetTitle()
         {
-            return "Dig Site";
-        }
-        protected override GameObject GetCardArt()
-        {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Fossilized");
+            return "Humble Prayer";
         }
         protected override string GetDescription()
         {
-            return "Get a random <color=#00ff00ff>Dinosaur</color> card, but be <color=#964B00>Fossilized</color> for 3 turns";
+            return "Pray for a random <color=#00ffff>Holy</color> Card. Your mobility is hindered while you pray.";
+        }
+        protected override GameObject GetCardArt()
+        {
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Prayer");
         }
         protected override CardInfo.Rarity GetRarity()
         {
@@ -94,16 +96,14 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(false,"Health",multiplier),
-                CardTools.FormatStat(false,"Movement Speed",multiplier),
-                CardTools.FormatStat(false,"Damage",multiplier)
+                CardTools.FormatStat(false,"Movement Speed",mobility),
+                CardTools.FormatStat(false,"Jump Height",mobility)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.PoisonGreen;
+            return CardThemeColor.CardThemeColorType.ColdBlue;
         }
-
         public override string GetModName()
         {
             return "HDC";
@@ -117,7 +117,7 @@ namespace HDC.Cards
 namespace HDC.MonoBehaviours
 {
     [DisallowMultipleComponent]
-    class Fossilized_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+    class Prayer_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
         private int turns = 3;
 
@@ -126,7 +126,7 @@ namespace HDC.MonoBehaviours
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
-        }        
+        }
         public void OnPlayerPickStart()
         {
 
@@ -140,16 +140,12 @@ namespace HDC.MonoBehaviours
         public void OnPointEnd()
         {
             turns--;
-            HDC.Log($"Fossilized Turns left: {turns}");
+            HDC.Log($"Prayer Turns left: {turns}");
 
             if (turns <= 0)
             {
-                CardTools.RemoveFirstCardByName(player, "Dig Site");
-                //var fossilCard = player.data.currentCards.FirstOrDefault(c => c.cardName == "Dig Site");
-                //ModdingUtils.Utils.Cards.instance.RemoveCardFromPlayer(player, fossilCard, ModdingUtils.Utils.Cards.SelectionType.Oldest, true);
-
+                CardTools.RemoveFirstCardByName(player, "Humble Prayer");             
                 Destroy(this);
-
             }
         }
 
@@ -160,7 +156,7 @@ namespace HDC.MonoBehaviours
 
         public override void OnOnDestroy()
         {
-            HDC.Log("Fossilized OnOnDestroy Attempt");
+            HDC.Log("Prayer OnOnDestroy Attempt");
             InterfaceGameModeHooksManager.instance.RemoveHooks(this);
         }
 
@@ -168,3 +164,5 @@ namespace HDC.MonoBehaviours
 
     }
 }
+
+

@@ -16,9 +16,12 @@ namespace HDC.Class
 
         public override IEnumerator Init()
         {
-            while (!(Paleontologist.card && DigSite.card )) yield return null;
+            while (!(Paleontologist.card && DigSite.card && Carnivore.card )) yield return null;
             ClassesRegistry.Register(Paleontologist.card, CardType.Entry);
             ClassesRegistry.Register(DigSite.card, CardType.Card, Paleontologist.card);
+            ClassesRegistry.Register(Carnivore.card, CardType.SubClass, Paleontologist.card);
+            ClassesRegistry.Register(Herbivore.card, CardType.SubClass, Paleontologist.card);
+
         }
     }
 }

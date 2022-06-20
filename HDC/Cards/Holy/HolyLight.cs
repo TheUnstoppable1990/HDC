@@ -19,6 +19,8 @@ namespace HDC.Cards
         private float damage_ratio = 1f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
+            cardInfo.categories = new CardCategory[] { Saint.HolyClass };
+
             statModifiers.health = 1f + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -61,7 +63,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Health",health_boost,CardInfoStat.SimpleAmount.aHugeAmountOf),
-                CardTools.FormatStat(true,"Heal Damage on Discharge ",damage_ratio,CardInfoStat.SimpleAmount.aLotOf)
+                CardTools.FormatStat(true,"Damage on Discharge",damage_ratio,CardInfoStat.SimpleAmount.aLotOf)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

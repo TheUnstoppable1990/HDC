@@ -34,15 +34,19 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 <details open>
 	<summary><h3>Dino Pun Cards</h3></summary>
 	
-	Dig Site: Grabs a Random Dinosaur card to give to the player 
+	Paleontologist: Unlocks the Paleontologist Class and gives buffs based on the total number of dinosaur cards a player has. 
+
+	Dig Site: Grabs a Random Dinosaur card to give to the player at a cost 
 
 	Ankylosaurus: Does Thorns damage, lots of knockback
+
+	Compsognathus: Lots of player seeking bullets in a tiny package
 
 	Parasaurolophus: Increases stats a crazy amount when near an enemy
 
 	Pachycephalosaurus: Reduces block cooldown, adds health, and gives you a BIG headbutt on block
 
-	Brontosaurus: Adds a metric crap ton of health, regeneration and decay, but makes you extremely slow and offensively incapable
+	Brontosaurus: Adds a ton of health and decay and an offensive stomp ability but makes it hard to move
 
 	Stegosaurus: Adds additional blocks and damage reducing plates, each plate reduces damage by 50% its like doubling your health 
 
@@ -84,7 +88,21 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Changes
 	
-	-Paleontologist is now called Dig Site
+	-Paleontologist is now a class 
+
+	-Added Dig Site as a class card for Paleontologist
+
+	-Bronto now has a stomp ability
+
+	-Compsognathus (compy) is a new card :D
+
+	-
+
+-Fixes
+
+	-Cleaned up how some of the cards call for damage
+
+	-Minor rebalances
 
 
 ### v1.1.3

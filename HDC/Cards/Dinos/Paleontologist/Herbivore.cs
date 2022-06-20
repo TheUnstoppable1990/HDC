@@ -9,108 +9,76 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using ModdingUtils.MonoBehaviours;
+using ModdingUtils.Extensions;
+using CardChoiceSpawnUniqueCardPatch;
+using System.Collections.ObjectModel;
+using System.Reflection;
+using UnboundLib.Utils;
 using CardChoiceSpawnUniqueCardPatch.CustomCategories;
 using ClassesManagerReborn.Util;
-using System.Collections.ObjectModel;
-using UnboundLib.Utils;
-using System.Reflection;
+using HDC.Class;
+using ModdingUtils.MonoBehaviours;
+using ModdingUtils.GameModes;
 using HDC.Cards;
 using System.Collections;
-using ModdingUtils.GameModes;
 using RarityLib.Utils;
 
 namespace HDC.Cards
 {
-    public class Paleontologist : CustomCard
+    class Herbivore : CustomCard
     {
-        public static float multiplier = 0.1f;
+        public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
 
-        public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");
-        public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };
-        public const string PaleontologistClassName = "Paleontologist";
-
-
-        public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");
-        
-
-        public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            return card.categories.Intersect(dinoCards).Any();
-        }
+        public static float healingPerCard = 5f;
+        private float healthBonus = 0.5f;
 
         public override void Callback()
         {
-            gameObject.GetOrAddComponent<ClassNameMono>();
-        }
-
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
+            gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
+        }        
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
             cardInfo.allowMultiple = false;
-            cardInfo.categories = new CardCategory[] { CustomCardCategories.instance.CardCategory("Class") , CustomCardCategories.instance.CardCategory("CardManipulation") };
-            ModdingUtils.Extensions.CardInfoExtension.GetAdditionalData(cardInfo).canBeReassigned = false;          
+            statModifiers.health = 1 + healthBonus;
         }
-
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            CardInfo randomCard = ModdingUtils.Utils.Cards.instance.NORARITY_GetRandomCardWithCondition(player, gun, gunAmmo, data, health, gravity, block, characterStats, this.condition);
-            if (randomCard == null)
-            {
-                // if there is no valid card, then try drawing from the list of all cards (inactive + active) but still make sure it is compatible
-                CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
-                randomCard = ModdingUtils.Utils.Cards.instance.DrawRandomCardWithCondition(allCards, player, null, null, null, null, null, null, null, this.condition);
-            }            
-
-            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
-            HDC.instance.ExecuteAfterFrames(20, () =>
-            {
-                ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
-                ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);
-            });
-
+            var carnivore_effect = player.gameObject.AddComponent<Herbivore_Effect>();
         }
-        public override void OnReassignCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
-        }
-
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            Destroy(player.gameObject.GetComponentInChildren<Paleontologist_Effect>());            
+        {            
+            Destroy(player.gameObject.GetComponentInChildren<Herbivore_Effect>());
         }
-
         protected override string GetTitle()
         {
-            return "Paleontologist";
-        }
-        protected override string GetDescription()
-        {
-            return "Get bonuses for every dinosaur card";
+            return "Herbivore";
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Paleontologist");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Herbivore");
+        }
+        protected override string GetDescription()
+        {
+            return "Learn from the plant-eating <color=#00ff00ff>Dinosaurs</color>.";
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            //return CardInfo.Rarity.Rare;
-            return RarityUtils.GetRarity("Legendary");
+            return CardInfo.Rarity.Uncommon;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Health/Dino",multiplier),
-                CardTools.FormatStat(true,"Damage/Dino",multiplier),
-                CardTools.FormatStat(true,"Speed/Dino",multiplier),
-                CardTools.FormatStat(true,"Dino Card","+1")
+                CardTools.FormatStat(true,"Max Health",healthBonus),
+                CardTools.FormatStat(true,"Regen per <color=#00ff00>Dino</color> Card",(int)healingPerCard)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
             return CardThemeColor.CardThemeColorType.PoisonGreen;
         }
+
         public override string GetModName()
         {
             return "HDC";
@@ -120,8 +88,12 @@ namespace HDC.Cards
 namespace HDC.MonoBehaviours
 {
     [DisallowMultipleComponent]
-    class Paleontologist_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+    class Herbivore_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
+        
+
+        public Herbivore_Healing_Effect herbivore_healing_effect = null;
+
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -133,7 +105,7 @@ namespace HDC.MonoBehaviours
             var haveCard = false;
             for (int i = 0; i < player.data.currentCards.Count; i++)
             {
-                if (player.data.currentCards[i].cardName.ToLower() == "Paleontologist".ToLower())
+                if (player.data.currentCards[i].cardName.ToLower() == "Herbivore".ToLower())
                 {
                     haveCard = true;
                     break;
@@ -194,22 +166,27 @@ namespace HDC.MonoBehaviours
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            var multiplier = Paleontologist.multiplier * dinos + 1f;
-            characterDataModifier.maxHealth_mult = multiplier;
-            characterDataModifier.health_mult = multiplier;
-            characterStatModifiersModifier.movementSpeed_mult = multiplier;
-            gunStatModifier.damage_mult = multiplier;
-            //HDC.Log("ADDING DINO MODIFIER");            
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
+            //additional_health = Herbivore.healthPerCard * dinos;
+            //player.data.maxHealth *= additional_health;
+            //player.data.health = player.data.maxHealth;
+            if (herbivore_healing_effect == null)
+            {
+                herbivore_healing_effect = player.gameObject.GetOrAddComponent<Herbivore_Healing_Effect>();
+            }
+            herbivore_healing_effect.healAmount = dinos * Herbivore.healingPerCard;
+            //ApplyModifiers();
+            //HDC.Log($"Player {player.playerID} has max health: {player.data.stats.health}");
+            HDC.Log($"Healing effect applied for {dinos * Herbivore.healingPerCard}");
             CheckIfValid();
-            
-         }
+
+        }
 
         public void OnPointEnd()
         {
             //HDC.Log("REMOVING DINO MODIFIER");
-            ClearModifiers();
+            //ClearModifiers();
+            //player.data.maxHealth *= additional_health;
+            //player.data.health = player.data.maxHealth;
         }
 
         public void OnGameStart()
@@ -223,9 +200,57 @@ namespace HDC.MonoBehaviours
             ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.RemoveAll((category) => category == CustomCardCategories.instance.CardCategory("Class"));
             ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.Add(Paleontologist.PaleontologistClass);
             InterfaceGameModeHooksManager.instance.RemoveHooks(this);
+            Destroy(player.gameObject.GetComponentInChildren<Herbivore_Healing_Effect>());
+        }
+    }
+}
+
+namespace HDC.MonoBehaviours
+{
+    class Herbivore_Healing_Effect : MonoBehaviour
+    {
+        internal Player player;
+        internal CharacterData data;
+        private float timePass = 0.0f;
+        public float healAmount = 5.0f;
+
+        private void Start()
+        {
+            this.data = base.GetComponentInParent<CharacterData>();
+            HealthHandler healthHandler = this.data.healthHandler;
+            healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff)); //Adds a reset to character on revive?
+        }
+        private void OnDestroy()
+        {
+            HealthHandler healthHandler = this.data.healthHandler;
+            healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff)); //Adds a reset to character on revive?
+
+        }
+        public void Awake()
+        {
+            this.player = gameObject.GetComponent<Player>();
+            this.data = this.player.GetComponent<CharacterData>();
         }
 
 
+        private void Update()
+        {
+            timePass += Time.deltaTime;
+            if (timePass > 1.0f)  //every second
+            {
+                this.data.healthHandler.Heal(healAmount);
+                timePass = 0.0f;
 
+            }
+        }
+        private void ResetStuff()
+        {
+            timePass = 0.0f;
+        }
+        public void Destroy()
+        {
+            UnityEngine.Object.Destroy(this);
+        }
     }
 }
+

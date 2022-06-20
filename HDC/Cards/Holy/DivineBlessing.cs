@@ -20,6 +20,8 @@ namespace HDC.Cards
         private float health_restore = 0.1f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
+            cardInfo.categories = new CardCategory[] { Saint.HolyClass };
+
             block.InvokeMethod("ResetStats");
             block.cdMultiplier = 1-block_cooldown;
             statModifiers.health = 1f + health_boost;

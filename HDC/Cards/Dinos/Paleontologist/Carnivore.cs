@@ -9,108 +9,84 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using ModdingUtils.MonoBehaviours;
+using ModdingUtils.Extensions;
+using CardChoiceSpawnUniqueCardPatch;
+using System.Collections.ObjectModel;
+using System.Reflection;
+using UnboundLib.Utils;
 using CardChoiceSpawnUniqueCardPatch.CustomCategories;
 using ClassesManagerReborn.Util;
-using System.Collections.ObjectModel;
-using UnboundLib.Utils;
-using System.Reflection;
+using HDC.Class;
+using ModdingUtils.MonoBehaviours;
+using ModdingUtils.GameModes;
 using HDC.Cards;
 using System.Collections;
-using ModdingUtils.GameModes;
 using RarityLib.Utils;
 
 namespace HDC.Cards
 {
-    public class Paleontologist : CustomCard
+    class Carnivore : CustomCard
     {
-        public static float multiplier = 0.1f;
+        public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
 
-        public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");
-        public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };
-        public const string PaleontologistClassName = "Paleontologist";
-
-
-        public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");
-        
-
-        public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            return card.categories.Intersect(dinoCards).Any();
-        }
+        public static float damagePerCard = 0.25f;
+        private float lifesteal = 0.5f;
 
         public override void Callback()
         {
-            gameObject.GetOrAddComponent<ClassNameMono>();
-        }
-
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
+            gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
+        }        
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
             cardInfo.allowMultiple = false;
-            cardInfo.categories = new CardCategory[] { CustomCardCategories.instance.CardCategory("Class") , CustomCardCategories.instance.CardCategory("CardManipulation") };
-            ModdingUtils.Extensions.CardInfoExtension.GetAdditionalData(cardInfo).canBeReassigned = false;          
         }
-
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            CardInfo randomCard = ModdingUtils.Utils.Cards.instance.NORARITY_GetRandomCardWithCondition(player, gun, gunAmmo, data, health, gravity, block, characterStats, this.condition);
-            if (randomCard == null)
+            var carnivore_effect = player.gameObject.AddComponent<Carnivore_Effect>();
+
+            if(characterStats.lifeSteal < 1)
             {
-                // if there is no valid card, then try drawing from the list of all cards (inactive + active) but still make sure it is compatible
-                CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
-                randomCard = ModdingUtils.Utils.Cards.instance.DrawRandomCardWithCondition(allCards, player, null, null, null, null, null, null, null, this.condition);
-            }            
-
-            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
-            HDC.instance.ExecuteAfterFrames(20, () =>
+                characterStats.lifeSteal += lifesteal;
+            }
+            else
             {
-                ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
-                ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);
-            });
-
+                characterStats.lifeSteal *= (1 + lifesteal);
+            }
         }
-        public override void OnReassignCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
-        }
-
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            Destroy(player.gameObject.GetComponentInChildren<Paleontologist_Effect>());            
+        {            
+            Destroy(player.gameObject.GetComponentInChildren<Carnivore_Effect>());
         }
-
         protected override string GetTitle()
         {
-            return "Paleontologist";
-        }
-        protected override string GetDescription()
-        {
-            return "Get bonuses for every dinosaur card";
+            return "Carnivore";
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Paleontologist");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Carnivore");
+        }
+        protected override string GetDescription()
+        {
+            return "Learn from the meat-eating <color=#00ff00ff>Dinosaurs</color>.";
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            //return CardInfo.Rarity.Rare;
-            return RarityUtils.GetRarity("Legendary");
+            return CardInfo.Rarity.Uncommon;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Health/Dino",multiplier),
-                CardTools.FormatStat(true,"Damage/Dino",multiplier),
-                CardTools.FormatStat(true,"Speed/Dino",multiplier),
-                CardTools.FormatStat(true,"Dino Card","+1")
+                CardTools.FormatStat(true,"Lifesteal",lifesteal),
+                CardTools.FormatStat(true,"Damage per <color=#00ff00>Dino</color> Card",damagePerCard)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
             return CardThemeColor.CardThemeColorType.PoisonGreen;
         }
+
         public override string GetModName()
         {
             return "HDC";
@@ -120,8 +96,9 @@ namespace HDC.Cards
 namespace HDC.MonoBehaviours
 {
     [DisallowMultipleComponent]
-    class Paleontologist_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+    class Carnivore_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
+        //private float additional_lifesteal;
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -133,7 +110,7 @@ namespace HDC.MonoBehaviours
             var haveCard = false;
             for (int i = 0; i < player.data.currentCards.Count; i++)
             {
-                if (player.data.currentCards[i].cardName.ToLower() == "Paleontologist".ToLower())
+                if (player.data.currentCards[i].cardName.ToLower() == "Carnivore".ToLower())
                 {
                     haveCard = true;
                     break;
@@ -194,22 +171,21 @@ namespace HDC.MonoBehaviours
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            var multiplier = Paleontologist.multiplier * dinos + 1f;
-            characterDataModifier.maxHealth_mult = multiplier;
-            characterDataModifier.health_mult = multiplier;
-            characterStatModifiersModifier.movementSpeed_mult = multiplier;
-            gunStatModifier.damage_mult = multiplier;
-            //HDC.Log("ADDING DINO MODIFIER");            
+            //additional_lifesteal = Carnivore.lifestealPerCard * dinos;
+            //player.data.stats.lifeSteal += additional_lifesteal;
+            gunStatModifier.damage_mult = 1 + (Carnivore.damagePerCard * dinos);
             ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
+            HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
             CheckIfValid();
-            
-         }
+
+        }
 
         public void OnPointEnd()
         {
-            //HDC.Log("REMOVING DINO MODIFIER");
+            HDC.Log("REMOVING DINO MODIFIER");
             ClearModifiers();
+            HDC.Log($"Player {player.playerID} has Lifesteal: {gun.damage}");
+            //player.data.stats.lifeSteal -= additional_lifesteal;
         }
 
         public void OnGameStart()

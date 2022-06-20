@@ -15,9 +15,9 @@ namespace HDC.MonoBehaviours
         private CharacterStatModifiers theseStats;
 
         private float timeOfLastStomp= -1f;
-        private readonly float range = 1.5f;
+        private readonly float range = 1.75f;
         private readonly float angleThreshold = 30f;
-        private readonly float minTimeBetweenStomps = 0.05f;
+        private readonly float minTimeBetweenStomps = 0.5f;
         private readonly float minMassFactor = 2f;
 
         void Awake()
@@ -47,9 +47,12 @@ namespace HDC.MonoBehaviours
 
                     if( mass >= minMassFactor * enemyMass) //player has to be significantly bigger than enemy
                     {
-                        displacement = thisPlayer.transform.position - enemyPlayer.transform.position; 
+                        displacement = thisPlayer.transform.position - enemyPlayer.transform.position;
+                        //HDC.Log($"Size Multiplier: {thisPlayer.data.stats.sizeMultiplier}");
+                        var calc_range = range * thisPlayer.data.stats.sizeMultiplier * thisPlayer.data.stats.health;
                         if(displacement.magnitude <= range && Vector2.Angle(Vector2.up,displacement) <= Math.Abs(this.angleThreshold / 2))
                         {
+                            HDC.Log("attempting stomp");
                             //player is within range and above enemy
                             //damage will not be instakill but rather a mass ratio 5x mass will be instakill
                             float damage = mass/enemyMass/5 * enemyPlayer.data.maxHealth;

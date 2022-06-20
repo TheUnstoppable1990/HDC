@@ -24,13 +24,14 @@ namespace HDC
     [BepInDependency("pykess.rounds.plugins.cardchoicespawnuniquecardpatch", BepInDependency.DependencyFlags.HardDependency)] //for paleontologist
     [BepInDependency("root.classes.manager.reborn",BepInDependency.DependencyFlags.HardDependency)]//for new class cards
     [BepInDependency("root.rarity.lib", BepInDependency.DependencyFlags.HardDependency)]//for new class cards
+    [BepInDependency("pykess.rounds.plugins.legraycasterspatch", BepInDependency.DependencyFlags.HardDependency)] // fixes physics for small players
     [BepInPlugin(ModID, ModName, ModVersion)]
     [BepInProcess("Rounds.exe")]
     public class HDC : BaseUnityPlugin
     {                
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.1.3";
+        public const string ModVersion = "1.2.0";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -88,6 +89,10 @@ namespace HDC
             CustomCard.BuildCard<Paladin>();
             CustomCard.BuildCard<HolyLight>();
 
+            //CustomCard.BuildCard<Saint>(cardInfo => { Saint.card = cardInfo; });
+
+            //CustomCard.BuildCard<Prayer>(cardInfo => { Prayer.card = cardInfo; });
+
             //Signature Cards
             CustomCard.BuildCard<BehindYou>();
             CustomCard.BuildCard<LilDefensive>();
@@ -106,13 +111,13 @@ namespace HDC
             CustomCard.BuildCard<Pachycephalosaurus>();
             CustomCard.BuildCard<Ankylosaurus>();
             CustomCard.BuildCard<Parasaurolophus>();
+            CustomCard.BuildCard<Compsognathus>();
 
             CustomCard.BuildCard<Paleontologist>(cardInfo => { Paleontologist.card = cardInfo; });
+            CustomCard.BuildCard<DigSite>(cardInfo => { DigSite.card = cardInfo; });
+            CustomCard.BuildCard<Carnivore>(cardInfo => { Carnivore.card = cardInfo; });
+            CustomCard.BuildCard<Herbivore>(cardInfo => { Herbivore.card = cardInfo; });
 
-            CustomCard.BuildCard<DigSite>(cardInfo => {DigSite.card = cardInfo; });
-
-            //CustomCard.BuildCard<Fossilized>(cardInfo => { Fossilized.card = cardInfo; ModdingUtils.Utils.Cards.instance.AddHiddenCard(Fossilized.card); });
-         
         }
         internal static void Log(string message)
         {            

@@ -9,6 +9,13 @@ namespace HDC.Extentions
     static class DinoPuns
     {
         static public string[] blankDesc = new string[] {""};
+        static public string[] compsognathus = new string[] {
+            "What do you call a dinosaur that’s overly affectionate?\nA Comp-hug-nathus",
+            "What do you call an extinct computer store?\nCompyUSA",
+            "What do you call a dinosaur pharmacist?\nA Comp-drug-nathus",
+            "What do you call a dinosaur that likes to get squeaky clean?\nA Compsog-bath-us",
+            "What do you call a dinosaur that always keeps its cool?\nA Calm-sognathus"
+        };
         static public string[] rex = new string[]
         {
             "What do you call glasses for dinosuars?\nTyrannosaurus Specs",

@@ -1,4 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnboundLib;
+using UnboundLib.Cards;
+using UnityEngine;
+using HDC.MonoBehaviours;
+using HDC.Utilities;
+using HDC.Extentions;
+using ModdingUtils.MonoBehaviours;
+using CardChoiceSpawnUniqueCardPatch.CustomCategories;
+using ClassesManagerReborn.Util;
+using System.Collections.ObjectModel;
+using UnboundLib.Utils;
+using System.Reflection;
+using HDC.Cards;
+using System.Collections;
+using ModdingUtils.GameModes;
+using ModdingUtils.Extensions;
+using HDC.Class;
+
 
 namespace HDC.Utilities
 {
@@ -113,9 +135,15 @@ namespace HDC.Utilities
 		
 		public static string RandomDescription(string[] descriptions)
 		{
-			Random random = new Random();
+			System.Random random = new System.Random();
 			int num = random.Next(descriptions.Length);
 			return descriptions[num];
+		}
+
+		public static void RemoveFirstCardByName(Player player, string name)
+        {
+			var targetCard = player.data.currentCards.FirstOrDefault(c => c.cardName == name);
+			ModdingUtils.Utils.Cards.instance.RemoveCardFromPlayer(player, targetCard, ModdingUtils.Utils.Cards.SelectionType.Oldest, true);
 		}
 	}
 }
