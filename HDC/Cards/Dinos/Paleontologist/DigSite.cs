@@ -25,7 +25,7 @@ namespace HDC.Cards
 {
     class DigSite : CustomCard
     {
-        public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
+        //public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
 
         private Fossilized_Effect fossil_effect;
@@ -38,7 +38,18 @@ namespace HDC.Cards
         }
         public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            return card.categories.Intersect(DigSite.dinoCards).Any();
+            if (player.data.currentCards.Contains(Herbivore.card))
+            {
+                return card.categories.Intersect(Herbivore.herbCards).Any();
+            }
+            else if (player.data.currentCards.Contains(Carnivore.card))
+            {
+                return card.categories.Intersect(Carnivore.carnCards).Any();
+            }
+            else
+            {
+                return card.categories.Intersect(Paleontologist.dinoCards).Any();
+            }
         }
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {

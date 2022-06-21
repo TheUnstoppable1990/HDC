@@ -17,12 +17,12 @@ namespace HDC.Cards
     class Ankylosaurus : CustomCard
     {
         private float knockback_boost = 2.0f;
-        private float horns_damage = 0.5f;
+        private float horns_damage = 0.25f;
         private float health_boost = 0.5f;
         private float speed_boost = -0.25f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Herbivore.HerbivoreClass };
             statModifiers.health = 1 + health_boost;
             statModifiers.movementSpeed = 1 + speed_boost;
         }

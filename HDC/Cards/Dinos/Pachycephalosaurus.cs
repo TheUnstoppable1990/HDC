@@ -23,7 +23,7 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Herbivore.HerbivoreClass};
             block.cdMultiplier = 1f + block_cooldown;
             statModifiers.health = 1f + health_boost;
         }

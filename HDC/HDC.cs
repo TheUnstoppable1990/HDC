@@ -98,8 +98,7 @@ namespace HDC
             CustomCard.BuildCard<LilDefensive>();
             CustomCard.BuildCard<LilOffensive>();
             CustomCard.BuildCard<PointBlank>();
-
-                   
+                              
 
             //Dino Cards
             CustomCard.BuildCard<Rex>();
@@ -116,7 +115,11 @@ namespace HDC
             CustomCard.BuildCard<Paleontologist>(cardInfo => { Paleontologist.card = cardInfo; });
             CustomCard.BuildCard<DigSite>(cardInfo => { DigSite.card = cardInfo; });
             CustomCard.BuildCard<Carnivore>(cardInfo => { Carnivore.card = cardInfo; });
+            CustomCard.BuildCard<PiercingTeeth>(cardInfo => { PiercingTeeth.card = cardInfo; });
+            CustomCard.BuildCard<RendingClaws>(cardInfo => { RendingClaws.card = cardInfo; });
             CustomCard.BuildCard<Herbivore>(cardInfo => { Herbivore.card = cardInfo; });
+            CustomCard.BuildCard<ArmorPlates>(cardInfo => { ArmorPlates.card = cardInfo; });
+            CustomCard.BuildCard<DefensiveSpines>(cardInfo => { DefensiveSpines.card = cardInfo; });
 
         }
         internal static void Log(string message)

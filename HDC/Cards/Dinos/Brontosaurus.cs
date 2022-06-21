@@ -21,7 +21,7 @@ namespace HDC.Cards
         private float damageOT = 5f;
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass};            
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Herbivore.HerbivoreClass};            
             cardInfo.allowMultiple = false;
             //statModifiers.movementSpeed = 1f + movement_reduction;
             statModifiers.secondsToTakeDamageOver = damageOT;

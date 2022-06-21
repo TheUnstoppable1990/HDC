@@ -23,7 +23,7 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Herbivore.HerbivoreClass };
 
             block.additionalBlocks = extra_blocks;
             statModifiers.movementSpeed = 1 + speed_boost;

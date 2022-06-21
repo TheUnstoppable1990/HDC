@@ -27,16 +27,17 @@ namespace HDC.Cards
         public static float multiplier = 0.1f;
         public static CardInfo card = null;
 
-        public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");
-        public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };
-        public const string PaleontologistClassName = "Paleontologist";
+        public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");  //this defines the category of dinosaur for the dino cards
+        public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };                      //this is the grounp of dino cards
+        public const string PaleontologistClassName = "Paleontologist";                                 //this is the classname for paleontologist
 
 
-        public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");
+        public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");  //this defines the Paleontologist class, different from dino class
         
 
         public bool condition(CardInfo card, Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
+            
             return card.categories.Intersect(dinoCards).Any();
         }
 

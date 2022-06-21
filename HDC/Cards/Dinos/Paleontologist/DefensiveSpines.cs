@@ -9,7 +9,7 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using ModdingUtils.Extensions;
+//using ModdingUtils.Extensions;
 using CardChoiceSpawnUniqueCardPatch;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -22,18 +22,15 @@ using ModdingUtils.GameModes;
 using HDC.Cards;
 using System.Collections;
 using RarityLib.Utils;
+using ModdingUtils.RoundsEffects;
+using HDC.RoundsEffects;
 
 namespace HDC.Cards
 {
-    class Carnivore : CustomCard
+    class DefensiveSpines : CustomCard
     {
-        public static CardInfo card = null;
-
-        public static CardCategory CarnivoreClass = CustomCardCategories.instance.CardCategory("Carnivore");   //defining the Carnivore class for carnivore dinos
-        public static CardCategory[] carnCards = new CardCategory[] { CarnivoreClass };
-
-        public static float damagePerCard = 0.25f;
-        private float lifesteal = 0.5f;
+        public static CardInfo card = null; 
+        public static float dmgPerSpine = 0.10f;
 
 
         public override void Callback()
@@ -42,47 +39,44 @@ namespace HDC.Cards
         }        
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-            cardInfo.allowMultiple = false;
+
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            var carnivore_effect = player.gameObject.AddComponent<Carnivore_Effect>();
-
-            if(characterStats.lifeSteal < 1)
-            {
-                characterStats.lifeSteal += lifesteal;
-            }
-            else
-            {
-                characterStats.lifeSteal *= (1 + lifesteal);
-            }
+            var spines_effect = player.gameObject.GetOrAddComponent<DefensiveSpines_Effect>();
+            spines_effect.numOfSpines++;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {            
-            Destroy(player.gameObject.GetComponentInChildren<Carnivore_Effect>());
+        {
+            var spines_effect = player.gameObject.GetOrAddComponent<DefensiveSpines_Effect>();
+            spines_effect.numOfSpines--;
+            if (spines_effect.numOfSpines <= 0)
+            {
+                Destroy(player.gameObject.GetComponentInChildren<DefensiveSpines_Effect>());
+            }
         }
         protected override string GetTitle()
         {
-            return "Carnivore";
+            return "Defensive Spines";
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Carnivore");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Ankylosaurus");
         }
         protected override string GetDescription()
         {
-            return "Learn from the meat-eating <color=#00ff00ff>Dinosaurs</color>.";
+            return "Damage inducing defensive spines";
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Uncommon;
+            return CardInfo.Rarity.Common;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Lifesteal",lifesteal),
-                CardTools.FormatStat(true,"Damage per <color=#00ff00>Dino</color> Card",damagePerCard)
+                CardTools.FormatStat(true,"Spines Per <color=#00ff00>Dino</color> Card",1),
+                CardTools.FormatStat(true,"Thorns Damage Per Spine",dmgPerSpine)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
@@ -97,10 +91,10 @@ namespace HDC.Cards
     }
 }
 namespace HDC.MonoBehaviours
-{
-    [DisallowMultipleComponent]
-    class Carnivore_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+{    
+    class DefensiveSpines_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
+        public int numOfSpines = 0;
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -118,21 +112,21 @@ namespace HDC.MonoBehaviours
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            gunStatModifier.damage_mult = 1 + (Carnivore.damagePerCard * dinos);
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
-
+            float spine_percent = numOfSpines * DefensiveSpines.dmgPerSpine;
+            var spine_hit_effect = player.gameObject.GetOrAddComponent<SpinesOnHit_Effect>();
+            spine_hit_effect.damage_percent = spine_percent;
+            //player.data.stats.GetAdditionalData().armorPlates = numOfPlates *  dinos;
+            //HDC.Log($"Player {player.playerID} has {player.data.stats.GetAdditionalData().armorPlates} plates");
         }
 
         public void OnPointEnd()
         {
             HDC.Log("REMOVING DINO MODIFIER");
-            ClearModifiers();
-            HDC.Log($"Player {player.playerID} has Lifesteal: {gun.damage}");
         }
 
         public void OnGameStart()
         {
+            UnityEngine.GameObject.Destroy(player.gameObject.GetComponentInChildren<SpinesOnHit_Effect>());
             UnityEngine.GameObject.Destroy(this);
         }
 
@@ -146,5 +140,22 @@ namespace HDC.MonoBehaviours
 
 
 
+    }
+}
+namespace HDC.RoundsEffects
+{
+    class SpinesOnHit_Effect : WasHitEffect
+    {
+        public float damage_percent = 0f;
+        public override void WasDealtDamage(Vector2 damage, bool selfDamage)
+        {
+            Player attacking_player = this.gameObject.GetComponent<Player>().data.lastSourceOfDamage;
+            if (!selfDamage && attacking_player != null)
+            {
+                Vector2 horns_damage = new Vector2(-damage_percent * damage.x, -damage_percent * damage.y);
+                Vector2 enemy_pos = attacking_player.data.playerVel.position;
+                attacking_player.data.healthHandler.DoDamage(horns_damage, enemy_pos, Color.blue);
+            }
+        }
     }
 }

@@ -27,8 +27,11 @@ namespace HDC.Cards
 {
     class Herbivore : CustomCard
     {
-        public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
+        //public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
+
+        public static CardCategory HerbivoreClass = CustomCardCategories.instance.CardCategory("Herbivore");   //defining the Herbivore class for herbivore dinos
+        public static CardCategory[] herbCards = new CardCategory[] { HerbivoreClass };
 
         public static float healingPerCard = 5f;
         private float healthBonus = 0.5f;

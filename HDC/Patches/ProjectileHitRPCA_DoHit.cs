@@ -48,8 +48,17 @@ namespace HDC.Patches
                 int plates = healthHandler.GetComponent<CharacterData>().stats.GetAdditionalData().stegoPlates;
                 if ((plates > 0))
                 {
-                    float damage_reduction = Mathf.Pow(Stegosaurus.plate_reduction, plates); //Reduces damage by half to the power of the number of plates 1 plate = 50% 2 plates = 75% etc
+                    float damage_reduction = Mathf.Pow((1-Stegosaurus.plate_reduction), plates); //Reduces damage by half to the power of the number of plates 1 plate = 50% 2 plates = 75% etc
+                    
                     __instance.damage *= damage_reduction;                                    
+                }
+
+                //armor plate stuff 
+                int armor_plates = healthHandler.GetComponent<CharacterData>().stats.GetAdditionalData().armorPlates;
+                if(armor_plates > 0)
+                {
+                    float armor_reduction = Mathf.Pow((1 - ArmorPlates.redPerPlate), plates);
+                    __instance.damage *= armor_reduction;
                 }
             }
 

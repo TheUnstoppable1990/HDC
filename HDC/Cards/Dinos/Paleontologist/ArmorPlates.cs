@@ -9,7 +9,7 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using ModdingUtils.Extensions;
+//using ModdingUtils.Extensions;
 using CardChoiceSpawnUniqueCardPatch;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -25,15 +25,10 @@ using RarityLib.Utils;
 
 namespace HDC.Cards
 {
-    class Carnivore : CustomCard
+    class ArmorPlates : CustomCard
     {
-        public static CardInfo card = null;
-
-        public static CardCategory CarnivoreClass = CustomCardCategories.instance.CardCategory("Carnivore");   //defining the Carnivore class for carnivore dinos
-        public static CardCategory[] carnCards = new CardCategory[] { CarnivoreClass };
-
-        public static float damagePerCard = 0.25f;
-        private float lifesteal = 0.5f;
+        public static CardInfo card = null; 
+        public static float redPerPlate = 0.10f;
 
 
         public override void Callback()
@@ -42,47 +37,44 @@ namespace HDC.Cards
         }        
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-            cardInfo.allowMultiple = false;
+
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            var carnivore_effect = player.gameObject.AddComponent<Carnivore_Effect>();
-
-            if(characterStats.lifeSteal < 1)
-            {
-                characterStats.lifeSteal += lifesteal;
-            }
-            else
-            {
-                characterStats.lifeSteal *= (1 + lifesteal);
-            }
+            var armor_effect = player.gameObject.GetOrAddComponent<ArmorPlates_Effect>();
+            armor_effect.numOfPlates++;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {            
-            Destroy(player.gameObject.GetComponentInChildren<Carnivore_Effect>());
+        {
+            var armor_effect = player.gameObject.GetOrAddComponent<ArmorPlates_Effect>();
+            armor_effect.numOfPlates--;
+            if (armor_effect.numOfPlates <= 0)
+            {
+                Destroy(player.gameObject.GetComponentInChildren<ArmorPlates_Effect>());
+            }
         }
         protected override string GetTitle()
         {
-            return "Carnivore";
+            return "Armor Plates";
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Carnivore");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Stegosaurus");
         }
         protected override string GetDescription()
         {
-            return "Learn from the meat-eating <color=#00ff00ff>Dinosaurs</color>.";
+            return "Damage reducing armored plates";
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Uncommon;
+            return CardInfo.Rarity.Common;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Lifesteal",lifesteal),
-                CardTools.FormatStat(true,"Damage per <color=#00ff00>Dino</color> Card",damagePerCard)
+                CardTools.FormatStat(true,"Plates Per <color=#00ff00>Dino</color> Card",1),
+                CardTools.FormatStat(true,"Reduction Per Plate",redPerPlate)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
@@ -97,10 +89,10 @@ namespace HDC.Cards
     }
 }
 namespace HDC.MonoBehaviours
-{
-    [DisallowMultipleComponent]
-    class Carnivore_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+{    
+    class ArmorPlates_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
+        public int numOfPlates = 0;
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -118,17 +110,13 @@ namespace HDC.MonoBehaviours
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            gunStatModifier.damage_mult = 1 + (Carnivore.damagePerCard * dinos);
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
-
+            player.data.stats.GetAdditionalData().armorPlates = numOfPlates *  dinos;
+            HDC.Log($"Player {player.playerID} has {player.data.stats.GetAdditionalData().armorPlates} plates");
         }
 
         public void OnPointEnd()
         {
             HDC.Log("REMOVING DINO MODIFIER");
-            ClearModifiers();
-            HDC.Log($"Player {player.playerID} has Lifesteal: {gun.damage}");
         }
 
         public void OnGameStart()

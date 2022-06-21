@@ -20,7 +20,11 @@ namespace HDC.Cards
         private int ammoIncrease = 3;
         private int bulletIncrease = 2;
         private float damageDecrease = -0.40f;
+
+        //hidden pack stats to make em more chasey and junk
         private int bounces = 2;
+        private float grav = 0.5f;
+        private float bullSpeed = 0.75f;
 
         private List<ObjectsToSpawn> gunObjects;
         private ObjectsToSpawn compyObj;
@@ -28,15 +32,21 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Carnivore.CarnivoreClass };
             statModifiers.sizeMultiplier = 1 + healthDecrease;
             statModifiers.health = 1 + healthDecrease;
-            gun.damage = 1 + damageDecrease;
+            //gun.damage = 1 + damageDecrease;
+            gun.bulletDamageMultiplier = 1 + damageDecrease;
             gun.ammo = ammoIncrease;
             gun.numberOfProjectiles = bulletIncrease;
             gun.spread = 0.1f;
+
+
+            //pack stats applied
             gun.projectileColor = new Color(0, 1, 0);
             gun.reflects = bounces;
+            gun.gravity = grav;
+            gun.projectileSpeed = bullSpeed;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {

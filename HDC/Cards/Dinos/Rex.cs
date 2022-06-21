@@ -22,11 +22,12 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass , Carnivore.CarnivoreClass };
             cardInfo.allowMultiple = false;
             statModifiers.sizeMultiplier = 1f + size;
             statModifiers.health = 1f + health_boost;
-            gun.damage = 1f + dmg_boost;
+            //gun.damage = 1f + dmg_boost;
+            gun.bulletDamageMultiplier = 1f + dmg_boost;
             gun.destroyBulletAfter = distance;
             gun.reloadTimeAdd = add_reload_time;
         }

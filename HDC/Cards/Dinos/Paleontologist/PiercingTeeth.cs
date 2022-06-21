@@ -9,7 +9,7 @@ using UnityEngine;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
 using HDC.Extentions;
-using ModdingUtils.Extensions;
+//using ModdingUtils.Extensions;
 using CardChoiceSpawnUniqueCardPatch;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -25,15 +25,10 @@ using RarityLib.Utils;
 
 namespace HDC.Cards
 {
-    class Carnivore : CustomCard
+    class PiercingTeeth : CustomCard
     {
-        public static CardInfo card = null;
-
-        public static CardCategory CarnivoreClass = CustomCardCategories.instance.CardCategory("Carnivore");   //defining the Carnivore class for carnivore dinos
-        public static CardCategory[] carnCards = new CardCategory[] { CarnivoreClass };
-
-        public static float damagePerCard = 0.25f;
-        private float lifesteal = 0.5f;
+        public static CardInfo card = null; 
+        public static float piercingPerCard = 0.15f;
 
 
         public override void Callback()
@@ -42,47 +37,43 @@ namespace HDC.Cards
         }        
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
         {
-            cardInfo.allowMultiple = false;
+
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            var carnivore_effect = player.gameObject.AddComponent<Carnivore_Effect>();
-
-            if(characterStats.lifeSteal < 1)
-            {
-                characterStats.lifeSteal += lifesteal;
-            }
-            else
-            {
-                characterStats.lifeSteal *= (1 + lifesteal);
-            }
+            var piercing_effect = player.gameObject.GetOrAddComponent<PiercingTeeth_Effect>();
+            piercing_effect.numOfTeeth++;            
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {            
-            Destroy(player.gameObject.GetComponentInChildren<Carnivore_Effect>());
+        {
+            var piercing_effect = player.gameObject.GetComponent<PiercingTeeth_Effect>();
+            piercing_effect.numOfTeeth--;
+            if (piercing_effect.numOfTeeth <= 0)
+            {
+                Destroy(player.gameObject.GetComponentInChildren<PiercingTeeth_Effect>());
+            }
         }
         protected override string GetTitle()
         {
-            return "Carnivore";
+            return "Piercing Teeth";
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Carnivore");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Rex");
         }
         protected override string GetDescription()
         {
-            return "Learn from the meat-eating <color=#00ff00ff>Dinosaurs</color>.";
+            return "Razor sharp, piercing teeth";
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            return CardInfo.Rarity.Uncommon;
+            return CardInfo.Rarity.Common;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Lifesteal",lifesteal),
-                CardTools.FormatStat(true,"Damage per <color=#00ff00>Dino</color> Card",damagePerCard)
+                CardTools.FormatStat(true,"Piercing Damage per <color=#00ff00>Dino</color> Card",piercingPerCard)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
@@ -97,10 +88,10 @@ namespace HDC.Cards
     }
 }
 namespace HDC.MonoBehaviours
-{
-    [DisallowMultipleComponent]
-    class Carnivore_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+{    
+    class PiercingTeeth_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
+        public int numOfTeeth = 0;
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -118,17 +109,13 @@ namespace HDC.MonoBehaviours
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            gunStatModifier.damage_mult = 1 + (Carnivore.damagePerCard * dinos);
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
-
+            player.data.stats.GetAdditionalData().piercePercent = numOfTeeth * PiercingTeeth.piercingPerCard * dinos;
+            HDC.Log($"Player {player.playerID} has Piercing Damage: {player.data.stats.GetAdditionalData().piercePercent}");
         }
 
         public void OnPointEnd()
         {
             HDC.Log("REMOVING DINO MODIFIER");
-            ClearModifiers();
-            HDC.Log($"Player {player.playerID} has Lifesteal: {gun.damage}");
         }
 
         public void OnGameStart()

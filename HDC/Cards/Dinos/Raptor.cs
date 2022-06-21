@@ -22,18 +22,18 @@ namespace HDC.Cards
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass };
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Carnivore.CarnivoreClass };
 
             statModifiers.movementSpeed = 1 + speed_boost;
             gun.reloadTime = 1 + reload_time;
             gun.attackSpeed = 1 + attack_speed;
             gun.projectileSpeed = 1 + bullet_speed;
-            gun.damage = 1 + damage_boost;
+            //gun.damage = 1 + damage_boost;
+            gun.bulletDamageMultiplier = 1 + damage_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            
-            
+                        
         }
         public override void OnRemoveCard()
         {
