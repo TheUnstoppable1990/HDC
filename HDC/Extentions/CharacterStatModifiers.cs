@@ -14,6 +14,7 @@ namespace HDC.Extentions
         public float holyLightCharge;
         public int panicAuras;
         public float piercePercent;
+        public int numDinoCards;
          
         public CharacterStatModifiersAdditionalData()
         {
@@ -22,6 +23,7 @@ namespace HDC.Extentions
             holyLightCharge = 0f;
             panicAuras = 0;
             piercePercent = 0f;
+            numDinoCards = 0;
         }
 
     }
@@ -56,7 +58,7 @@ namespace HDC.Extentions
             __instance.GetAdditionalData().holyLightCharge = 0f;
             __instance.GetAdditionalData().panicAuras = 0;
             __instance.GetAdditionalData().piercePercent = 0f;
-
+            __instance.GetAdditionalData().numDinoCards = 0;
         }
     }
 }

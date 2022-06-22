@@ -27,7 +27,6 @@ namespace HDC.Cards
 {
     class Herbivore : CustomCard
     {
-        //public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
 
         public static CardCategory HerbivoreClass = CustomCardCategories.instance.CardCategory("Herbivore");   //defining the Herbivore class for herbivore dinos
@@ -101,63 +100,7 @@ namespace HDC.MonoBehaviours
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
-        }
-        /*
-        private void CheckIfValid()
-        {
-            var haveCard = false;
-            for (int i = 0; i < player.data.currentCards.Count; i++)
-            {
-                if (player.data.currentCards[i].cardName.ToLower() == "Herbivore".ToLower())
-                {
-                    haveCard = true;
-                    break;
-                }
-            }
-
-            if (!haveCard)
-            {
-                var classCards = data.currentCards.Where(card => card.categories.Contains(Paleontologist.PaleontologistClass)).ToList();
-                var cardIndeces = Enumerable.Range(0, player.data.currentCards.Count()).Where((index) => player.data.currentCards[index].categories.Contains(Paleontologist.PaleontologistClass)).ToArray();
-                if (classCards.Count() > 0)
-                {
-                    CardInfo[] replacePool = null;
-                    if (classCards.Where(card => card.rarity == CardInfo.Rarity.Common).ToArray().Length > 0)
-                    {
-                        replacePool = classCards.Where(card => card.rarity == CardInfo.Rarity.Common).ToArray();
-                    }
-                    else if (classCards.Where(card => card.rarity == CardInfo.Rarity.Uncommon).ToArray().Length > 0)
-                    {
-                        replacePool = classCards.Where(card => card.rarity == CardInfo.Rarity.Uncommon).ToArray();
-                    }
-                    else if (classCards.Where(card => card.rarity == CardInfo.Rarity.Rare).ToArray().Length > 0)
-                    {
-                        replacePool = classCards.Where(card => card.rarity == CardInfo.Rarity.Rare).ToArray();
-                    }
-                    var replaced = replacePool[UnityEngine.Random.Range(0, replacePool.Length)];
-                    classCards.Remove(replaced);
-                    if (classCards.Count() > 1)
-                    {
-                        classCards.Shuffle();
-                    }
-                    classCards.Insert(0, Paleontologist.card);
-
-                    StartCoroutine(ReplaceCards(player, cardIndeces, classCards.ToArray()));
-                }
-                else
-                {
-                    UnityEngine.GameObject.Destroy(this);
-                }
-            }
-        }
-        
-        private IEnumerator ReplaceCards(Player player, int[] indeces, CardInfo[] cards)
-        {
-            yield return ModdingUtils.Utils.Cards.instance.ReplaceCards(player, indeces, cards, null, true);
-
-            yield break;
-        }
-        */
+        }       
         public void OnPlayerPickStart()
         {
             if (ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.Contains(Paleontologist.PaleontologistClass))
@@ -168,28 +111,18 @@ namespace HDC.MonoBehaviours
 
         public void OnPointStart()
         {
-            var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            //additional_health = Herbivore.healthPerCard * dinos;
-            //player.data.maxHealth *= additional_health;
-            //player.data.health = player.data.maxHealth;
+            var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();            
             if (herbivore_healing_effect == null)
             {
                 herbivore_healing_effect = player.gameObject.GetOrAddComponent<Herbivore_Healing_Effect>();
             }
             herbivore_healing_effect.healAmount = dinos * Herbivore.healingPerCard;
-            //ApplyModifiers();
-            //HDC.Log($"Player {player.playerID} has max health: {player.data.stats.health}");
             HDC.Log($"Healing effect applied for {dinos * Herbivore.healingPerCard}");
-            //CheckIfValid();
-
         }
 
         public void OnPointEnd()
         {
-            //HDC.Log("REMOVING DINO MODIFIER");
-            //ClearModifiers();
-            //player.data.maxHealth *= additional_health;
-            //player.data.health = player.data.maxHealth;
+            
         }
 
         public void OnGameStart()

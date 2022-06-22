@@ -33,11 +33,14 @@ namespace HDC.Cards
             pachy_effect.player = player;
             pachy_effect.knockbackMult += knockbackMult;
             pachy_effect.range += range;
-            HDC.Log(pachy_effect.GetStats());
+            //HDC.Log(pachy_effect.GetStats());
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {            
             Destroy(player.gameObject.GetComponentInChildren<Pachycephalosaurus_Effect>());
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

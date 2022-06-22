@@ -31,6 +31,9 @@ namespace HDC.Cards
             gun.knockback += knockback_boost * Math.Abs(gun.knockback);
             AnkylosaurusEffect ankyEffect = player.gameObject.GetOrAddComponent<AnkylosaurusEffect>();
             ankyEffect.damage_percent += horns_damage;
+
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -42,7 +45,8 @@ namespace HDC.Cards
                 {
                     Destroy(player.gameObject.GetComponentInChildren<AnkylosaurusEffect>());
                 }
-            }                      
+            }
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

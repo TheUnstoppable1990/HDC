@@ -49,7 +49,7 @@ namespace HDC.MonoBehaviours
         }
         private void OnDestroy()
         {
-			HDC.Log("DESTROYING PACHY EFFECT");
+			//HDC.Log("DESTROYING PACHY EFFECT");
             PlayerCollision component = this.data.GetComponent<PlayerCollision>();
             component.collideWithPlayerAction = (Action<Vector2, Vector2, Player>)Delegate.Remove(component.collideWithPlayerAction, new Action<Vector2, Vector2, Player>(this.Collide));
             base.GetComponentInParent<ChildRPC>().childRPCsVector2Vector2Int.Remove("PachyHeadbutt");

@@ -29,15 +29,21 @@ namespace HDC.Cards
             statModifiers.health = 1f + health_boost;             
             statModifiers.sizeMultiplier = 1f + size_boost;
             statModifiers.jump = 1f + jump_reduction;
+
+
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             //add a stomp/squish effect to bronto cuz its what the people deserve
             player.gameObject.GetOrAddComponent<BrontoStomp_Effect>();
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             Destroy(player.gameObject.GetComponentInChildren<BrontoStomp_Effect>());
+
+            characterStats.GetAdditionalData().numDinoCards--;
 
         }
         protected override string GetTitle()

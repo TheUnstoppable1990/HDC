@@ -36,11 +36,13 @@ namespace HDC.Cards
             flight.SetResetOnWallGrab(true);
             flight.SetInterval(0.1f);
             gravity.gravityForce = 0.01f;
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //throw new NotImplementedException();
-                     
+            Destroy(player.gameObject.GetOrAddComponent<InAirJumpEffect>());
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

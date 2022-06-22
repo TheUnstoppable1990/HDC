@@ -19,7 +19,7 @@ namespace HDC.Cards
         private int plateNum = 1;
         private float speed_boost = -0.1f; //Speed Reduction in truth          
         private int extra_blocks = 2;
-        private CharacterStatModifiers stats;
+        
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
@@ -30,12 +30,16 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            stats = characterStats;
+            
             characterStats.GetAdditionalData().stegoPlates += plateNum ;
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {            
-            stats.GetAdditionalData().stegoPlates -= plateNum;
+            characterStats.GetAdditionalData().stegoPlates -= plateNum;
+
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

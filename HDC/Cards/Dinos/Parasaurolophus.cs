@@ -34,12 +34,14 @@ namespace HDC.Cards
             panic_effect = player.gameObject.GetOrAddComponent<Parasaurolophus_Effect>();
 
             float adjustedBCD = (float)Math.Pow(1f + panic_block_cd, pa) - 1f; //gets the multiplier value
-            HDC.Log(adjustedBCD.ToString());
+            //HDC.Log(adjustedBCD.ToString());
             panic_effect.panic_speed += this.panic_speed/pa;
             panic_effect.panic_regen += this.panic_regen/pa;
             panic_effect.panic_block_cd = adjustedBCD; //returns it to the original format
 
             panic_effect.AdjustSize(pa);
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
         
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -56,6 +58,8 @@ namespace HDC.Cards
                 //Destroy(panic_effect);
                 Destroy(player.gameObject.GetComponentInChildren<Parasaurolophus_Effect>());
             }
+
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

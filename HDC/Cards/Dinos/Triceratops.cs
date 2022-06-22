@@ -32,13 +32,12 @@ namespace HDC.Cards
             block.cdMultiplier = 1f + block_cooldown;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {            
-            
-        }
-        public override void OnRemoveCard()
         {
-            //throw new NotImplementedException();
-                     
+            characterStats.GetAdditionalData().numDinoCards++;
+        }
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
+        {
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

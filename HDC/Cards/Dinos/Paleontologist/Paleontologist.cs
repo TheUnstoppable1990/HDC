@@ -29,7 +29,7 @@ namespace HDC.Cards
 
         public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");  //this defines the category of dinosaur for the dino cards
         public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };                      //this is the grounp of dino cards
-        public const string PaleontologistClassName = "Paleontologist";                                 //this is the classname for paleontologist
+        public const string PaleontologistClassName = "Dino";                                           //this is the classname for paleontologist
 
 
         public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");  //this defines the Paleontologist class, different from dino class
@@ -121,69 +121,20 @@ namespace HDC.Cards
 namespace HDC.MonoBehaviours
 {
     [DisallowMultipleComponent]
-    class Paleontologist_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+    class Paleontologist_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler, IRoundStartHookHandler, IRoundEndHookHandler,
+        IBattleStartHookHandler
     {
+        private float multiplier;
+        private float DinoMult()
+        {
+            return 1f + Paleontologist.multiplier * data.stats.GetAdditionalData().numDinoCards;
+        }
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
         }
-        /*
-        private void CheckIfValid()
-        {
-            var haveCard = false;
-            for (int i = 0; i < player.data.currentCards.Count; i++)
-            {
-                if (player.data.currentCards[i].cardName.ToLower() == "Paleontologist".ToLower())
-                {
-                    haveCard = true;
-                    break;
-                }
-            }
-
-            if (!haveCard)
-            {
-                var classCards = data.currentCards.Where(card => card.categories.Contains(Paleontologist.PaleontologistClass)).ToList();
-                var cardIndeces = Enumerable.Range(0, player.data.currentCards.Count()).Where((index) => player.data.currentCards[index].categories.Contains(Paleontologist.PaleontologistClass)).ToArray();
-                if (classCards.Count() > 0)
-                {
-                    CardInfo[] replacePool = null;
-                    if (classCards.Where(card => card.rarity == CardInfo.Rarity.Common).ToArray().Length > 0)
-                    {
-                        replacePool = classCards.Where(card => card.rarity == CardInfo.Rarity.Common).ToArray();
-                    }
-                    else if (classCards.Where(card => card.rarity == CardInfo.Rarity.Uncommon).ToArray().Length > 0)
-                    {
-                        replacePool = classCards.Where(card => card.rarity == CardInfo.Rarity.Uncommon).ToArray();
-                    }
-                    else if (classCards.Where(card => card.rarity == CardInfo.Rarity.Rare).ToArray().Length > 0)
-                    {
-                        replacePool = classCards.Where(card => card.rarity == CardInfo.Rarity.Rare).ToArray();
-                    }
-                    var replaced = replacePool[UnityEngine.Random.Range(0, replacePool.Length)];
-                    classCards.Remove(replaced);
-                    if (classCards.Count() > 1)
-                    {
-                        classCards.Shuffle();
-                    }
-                    classCards.Insert(0, Paleontologist.card);
-
-                    StartCoroutine(ReplaceCards(player, cardIndeces, classCards.ToArray()));
-                }
-                else
-                {
-                    UnityEngine.GameObject.Destroy(this);
-                }
-            }
-        }
-
-        private IEnumerator ReplaceCards(Player player, int[] indeces, CardInfo[] cards)
-        {
-            yield return ModdingUtils.Utils.Cards.instance.ReplaceCards(player, indeces, cards, null, true);
-
-            yield break;
-        }
-        */
+        
         public void OnPlayerPickStart()
         {
             if (ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.Contains(Paleontologist.PaleontologistClass))
@@ -191,28 +142,49 @@ namespace HDC.MonoBehaviours
                 ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.RemoveAll((category) => category == Paleontologist.PaleontologistClass);
             }
         }
-
+        public void OnRoundStart()
+        {
+            HDC.Log("Running the Round Start Code");
+        }
         public void OnPointStart()
         {
-            var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            var multiplier = Paleontologist.multiplier * dinos + 1f;
-            characterDataModifier.maxHealth_mult = multiplier;
-            characterDataModifier.health_mult = multiplier;
-            characterStatModifiersModifier.movementSpeed_mult = multiplier;
-            gunStatModifier.damage_mult = multiplier;
-            //HDC.Log("ADDING DINO MODIFIER");            
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
-            //CheckIfValid();
-            
-         }
+            HDC.Log("Running the Point Start Code");
+            int dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
+            HDC.Log($"Player {player.playerID} has {dinos} dinos");
+
+            multiplier = 1f + Paleontologist.multiplier * dinos;
+
+            data.maxHealth *= multiplier;
+            data.health = data.maxHealth;
+            gun.damage *= multiplier;
+            data.stats.movementSpeed *= multiplier;
+            HDC.instance.ExecuteAfterFrames(20, () =>
+            {
+                HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
+            });
+        }
 
         public void OnPointEnd()
         {
-            //HDC.Log("REMOVING DINO MODIFIER");
-            ClearModifiers();
+            HDC.Log("Running the Point End Code");
+           
+            data.maxHealth /= multiplier;
+            data.health = data.maxHealth;
+            gun.damage /= multiplier;
+            data.stats.movementSpeed /= multiplier;
+            HDC.instance.ExecuteAfterFrames(20, () =>
+            {
+                HDC.Log($"Player {player.playerID} has Health: {data.maxHealth}, Damage: {gun.damage}, Speed: {characterStatModifiers.movementSpeed}");
+            });
         }
-
+        public void OnRoundEnd()
+        {
+            HDC.Log("Running the Round End Code");
+        }
+        public void OnBattleStart()
+        {
+            HDC.Log("Running the Battle Start Code");            
+        }
         public void OnGameStart()
         {
             UnityEngine.GameObject.Destroy(this);

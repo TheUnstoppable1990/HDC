@@ -101,6 +101,7 @@ namespace HDC.MonoBehaviours
     [DisallowMultipleComponent]
     class Carnivore_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
+        private float multiplier;
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -118,17 +119,14 @@ namespace HDC.MonoBehaviours
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            gunStatModifier.damage_mult = 1 + (Carnivore.damagePerCard * dinos);
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
-
+            multiplier = 1 + (Carnivore.damagePerCard * dinos);
+            gun.damage *= multiplier;
+            HDC.Log($"Carnivore Damage: {gun.damage}");
         }
 
         public void OnPointEnd()
         {
-            HDC.Log("REMOVING DINO MODIFIER");
-            ClearModifiers();
-            HDC.Log($"Player {player.playerID} has Lifesteal: {gun.damage}");
+            gun.damage /= multiplier;            
         }
 
         public void OnGameStart()

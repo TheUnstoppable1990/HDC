@@ -88,21 +88,30 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Changes
 	
-	-Paleontologist is now a class 
+	-Paleontologist is now a class
+		
+		-Added Dig Site as a class card for Paleontologist
 
-	-Added Dig Site as a class card for Paleontologist
+		-2 Subclasses Carnivore and Hebivore
+
+			-Each with 2 class cards		
 
 	-Bronto now has a stomp ability
 
 	-Compsognathus (compy) is a new card :D
 
-	-
-
+	
 -Fixes
 
 	-Cleaned up how some of the cards call for damage
 
-	-Minor rebalances
+	-Major rebalances
+
+-To Do
+
+	-Figure out that weird thing happening with Pachy (its not game breaking tho)
+
+	-Compy has a weird error too
 
 
 ### v1.1.3

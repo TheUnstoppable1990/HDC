@@ -29,15 +29,15 @@ namespace HDC.Cards
     {
         public static CardInfo card = null; 
         public static float damagePerCard = 0.20f;
-
+        private float damage_boost = 0.25f;
 
         public override void Callback()
         {
             gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
         }        
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-
+            gun.damage = 1 + damage_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -73,6 +73,7 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
+                CardTools.FormatStat(true,"Damage",damage_boost),
                 CardTools.FormatStat(true,"Extra Damage per <color=#00ff00>Dino</color> Card",damagePerCard)
             };
         }
@@ -92,6 +93,7 @@ namespace HDC.MonoBehaviours
     class RendingClaws_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
     {
         public int numOfClaws = 0;
+        private float multiplier;
         public override void OnStart()
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
@@ -105,18 +107,17 @@ namespace HDC.MonoBehaviours
                 ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.RemoveAll((category) => category == Paleontologist.PaleontologistClass);
             }
         }
-
+        
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
-            gunStatModifier.damage_mult = 1 + (RendingClaws.damagePerCard * dinos * numOfClaws);
-            ApplyModifiers();
-            HDC.Log($"Player {player.playerID} has Damage: {gun.damage}");
+            multiplier = 1 + (RendingClaws.damagePerCard * dinos * numOfClaws);
+            gun.damage *= multiplier;            
         }
 
         public void OnPointEnd()
         {
-            ClearModifiers();
+            gun.damage /= multiplier;
         }
 
         public void OnGameStart()

@@ -33,12 +33,11 @@ namespace HDC.Cards
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-                        
+            characterStats.GetAdditionalData().numDinoCards++;
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            //throw new NotImplementedException();
-                     
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

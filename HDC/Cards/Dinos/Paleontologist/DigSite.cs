@@ -25,7 +25,6 @@ namespace HDC.Cards
 {
     class DigSite : CustomCard
     {
-        //public static CardCategory[] dinoCards = new CardCategory[] { Paleontologist.DinoClass };
         public static CardInfo card = null;
 
         private Fossilized_Effect fossil_effect;
@@ -85,7 +84,7 @@ namespace HDC.Cards
 
             //adding the fossilization effect
             fossil_effect = player.gameObject.AddComponent<Fossilized_Effect>();
-            //fossil_effect = player.gameObject.GetOrAddComponent<Fossilized_Effect>();
+            
             
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
@@ -135,7 +134,7 @@ namespace HDC.Cards
 namespace HDC.MonoBehaviours
 {
     //[DisallowMultipleComponent]
-    class Fossilized_Effect : ReversibleEffect, IPointEndHookHandler, IPointStartHookHandler, IPlayerPickStartHookHandler, IGameStartHookHandler
+    class Fossilized_Effect : ReversibleEffect, IPointEndHookHandler, /*IPointStartHookHandler, IPlayerPickStartHookHandler,*/ IGameStartHookHandler
     {
         private int turns = 3;
 
@@ -144,7 +143,8 @@ namespace HDC.MonoBehaviours
         {
             InterfaceGameModeHooksManager.instance.RegisterHooks(this);
             SetLivesToEffect(int.MaxValue);
-        }        
+        } 
+        /*
         public void OnPlayerPickStart()
         {
 
@@ -154,7 +154,7 @@ namespace HDC.MonoBehaviours
         {
 
         }
-
+        */
         public void OnPointEnd()
         {
             turns--;
@@ -173,8 +173,7 @@ namespace HDC.MonoBehaviours
         }
 
         public override void OnOnDestroy()
-        {
-            HDC.Log("Fossilized OnOnDestroy Attempt");
+        {            
             InterfaceGameModeHooksManager.instance.RemoveHooks(this);
         }
 

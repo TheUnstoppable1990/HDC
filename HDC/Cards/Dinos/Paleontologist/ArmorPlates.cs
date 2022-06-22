@@ -29,15 +29,15 @@ namespace HDC.Cards
     {
         public static CardInfo card = null; 
         public static float redPerPlate = 0.10f;
-
+        private float health_boost = 0.25f;
 
         public override void Callback()
         {
             gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
         }        
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-
+            statModifiers.health = 1 + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -73,7 +73,8 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Plates Per <color=#00ff00>Dino</color> Card",1),
+                CardTools.FormatStat(true,"Health",health_boost),
+                CardTools.FormatStat(true,"Plates Per <color=#00ff00>Dino</color>",1),
                 CardTools.FormatStat(true,"Reduction Per Plate",redPerPlate)
             };
         }
@@ -106,7 +107,7 @@ namespace HDC.MonoBehaviours
                 ModdingUtils.Extensions.CharacterStatModifiersExtension.GetAdditionalData(characterStatModifiers).blacklistedCategories.RemoveAll((category) => category == Paleontologist.PaleontologistClass);
             }
         }
-
+        
         public void OnPointStart()
         {
             var dinos = data.currentCards.Where(card => card.categories.Contains(Paleontologist.DinoClass)).ToList().Count();
@@ -116,7 +117,7 @@ namespace HDC.MonoBehaviours
 
         public void OnPointEnd()
         {
-            HDC.Log("REMOVING DINO MODIFIER");
+            
         }
 
         public void OnGameStart()

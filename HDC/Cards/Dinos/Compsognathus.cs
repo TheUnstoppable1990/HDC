@@ -58,6 +58,8 @@ namespace HDC.Cards
             });            
             gunObjects.Add(compyObj);           
             gun.objectsToSpawn = gunObjects.ToArray();
+
+            characterStats.GetAdditionalData().numDinoCards++;
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -65,6 +67,8 @@ namespace HDC.Cards
             gunObjects = gun.objectsToSpawn.ToList();
             gunObjects.Remove(compyObj);
             gun.objectsToSpawn = gunObjects.ToArray();
+
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {

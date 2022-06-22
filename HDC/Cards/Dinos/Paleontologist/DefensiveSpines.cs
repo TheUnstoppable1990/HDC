@@ -31,15 +31,15 @@ namespace HDC.Cards
     {
         public static CardInfo card = null; 
         public static float dmgPerSpine = 0.10f;
-
+        private float health_boost = 0.25f;
 
         public override void Callback()
         {
             gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
         }        
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-
+            statModifiers.health = 1 + health_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -75,8 +75,9 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Spines Per <color=#00ff00>Dino</color> Card",1),
-                CardTools.FormatStat(true,"Thorns Damage Per Spine",dmgPerSpine)
+                CardTools.FormatStat(true,"Health",health_boost),
+                CardTools.FormatStat(true,"Spines Per <color=#00ff00>Dino</color>",1),
+                CardTools.FormatStat(true,"Thorns Per Spine",dmgPerSpine)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
@@ -115,13 +116,12 @@ namespace HDC.MonoBehaviours
             float spine_percent = numOfSpines * DefensiveSpines.dmgPerSpine;
             var spine_hit_effect = player.gameObject.GetOrAddComponent<SpinesOnHit_Effect>();
             spine_hit_effect.damage_percent = spine_percent;
-            //player.data.stats.GetAdditionalData().armorPlates = numOfPlates *  dinos;
-            //HDC.Log($"Player {player.playerID} has {player.data.stats.GetAdditionalData().armorPlates} plates");
+            HDC.Log($"Thorns Percent: {spine_hit_effect.damage_percent * 100}%a");
         }
 
         public void OnPointEnd()
         {
-            HDC.Log("REMOVING DINO MODIFIER");
+
         }
 
         public void OnGameStart()

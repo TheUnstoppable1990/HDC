@@ -103,14 +103,15 @@ namespace HDC
             //Dino Cards
             CustomCard.BuildCard<Rex>();
             CustomCard.BuildCard<Raptor>();
-            CustomCard.BuildCard<Triceratops>();
             CustomCard.BuildCard<Pterodactyl>();
+            CustomCard.BuildCard<Compsognathus>();
             CustomCard.BuildCard<Stegosaurus>();
             CustomCard.BuildCard<Brontosaurus>();
             CustomCard.BuildCard<Pachycephalosaurus>();
             CustomCard.BuildCard<Ankylosaurus>();
             CustomCard.BuildCard<Parasaurolophus>();
-            CustomCard.BuildCard<Compsognathus>();
+            CustomCard.BuildCard<Triceratops>();
+
 
             CustomCard.BuildCard<Paleontologist>(cardInfo => { Paleontologist.card = cardInfo; });
             CustomCard.BuildCard<DigSite>(cardInfo => { DigSite.card = cardInfo; });

@@ -29,15 +29,15 @@ namespace HDC.Cards
     {
         public static CardInfo card = null; 
         public static float piercingPerCard = 0.15f;
-
+        private float damage_boost = 0.25f;
 
         public override void Callback()
         {
             gameObject.GetOrAddComponent<ClassNameMono>().className = PaleontologistClass.name;
         }        
-        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers)
+        public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-
+            gun.damage = 1 + damage_boost;
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
@@ -73,6 +73,7 @@ namespace HDC.Cards
         {
             return new CardInfoStat[]
             {
+                CardTools.FormatStat(true,"Damage",damage_boost),
                 CardTools.FormatStat(true,"Piercing Damage per <color=#00ff00>Dino</color> Card",piercingPerCard)
             };
         }
@@ -115,7 +116,7 @@ namespace HDC.MonoBehaviours
 
         public void OnPointEnd()
         {
-            HDC.Log("REMOVING DINO MODIFIER");
+
         }
 
         public void OnGameStart()
