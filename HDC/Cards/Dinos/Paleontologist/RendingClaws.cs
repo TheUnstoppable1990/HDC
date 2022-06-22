@@ -74,7 +74,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Damage",damage_boost),
-                CardTools.FormatStat(true,"Extra Damage per <color=#00ff00>Dino</color> Card",damagePerCard)
+                CardTools.FormatStat(true,"Damage per <color=#00ff00>Dino</color>",damagePerCard)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

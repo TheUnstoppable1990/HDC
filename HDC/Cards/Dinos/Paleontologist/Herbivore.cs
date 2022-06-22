@@ -73,7 +73,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Max Health",healthBonus),
-                CardTools.FormatStat(true,"Regen per <color=#00ff00>Dino</color> Card",(int)healingPerCard)
+                CardTools.FormatStat(true,"Regen per <color=#00ff00>Dino</color>",(int)healingPerCard)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
