@@ -82,6 +82,14 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.2.2
+
+---
+
+-Changes
+
+	-New art for Paleo Class cards
+
 ### v1.2.0
 
 ---
@@ -428,7 +436,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -Known issues
 
-	-Effect persistence between games (I am working on it)
+	~-Effect persistence between games (I am working on it)~
 
 -Thanks Willis for some of the code improvements implemented in this update :)
 

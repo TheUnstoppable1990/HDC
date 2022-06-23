@@ -59,7 +59,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Stegosaurus");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Plates");
         }
         protected override string GetDescription()
         {

@@ -31,7 +31,7 @@ namespace HDC
     {                
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.2.0";
+        public const string ModVersion = "1.2.2";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -39,7 +39,7 @@ namespace HDC
 
         //Remember to change this before release
 
-        private static bool debugging = true;
+        private static bool debugging = false;
 
         public static float auraConst = 1.375f;// stil trying to tweak this
 

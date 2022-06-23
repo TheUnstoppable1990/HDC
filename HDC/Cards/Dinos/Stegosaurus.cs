@@ -62,8 +62,8 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Extra Blocks",extra_blocks),                
-                CardTools.FormatStat(true,"Plates",plateNum),
-                CardTools.FormatStat(true,"Damage Reduction / Plate",plate_reduction),
+                //CardTools.FormatStat(true,"Plates",plateNum),
+                CardTools.FormatStat(true,"Damage Reduction",plate_reduction),
                 CardTools.FormatStat(false,"Movement Speed",speed_boost)
             };
         }

@@ -29,7 +29,7 @@ namespace HDC.Cards
 
         public static CardCategory DinoClass = CustomCardCategories.instance.CardCategory("Dinosaur");  //this defines the category of dinosaur for the dino cards
         public static CardCategory[] dinoCards = new CardCategory[] { DinoClass };                      //this is the grounp of dino cards
-        public const string PaleontologistClassName = "Dino";                                           //this is the classname for paleontologist
+        public static string PaleontologistClassName = "Dino";                                           //this is the classname for paleontologist
 
 
         public static CardCategory PaleontologistClass = CustomCardCategories.instance.CardCategory("Paleontologist");  //this defines the Paleontologist class, different from dino class

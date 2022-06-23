@@ -68,7 +68,7 @@ namespace HDC.Cards
             {
                 CardTools.FormatStat(true,"Bronto Stomp",""),
                 CardTools.FormatStat(true,"Health",health_boost),                                
-                CardTools.FormatStat(true,"Damage Taken Over",$"{damageOT}s"),
+                CardTools.FormatStat(true,"Damage Over Time",$"{damageOT}s"),
                 CardTools.FormatStat(false,"Size",size_boost),
                 //CardTools.FormatStat(false,"Movement Speed",movement_reduction),
                 CardTools.FormatStat(false,"Jump Height",jump_reduction)               

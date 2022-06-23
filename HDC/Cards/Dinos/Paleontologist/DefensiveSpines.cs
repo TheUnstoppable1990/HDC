@@ -61,7 +61,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Ankylosaurus");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Spines");
         }
         protected override string GetDescription()
         {

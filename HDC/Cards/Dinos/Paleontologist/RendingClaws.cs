@@ -59,7 +59,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Raptor");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Claws");
         }
         protected override string GetDescription()
         {

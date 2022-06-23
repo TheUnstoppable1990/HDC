@@ -59,7 +59,7 @@ namespace HDC.Cards
         }
         protected override GameObject GetCardArt()
         {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Rex");
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Teeth");
         }
         protected override string GetDescription()
         {
@@ -74,7 +74,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Damage",damage_boost),
-                CardTools.FormatStat(true,"Piercing Damage per <color=#00ff00>Dino</color>",piercingPerCard)
+                CardTools.FormatStat(true,"Piercing per <color=#00ff00>Dino</color>",piercingPerCard)
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
