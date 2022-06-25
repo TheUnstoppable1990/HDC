@@ -15,6 +15,7 @@ namespace HDC.Extentions
         public int panicAuras;
         public float piercePercent;
         public int numDinoCards;
+        public int diloCards;
          
         public CharacterStatModifiersAdditionalData()
         {
@@ -24,6 +25,7 @@ namespace HDC.Extentions
             panicAuras = 0;
             piercePercent = 0f;
             numDinoCards = 0;
+            diloCards = 0;
         }
 
     }
@@ -59,6 +61,7 @@ namespace HDC.Extentions
             __instance.GetAdditionalData().panicAuras = 0;
             __instance.GetAdditionalData().piercePercent = 0f;
             __instance.GetAdditionalData().numDinoCards = 0;
+            __instance.GetAdditionalData().diloCards = 0;
         }
     }
 }

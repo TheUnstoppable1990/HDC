@@ -17,9 +17,8 @@ namespace HDC.Cards
     {
         private float health_boost = 0.5f;
         private float speed_boost = 0.25f;
-        private float block_cooldown = -0.25f;
+        private float block_cooldown = -0.30f;
         private float add_reload_time = 0.25f; //seconds
-       // private float horns_damage = 0.3f; //percent delt back as Horns Damage
         
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)

@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI.ProceduralImage;
 using UnboundLib.Utils;
+using UnboundLib;
 
 namespace HDC.Utilities
 {
@@ -39,6 +40,13 @@ namespace HDC.Utilities
 				HDC.Log(proceduralImage.ToString());
 			}
 			return componentsInChildren[index];
+		}
+		public static float GetLineEffectRadius(LineEffect lineEffect)
+        {
+			//LineEffect test = new LineEffect();
+			//var range = typeof(LineEffect).GetMethod("GetRadius", System.Reflection.BindingFlags.Default | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic).Invoke(lineEffect, new object[] { });
+			//return (float)range;
+			return (float)lineEffect.InvokeMethod("GetRadius");
 		}
 	}
 }

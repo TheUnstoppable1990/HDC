@@ -35,8 +35,8 @@ namespace HDC.Cards
 
             float adjustedBCD = (float)Math.Pow(1f + panic_block_cd, pa) - 1f; //gets the multiplier value
             //HDC.Log(adjustedBCD.ToString());
-            panic_effect.panic_speed += this.panic_speed/pa;
-            panic_effect.panic_regen += this.panic_regen/pa;
+            panic_effect.panic_speed += panic_speed/pa;
+            panic_effect.panic_regen += panic_regen/pa;
             panic_effect.panic_block_cd = adjustedBCD; //returns it to the original format
 
             panic_effect.AdjustSize(pa);
@@ -49,6 +49,9 @@ namespace HDC.Cards
             int pa = this.stats.GetAdditionalData().panicAuras;
             panic_effect.panic_speed -= this.panic_speed / pa; //adjust before changing number
             panic_effect.panic_regen -= this.panic_regen / pa;
+
+            //is this correct? check math on line below
+
             panic_effect.panic_block_cd -= this.panic_block_cd / pa;
             this.stats.GetAdditionalData().panicAuras--;
             pa = this.stats.GetAdditionalData().panicAuras;

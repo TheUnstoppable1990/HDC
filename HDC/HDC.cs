@@ -31,7 +31,7 @@ namespace HDC
     {                
         private const string ModID = "com.theunstoppable1990.rounds.hdc";
         private const string ModName = "Hatchet Daddy's Cards (HDC)";
-        public const string ModVersion = "1.2.2";
+        public const string ModVersion = "1.2.4";
         internal static AssetBundle ArtAssets;
         //private static readonly AssetBundle Bundle = Jotunn.Utils.AssetUtils.LoadAssetBundleFromResources(, typeof(HDC).Assembly);
 
@@ -39,7 +39,7 @@ namespace HDC
 
         //Remember to change this before release
 
-        private static bool debugging = false;
+        private static bool debugging = true;
 
         public static float auraConst = 1.375f;// stil trying to tweak this
 
@@ -56,7 +56,7 @@ namespace HDC
             DestroyAll<CelestialCountdown_Effect_2>();
             DestroyAll<Meditation_Effect>();
             DestroyAll<BehindYou_Effect>();
-            DestroyAll<DivineBlessing_Effect>();
+            //DestroyAll<DivineBlessing_Effect>();
             yield break;
         }
         void DestroyAll<T>() where T : UnityEngine.Object
@@ -101,16 +101,20 @@ namespace HDC
                               
 
             //Dino Cards
+                //Carnivores
             CustomCard.BuildCard<Rex>();
             CustomCard.BuildCard<Raptor>();
             CustomCard.BuildCard<Pterodactyl>();
             CustomCard.BuildCard<Compsognathus>();
+            CustomCard.BuildCard<Dilophosaurus>();
+                //Herbivores
             CustomCard.BuildCard<Stegosaurus>();
             CustomCard.BuildCard<Brontosaurus>();
             CustomCard.BuildCard<Pachycephalosaurus>();
             CustomCard.BuildCard<Ankylosaurus>();
             CustomCard.BuildCard<Parasaurolophus>();
             CustomCard.BuildCard<Triceratops>();
+
 
 
             CustomCard.BuildCard<Paleontologist>(cardInfo => { Paleontologist.card = cardInfo; });
@@ -140,5 +144,28 @@ namespace HDC
             return value.ToString();
         }
 
+        public static void PropertyDump(object obj)
+        {
+            var props = new Dictionary<string, string>();
+            if (obj == null)
+            {
+                Log("Object is null, no properties found.");
+            }
+            else
+            {
+                var type = obj.GetType();
+                foreach (var prop in type.GetProperties())
+                {
+                    var val = prop.GetValue(obj, new object[] { });
+                    var valStr = val == null ? "" : val.ToString();
+                    props.Add(prop.Name, valStr);
+                }
+                Log($"Object: {obj.GetType()} has the following properties:");
+                foreach (var property in props)
+                {
+                    Log($"\t{property.Key}: {property.Value}");
+                }
+            }
+        }
     }
 }

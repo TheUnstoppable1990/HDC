@@ -159,6 +159,11 @@ namespace HDC.MonoBehaviours
 	}
 	public class HolyGlow : ModdingUtils.MonoBehaviours.ReversibleEffect
 	{
+		private ReversibleColorEffect colorEffect = null;
+
+		private HolyRadiance radiance = null;
+
+		public float range = HLConst.range;
 		public override void OnOnEnable()
 		{
 			this.KillItDead();
@@ -169,6 +174,7 @@ namespace HDC.MonoBehaviours
 			this.colorEffect = this.player.gameObject.AddComponent<ReversibleColorEffect>();
 			this.colorEffect.SetColor(HLConst.color);
 			this.radiance = this.player.gameObject.AddComponent<HolyRadiance>();
+			//this.range = AssetTools.GetLineEffectRadius(radiance.holyLightLineEffect);
 			this.colorEffect.SetLivesToEffect(1);
 			this.TimeDestruction();
 		}
@@ -202,27 +208,33 @@ namespace HDC.MonoBehaviours
 			}
 		}
 
-		private ReversibleColorEffect colorEffect = null;
-
-		private HolyRadiance radiance = null;
-
-		public float range = HLConst.range;
+		
 	}
 	public class HolyRadiance : MonoBehaviour
 	{
+		public static GameObject lineEffect;
+
+		private Player player = null;
+
+		public GameObject holyEffect = null;
+
+		public GameObject holyLightObj = null;
+
+		public LineEffect holyLightLineEffect;
+
 		public void Start()
 		{
 			this.player = base.gameObject.GetComponent<Player>();
 			this.holyLightObj = new GameObject();
 			this.holyLightObj.transform.SetParent(this.player.transform);
 			this.holyLightObj.transform.position = this.player.transform.position;
-			if (HolyRadiance.lineEffect == null)
+			if (lineEffect == null)
 			{
-				HolyRadiance.lineEffect = AssetTools.GetLineEffect("ChillingPresence");
+				lineEffect = AssetTools.GetLineEffect("ChillingPresence");
 			}
-			this.holyEffect = UnityEngine.Object.Instantiate<GameObject>(HolyRadiance.lineEffect, this.holyLightObj.transform);
-			LineEffect componentInChildren = this.holyEffect.GetComponentInChildren<LineEffect>();
-			componentInChildren.colorOverTime = new Gradient
+			this.holyEffect = UnityEngine.Object.Instantiate<GameObject>(lineEffect, this.holyLightObj.transform);
+			holyLightLineEffect = this.holyEffect.GetComponentInChildren<LineEffect>();
+			holyLightLineEffect.colorOverTime = new Gradient
 			{
 				alphaKeys = new GradientAlphaKey[]
 				{
@@ -234,10 +246,10 @@ namespace HDC.MonoBehaviours
 				},
 				mode = GradientMode.Fixed
 			};
-			componentInChildren.widthMultiplier = 1f;
-			componentInChildren.radius = HLConst.range;
-			componentInChildren.raycastCollision = true;
-			componentInChildren.useColorOverTime = true;
+			holyLightLineEffect.widthMultiplier = 1f;
+			holyLightLineEffect.radius = HLConst.range;
+			holyLightLineEffect.raycastCollision = true;
+			holyLightLineEffect.useColorOverTime = true;
 		}
 
 		public void Destroy()
@@ -247,13 +259,7 @@ namespace HDC.MonoBehaviours
 			UnityEngine.Object.Destroy(this);
 		}
 
-		private static GameObject lineEffect;
-
-		private Player player = null;
-
-		public GameObject holyEffect = null;
-
-		public GameObject holyLightObj = null;
+		
 	}
 	internal static class HLConst
 	{

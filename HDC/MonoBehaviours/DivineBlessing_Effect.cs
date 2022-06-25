@@ -15,6 +15,8 @@ using System.Linq;
 
 namespace HDC.MonoBehaviours
 {
+    //Depreciated
+    /*
     class DivineBlessing_Effect : MonoBehaviour
     {
         public Block block;
@@ -22,7 +24,7 @@ namespace HDC.MonoBehaviours
         public CharacterData data;
         private Action<BlockTrigger.BlockTriggerType> divineBlessingAction;
 
-        private float healAmount = 10f;
+        private int healAmount = 10;
         public float healRatio = 0.15f;
         private void Start()
         {
@@ -38,7 +40,7 @@ namespace HDC.MonoBehaviours
         {
             return delegate (BlockTrigger.BlockTriggerType trigger)
             {
-                healAmount = data.maxHealth * healRatio;
+                //healAmount = data.maxHealth * healRatio;
                 data.healthHandler.Heal(healAmount);
                 
             };
@@ -53,5 +55,5 @@ namespace HDC.MonoBehaviours
             UnityEngine.Object.Destroy(this);
             block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Remove(block.BlockAction, divineBlessingAction);
         }
-    }
+    }*/
 }

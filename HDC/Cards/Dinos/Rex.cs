@@ -16,14 +16,14 @@ namespace HDC.Cards
     {
         private float health_boost = 1f;
         private float dmg_boost = 2f;
-        private float distance = 0.5f;
+        private float distance = 1f;
         private float add_reload_time = 0.25f; //seconds
         private float size = 0.5f;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass , Carnivore.CarnivoreClass };
-            cardInfo.allowMultiple = false;
+            //cardInfo.allowMultiple = false;
             statModifiers.sizeMultiplier = 1f + size;
             statModifiers.health = 1f + health_boost;
             //gun.damage = 1f + dmg_boost;

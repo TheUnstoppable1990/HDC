@@ -84,6 +84,13 @@ namespace HDC.Extentions
         };
         static public string[] dilophosaurus = new string[]
         {
+            "What do you call a dinosaur with lots a talent?\nA Skill-ophosaurus",
+            "What do you call a dinosaur dentist?\nA Smile-ophosaurus",
+            "What do you call a dinosaur that spends too much time thinking?\nA Philosoph-aurus",
+            "What kind of dinosaur issues parking tickets?\nA Traffic Dil-officer-us"
+        };
+        static public string[] plesiosaur = new string[]
+        {
 
         };
     }

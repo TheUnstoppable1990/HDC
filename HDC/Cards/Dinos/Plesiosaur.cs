@@ -6,59 +6,54 @@ using System.Threading.Tasks;
 using UnboundLib;
 using UnboundLib.Cards;
 using UnityEngine;
-using UnboundLib.Networking;
-using System.Collections;
-using HarmonyLib;
 using HDC.MonoBehaviours;
 using HDC.Utilities;
+using HDC.Extentions;
+using ModdingUtils.MonoBehaviours;
 
 namespace HDC.Cards
 {
-    class LilDefensive : CustomCard
+    class Plesiosaur : CustomCard
     {
-        private float block_cooldown = 0.25f;
-        private float health_boost = 0.50f;
+
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
-            //block.InvokeMethod("ResetStats");
-            block.cdMultiplier = 1f - block_cooldown;
-            statModifiers.health = 1f + health_boost;
+            cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Carnivore.CarnivoreClass };
         }
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-
+            characterStats.GetAdditionalData().numDinoCards++;
         }
-        public override void OnRemoveCard()
+        public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            throw new NotImplementedException();
+            characterStats.GetAdditionalData().numDinoCards--;
         }
         protected override string GetTitle()
         {
-            return "Lil Defensive";
+            return "Plesiosaur";
         }
         protected override string GetDescription()
         {
-            return "It was just a joke.";
+            return CardTools.RandomDescription(DinoPuns.plesiosaur);
+        }
+        protected override GameObject GetCardArt()
+        {
+            return HDC.ArtAssets.LoadAsset<GameObject>("C_Plesiosaur");
+        }
+        protected override CardInfo.Rarity GetRarity()
+        {
+            return CardInfo.Rarity.Rare;
         }
         protected override CardInfoStat[] GetStats()
         {
             return new CardInfoStat[]
             {
-                CardTools.FormatStat(true,"Block Cooldown",-block_cooldown),
-                CardTools.FormatStat(true,"Health",health_boost)
+               //CardTools.FormatStat(true,"Block Cooldown",block_cooldown)
             };
-        }
-        protected override GameObject GetCardArt()
-        {
-            return HDC.ArtAssets.LoadAsset<GameObject>("C_Lil_Defensive");
-        }
-        protected override CardInfo.Rarity GetRarity()
-        {
-            return CardInfo.Rarity.Uncommon;
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
         {
-            return CardThemeColor.CardThemeColorType.DefensiveBlue;
+            return CardThemeColor.CardThemeColorType.PoisonGreen;
         }
         public override string GetModName()
         {

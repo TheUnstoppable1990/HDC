@@ -17,6 +17,7 @@ namespace HDC.Cards
         private float health_boost = 0.5f;
         //static public float regen_mult = 0.1f;
         static public float regen_percentage = 0.1f;
+        static public int regen_amount = 10;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
@@ -40,8 +41,7 @@ namespace HDC.Cards
             }
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
-        {
-            //Destroy(paladin_effect);
+        {            
             Destroy(player.gameObject.GetComponentInChildren<Paladin_Effect>());
         }
         protected override string GetTitle()
@@ -65,7 +65,7 @@ namespace HDC.Cards
             return new CardInfoStat[]
             {
                 CardTools.FormatStat(true,"Max Health",health_boost),
-                CardTools.FormatStat(true,"Regen",$"{regen_percentage*100}% per enemy in range")
+                CardTools.FormatStat(true,"Per Enemy In Range",$"{regen_amount} HP Per Second")
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()

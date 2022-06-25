@@ -38,18 +38,18 @@ namespace HDC.MonoBehaviours
 
 		private void Start()
 		{
-			this.pa = this.player.gameObject.AddComponent<PanicAura>();
+			pa = player.gameObject.AddComponent<PanicAura>();
 		}
 		public void Destroy()
 		{
-			Destroy(this.pa);
+			Destroy(pa);
 			Destroy(this);			
 		}
 
 		private void Awake()
 		{
-			this.player = base.gameObject.GetComponent<Player>();
-			this.data = this.player.GetComponent<CharacterData>();
+			player = gameObject.GetComponent<Player>();
+			data = player.GetComponent<CharacterData>();
 		}
 
 		private void OnEnable()
@@ -63,8 +63,9 @@ namespace HDC.MonoBehaviours
 		}
 		private void Update()
 		{
-			List<Player> enInRange = GetLivingEnemyPlayersInRange(this.rangeOfEffect);			
-			this.timePass += Time.deltaTime;
+			rangeOfEffect = AssetTools.GetLineEffectRadius(pa.panicLineEffect);
+			List<Player> enInRange = GetLivingEnemyPlayersInRange(rangeOfEffect);			
+			timePass += Time.deltaTime;
 			if (enInRange.Count > 0)
 			{				
 				if(panicGlow == null)
@@ -76,7 +77,7 @@ namespace HDC.MonoBehaviours
                 }
 				if(timePass > 1)
                 {
-					this.data.healthHandler.Heal(panic_regen * this.data.maxHealth);
+					data.healthHandler.Heal(panic_regen * data.maxHealth);
 					timePass = 0;
                 }
 			}
@@ -117,7 +118,7 @@ namespace HDC.MonoBehaviours
 			if(pa != null)
             {
 				pa.AdjustSize(num);
-				this.rangeOfEffect = baseRange * num;
+				rangeOfEffect = baseRange * num;
             }			
         }
 
@@ -127,21 +128,21 @@ namespace HDC.MonoBehaviours
 			private Player player = null;
 			public GameObject panicEffect = null;
 			public GameObject panicObj = null;
-			private LineEffect panicLineEffect;
+			public LineEffect panicLineEffect;
 
 			public void Start()
 			{
-				this.player = base.gameObject.GetComponent<Player>();
-				this.panicObj = new GameObject();
-				this.panicObj.transform.SetParent(this.player.transform);
-				this.panicObj.transform.position = this.player.transform.position;
+				player = base.gameObject.GetComponent<Player>();
+				panicObj = new GameObject();
+				panicObj.transform.SetParent(player.transform);
+				panicObj.transform.position = player.transform.position;
 				if (lineEffect == null)
 				{
 					lineEffect = AssetTools.GetLineEffect("Lifestealer");
 				}
-				this.panicEffect = UnityEngine.Object.Instantiate<GameObject>(lineEffect, this.panicObj.transform);
-				this.panicLineEffect = this.panicEffect.GetComponentInChildren<LineEffect>();
-				this.panicLineEffect.colorOverTime = new Gradient
+				panicEffect = UnityEngine.Object.Instantiate<GameObject>(lineEffect, panicObj.transform);
+				panicLineEffect = panicEffect.GetComponentInChildren<LineEffect>();
+				panicLineEffect.colorOverTime = new Gradient
 				{
 					alphaKeys = new GradientAlphaKey[]
 					{
@@ -153,10 +154,10 @@ namespace HDC.MonoBehaviours
 					},
 					mode = GradientMode.Fixed
 				};
-				this.panicLineEffect.widthMultiplier = 1f;
-				this.panicLineEffect.radius = baseRange / HDC.auraConst;
-				this.panicLineEffect.raycastCollision = true;
-				this.panicLineEffect.useColorOverTime = true;
+				panicLineEffect.widthMultiplier = 1f;
+				panicLineEffect.radius = baseRange;
+				panicLineEffect.raycastCollision = true;
+				panicLineEffect.useColorOverTime = true;
 			}
 
 			public void Destroy()
@@ -168,12 +169,12 @@ namespace HDC.MonoBehaviours
 			public void AdjustSize(int num)
             {
 				HDC.Log($"Adjusting size for {num} panic aura(s)");
-				this.panicLineEffect.radius = baseRange * num / HDC.auraConst;
+				panicLineEffect.radius = baseRange * num;
             }
 
 
 		}
-		public class PanicGlow : ModdingUtils.MonoBehaviours.ReversibleEffect //Thanks Pykess for this Utility
+		public class PanicGlow : ReversibleEffect //Thanks Pykess for this Utility
 		{
 			private readonly Color color = Color.green; //light yellowish i think?
 			private ReversibleColorEffect colorEffect = null;

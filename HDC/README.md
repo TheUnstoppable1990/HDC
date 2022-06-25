@@ -82,6 +82,30 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.2.4
+
+---
+
+-Changes
+
+	-Bronto Stomp Remathed for balance
+
+	-Paladin and Divine Blessing have static healing as opposed to percentage based healing 
+
+-Fixes
+
+	-Paladin and Parasaurolophus now have more accurate line effects
+
+### v1.2.3
+
+---
+
+-Changes
+	
+	-Minor rebalances
+
+	-Rex can now be taken more than once
+
 ### v1.2.2
 
 ---

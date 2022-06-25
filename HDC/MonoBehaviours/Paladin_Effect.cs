@@ -30,12 +30,15 @@ namespace HDC.MonoBehaviours
 		  
 		private float timePass = 0f;
 		private float healAmount = 0f;
+		private int healPerEnemy = Paladin.regen_amount;
 		private float allyRatio = 0.1f;
-		private Paladin_Effect.PaladinAura pa;
+		private PaladinAura pa;
+
+
 
 		private void Start()
 		{
-			this.pa = this.player.gameObject.AddComponent<Paladin_Effect.PaladinAura>();
+			pa = player.gameObject.AddComponent<PaladinAura>();
 		}
 
 		private void OnDestroy()
@@ -55,30 +58,34 @@ namespace HDC.MonoBehaviours
 
 		private void OnEnable()
 		{
-			//this.startHealth = this.data.health;
-			//this.startMaxHealth = this.data.maxHealth;
+			
 		}
 
 		private void OnDisable()
 		{
-			//this.data.health = this.startHealth;
-			//this.data.maxHealth = this.startMaxHealth;
+
 		}
 
 		private void Update()
 		{
-			List<Player> enInRange = GetLivingEnemyPlayersInRange(this.rangeOfEffect);
-			List<Player> alInRange = GetLivingAllyPlayersInRange(this.rangeOfEffect);
+
+			//rangeOfEffect = pa.holyEffect.GetComponentInChildren<LineEffect>();
+			rangeOfEffect = AssetTools.GetLineEffectRadius(pa.holyEffect.GetComponentInChildren<LineEffect>());
+			//HDC.Log($"Radius is {rangeOfEffect}");
+
+			List<Player> enInRange = GetLivingEnemyPlayersInRange(rangeOfEffect);
+			List<Player> alInRange = GetLivingAllyPlayersInRange(rangeOfEffect);
 			//float numOfEnemies = enInRange.Count;
 			
 			this.timePass += Time.deltaTime;
-			if (this.timePass > 1f) //second counter
+			if (timePass > 1f) //second counter
 			{
-				this.healAmount = (float)enInRange.Count * this.multiplier * this.data.maxHealth; 
-				this.data.healthHandler.Heal(this.healAmount);//heal for each enemy in range
+				//this.healAmount = (float)enInRange.Count * this.multiplier * this.data.maxHealth;
+				healAmount = (float)enInRange.Count * healPerEnemy;
+				data.healthHandler.Heal(healAmount);//heal for each enemy in range
 				if(alInRange.Count > 0)
 				{
-					if (this.data.health > this.data.maxHealth * (0.5f + this.allyRatio))
+					if (data.health > data.maxHealth * (0.5f + allyRatio * alInRange.Count)) //health would be at least over half after healing each ally once
 					{						
 						foreach (Player ally in alInRange)
 						{
@@ -86,15 +93,16 @@ namespace HDC.MonoBehaviours
 							
 							if (aData.health < aData.maxHealth)
 							{
-								float healAmount = this.data.maxHealth * this.allyRatio;
-								aData.healthHandler.Heal(healAmount);
-								Vector2 damage = new Vector2(0f, -1f * healAmount);
-								this.data.healthHandler.DoDamage(damage, this.data.playerVel.position, Color.cyan, null, null, false, false, true);
+								float allyHealAmount = data.maxHealth * allyRatio;
+								aData.healthHandler.Heal(allyHealAmount);
+								Vector2 damage = new Vector2(0f, -1f * allyHealAmount);								
+								//data.healthHandler.DoDamage(damage, data.playerVel.position, Color.cyan, null, null, false, false, true);
+								data.healthHandler.CallTakeDamage(damage, data.playerVel.position);
 							}
 						}
 					}
 				}
-				this.timePass = 0f;
+				timePass = 0f;
 			}
 			//this.previousNumOfEnemies = this.numOfEnemies;
 		}
@@ -185,7 +193,7 @@ namespace HDC.MonoBehaviours
 					mode = GradientMode.Fixed
 				};
 				componentInChildren.widthMultiplier = 1f;
-				componentInChildren.radius = baseRange / HDC.auraConst;
+				componentInChildren.radius = baseRange;
 				componentInChildren.raycastCollision = true;
 				componentInChildren.useColorOverTime = true;
 			}
