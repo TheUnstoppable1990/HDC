@@ -33,8 +33,17 @@ namespace HDC.Cards
             characterStats.GetAdditionalData().diloCards++;
             if(toxicObjects == null)
             {
+                
                 toxicObjects = ((GameObject)Resources.Load("0 cards/Toxic cloud")).GetComponent<Gun>().objectsToSpawn[0];
-                HDC.Log("Toxic Cloud Effect Name is: " + toxicObjects.effect.name);             
+                
+                //var diloObj = Instantiate(toxicObjects)
+                var e_toxicCloud = toxicObjects.effect.GetComponent<SpawnObjects>().objectToSpawn[0];
+                
+                e_toxicCloud.GetComponent<ParticleSystem>().startColor = new Color(0.16f, 0, 0.29f);
+
+                
+
+                HDC.Log("Toxic Cloud Effect Name is: " + e_toxicCloud.name);             
                 //gonna try and pinpoint the toxic cloud effect via unity and change the color
             }
             else

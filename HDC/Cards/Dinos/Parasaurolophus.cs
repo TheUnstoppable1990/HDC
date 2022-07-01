@@ -86,7 +86,7 @@ namespace HDC.Cards
             {
                CardTools.FormatStat(true,"","When Panicking:"),
                CardTools.FormatStat(true,"Speed",panic_speed),
-               CardTools.FormatStat(true,"Regeneration",$"{panic_regen*100}%/s"),
+               CardTools.FormatStat(true,"Regeneration",$"{panic_regen * 100}hp/s"),
                CardTools.FormatStat(true,"Block Cooldown",panic_block_cd)
             };
         }

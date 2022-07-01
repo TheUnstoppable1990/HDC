@@ -77,7 +77,7 @@ namespace HDC.MonoBehaviours
                 }
 				if(timePass > 1)
                 {
-					data.healthHandler.Heal(panic_regen * data.maxHealth);
+					data.healthHandler.Heal(panic_regen * 100);
 					timePass = 0;
                 }
 			}

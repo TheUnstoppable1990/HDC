@@ -154,7 +154,10 @@ namespace HDC.RoundsEffects
             {
                 Vector2 horns_damage = new Vector2(-damage_percent * damage.x, -damage_percent * damage.y);
                 Vector2 enemy_pos = attacking_player.data.playerVel.position;
-                attacking_player.data.healthHandler.DoDamage(horns_damage, enemy_pos, Color.blue);
+                Unbound.Instance.ExecuteAfterFrames(1, () =>
+                {
+                    attacking_player.data.healthHandler.DoDamage(horns_damage, enemy_pos, Color.blue);
+                });
             }
         }
     }
