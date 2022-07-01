@@ -13,19 +13,27 @@ using HDC.RoundsEffects;
 
 namespace HDC.Cards
 {
-    class Triceratops : CustomCard
+    public class Triceratops : CustomCard
     {
+        public static float horns_duration = 1f; // 1 second
+        public static float damage_const = 100f;
+
         private float health_boost = 0.5f;
-        private float speed_boost = 0.25f;
+        //private float speed_boost = 0.25f;
         private float block_cooldown = -0.30f;
         private float add_reload_time = 0.25f; //seconds
+
+        private Triceratops_Effect trike_effect;
+
+        
+        
         
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass, Herbivore.HerbivoreClass };
 
-            statModifiers.movementSpeed = 1 + speed_boost;
+            //statModifiers.movementSpeed = 1 + speed_boost;
             statModifiers.health = 1f + health_boost;                        
             gun.reloadTimeAdd = add_reload_time;
             block.cdMultiplier = 1f + block_cooldown;
@@ -33,10 +41,19 @@ namespace HDC.Cards
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             characterStats.GetAdditionalData().numDinoCards++;
+            characterStats.GetAdditionalData().trikes++;
+            trike_effect = player.gameObject.GetOrAddComponent<Triceratops_Effect>();
+            trike_effect.block = block;
+            //add custom damaging Effect here
         }
         public override void OnRemoveCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
             characterStats.GetAdditionalData().numDinoCards--;
+            characterStats.GetAdditionalData().trikes--;
+            if(characterStats.GetAdditionalData().trikes <= 0)
+            {
+                Destroy(player.gameObject.GetComponent<Triceratops_Effect>());
+            }
         }
         protected override string GetTitle()
         {
@@ -60,8 +77,9 @@ namespace HDC.Cards
             {
                 CardTools.FormatStat(true,"Block Cooldown",block_cooldown),
                 CardTools.FormatStat(true,"Health",health_boost),
-                CardTools.FormatStat(true,"Movement Speed",speed_boost),                                
-                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")
+                //CardTools.FormatStat(true,"Movement Speed",speed_boost),         
+                CardTools.FormatStat(true,"On Block","Horns Attack"),
+                CardTools.FormatStat(false,"Reload Time", $"+{add_reload_time}s")                
             };
         }
         protected override CardThemeColor.CardThemeColorType GetTheme()
@@ -73,4 +91,5 @@ namespace HDC.Cards
             return "HDC";
         }
     }
+
 }

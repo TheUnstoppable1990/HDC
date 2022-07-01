@@ -82,6 +82,24 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 -----------------
 
+### v1.2.6
+
+-Changes
+
+	-Added Plesiosaur
+
+	-Updated Triceratops
+
+
+### v1.2.5
+
+---
+
+-Changes
+
+	-Added Dilo
+
+
 ### v1.2.4
 
 ---

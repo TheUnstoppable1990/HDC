@@ -91,7 +91,9 @@ namespace HDC.Extentions
         };
         static public string[] plesiosaur = new string[]
         {
-
+            "What do you call a dinosaur with allergies?\nA Sneeze-iosaur",
+            "What do you call a dinosaur with good manners?\nA Please-iosaur",
+            "What do you call a dinosaur brand Slurpee\nA Freezio-saur"
         };
     }
 }

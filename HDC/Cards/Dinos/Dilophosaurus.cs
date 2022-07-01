@@ -34,7 +34,8 @@ namespace HDC.Cards
             if(toxicObjects == null)
             {
                 toxicObjects = ((GameObject)Resources.Load("0 cards/Toxic cloud")).GetComponent<Gun>().objectsToSpawn[0];
-                
+                HDC.Log("Toxic Cloud Effect Name is: " + toxicObjects.effect.name);             
+                //gonna try and pinpoint the toxic cloud effect via unity and change the color
             }
             else
             {

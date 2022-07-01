@@ -6,6 +6,8 @@ using HarmonyLib;
 
 namespace HDC.Extentions
 {
+
+
     [Serializable] 
     public class CharacterStatModifiersAdditionalData //making a place for additional stats
     {
@@ -16,6 +18,8 @@ namespace HDC.Extentions
         public float piercePercent;
         public int numDinoCards;
         public int diloCards;
+        //public float plesioSubmergeTime;
+        public int trikes;
          
         public CharacterStatModifiersAdditionalData()
         {
@@ -26,6 +30,8 @@ namespace HDC.Extentions
             piercePercent = 0f;
             numDinoCards = 0;
             diloCards = 0;
+            trikes = 0;
+            //plesioSubmergeTime = 0f;
         }
 
     }
@@ -62,6 +68,8 @@ namespace HDC.Extentions
             __instance.GetAdditionalData().piercePercent = 0f;
             __instance.GetAdditionalData().numDinoCards = 0;
             __instance.GetAdditionalData().diloCards = 0;
+            __instance.GetAdditionalData().trikes = 0;
+            //__instance.GetAdditionalData().plesioSubmergeTime = 0f;
         }
     }
 }

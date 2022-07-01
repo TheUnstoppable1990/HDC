@@ -19,6 +19,15 @@ namespace HDC.Utilities
 			return componentInChildren.AddObjectToPlayer.GetComponentInChildren<LineEffect>().gameObject;
 		}
 
+		public static GameObject GetSawEffect(string name)
+        {
+			CardInfo cardInfo = CardManager.cards.Values.Select(card => card.cardInfo).First(c => c.name.Equals(name));
+			CharacterStatModifiers componentInChildren = cardInfo.gameObject.GetComponentInChildren<CharacterStatModifiers>();
+			GameObject objAddedToPlayer = componentInChildren.AddObjectToPlayer; //A_NewSaw
+			return objAddedToPlayer.GetComponentInChildren<ParticleSystem>().gameObject;
+			//return componentInChildren.AddObjectToPlayer.GetComponentInChildren<LineEffect>().gameObject;
+		}
+
 		// Token: 0x0600000E RID: 14 RVA: 0x00002458 File Offset: 0x00000658
 		public static ProceduralImage GetProceduralImage(string name)
 		{

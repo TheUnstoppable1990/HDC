@@ -21,10 +21,10 @@ namespace HDC.MonoBehaviours
 
 		private void Start()
 		{			
-			if (this.block)
+			if (block)
 			{
-				this.holyLightAction = new Action<BlockTrigger.BlockTriggerType>(this.GetDoBlockAction().Invoke);
-				this.block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Combine(this.block.BlockAction, this.holyLightAction);
+				holyLightAction = new Action<BlockTrigger.BlockTriggerType>(this.GetDoBlockAction().Invoke);
+				block.BlockAction = (Action<BlockTrigger.BlockTriggerType>)Delegate.Combine(this.block.BlockAction, this.holyLightAction);
 			}
 			HealthHandler healthHandler = this.data.healthHandler;
 			healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff));

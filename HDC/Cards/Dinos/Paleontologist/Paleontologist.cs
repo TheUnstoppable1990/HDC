@@ -95,8 +95,8 @@ namespace HDC.Cards
         }
         protected override CardInfo.Rarity GetRarity()
         {
-            //return CardInfo.Rarity.Rare;
-            return RarityUtils.GetRarity("Legendary");
+            return CardInfo.Rarity.Rare;
+            //return RarityUtils.GetRarity("Legendary");
         }
         protected override CardInfoStat[] GetStats()
         {
