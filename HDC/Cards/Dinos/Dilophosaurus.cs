@@ -22,6 +22,7 @@ namespace HDC.Cards
         //public static GameObject diloObject = null;
         private static ObjectsToSpawn diloObjects = null;
 
+
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
             cardInfo.categories = new CardCategory[] { Paleontologist.DinoClass , Carnivore.CarnivoreClass};
@@ -69,6 +70,8 @@ namespace HDC.Cards
                 diloObjects.stickToBigTargets = toxicObjects.stickToBigTargets;
                 diloObjects.zeroZ = toxicObjects.zeroZ;
 
+
+                diloObjects = toxicObjects; //completely ovewrites the code but at least it should work the basic way it did before
 
                 //Color Change Code but it changes the base thing and we dont want that probably...
                 //var e_toxicCloud = diloObjects.effect.GetComponent<SpawnObjects>().objectToSpawn[0];
