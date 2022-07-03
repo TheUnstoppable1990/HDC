@@ -19,6 +19,8 @@ namespace HDC.Cards
         private float damage_boost = 0.25f;
         private float reload_time = 0.25f;
         public static ObjectsToSpawn toxicObjects = null; //maybe make static?
+        //public static GameObject diloObject = null;
+        private static ObjectsToSpawn diloObjects = null;
 
         public override void SetupCard(CardInfo cardInfo, Gun gun, ApplyCardStats cardStats, CharacterStatModifiers statModifiers, Block block)
         {
@@ -31,33 +33,65 @@ namespace HDC.Cards
         {
             characterStats.GetAdditionalData().numDinoCards++;
             characterStats.GetAdditionalData().diloCards++;
-            if(toxicObjects == null)
+            if(diloObjects == null)
             {
-                
+                diloObjects = new ObjectsToSpawn();                
                 toxicObjects = ((GameObject)Resources.Load("0 cards/Toxic cloud")).GetComponent<Gun>().objectsToSpawn[0];
+                                
+                GameObject diloATP = toxicObjects.AddToProjectile is null ? null : Instantiate(toxicObjects.AddToProjectile);
+                diloATP?.SetActive(false);
                 
-                //var diloObj = Instantiate(toxicObjects)
-                var e_toxicCloud = toxicObjects.effect.GetComponent<SpawnObjects>().objectToSpawn[0];
-                
-                e_toxicCloud.GetComponent<ParticleSystem>().startColor = new Color(0.16f, 0, 0.29f);
+                GameObject diloEffect = toxicObjects.effect is null ? null : Instantiate(toxicObjects.effect);
+                diloEffect?.SetActive(false);
 
-                
+                GameObject diloObject = Instantiate(toxicObjects.effect.GetComponent<SpawnObjects>().objectToSpawn[0]);
+                diloObject.SetActive(false);
 
-                HDC.Log("Toxic Cloud Effect Name is: " + e_toxicCloud.name);             
-                //gonna try and pinpoint the toxic cloud effect via unity and change the color
+                diloObject.GetComponent<ParticleSystem>().startColor = new Color(0.16f, 0, 0.29f);
+
+                HDC.Log("Dilo Spawn Objects: " + diloEffect.GetComponent<SpawnObjects>());
+                diloEffect.GetComponent<SpawnObjects>().objectToSpawn[0] = diloObject;
+                diloObjects.AddToProjectile = diloATP;
+                diloObjects.effect = diloEffect;
+
+
+                diloObjects.direction = toxicObjects.direction;
+                diloObjects.normalOffset = toxicObjects.normalOffset;
+                diloObjects.numberOfSpawns = toxicObjects.numberOfSpawns;
+                diloObjects.removeScriptsFromProjectileObject = toxicObjects.removeScriptsFromProjectileObject;
+                diloObjects.scaleFromDamage = toxicObjects.scaleFromDamage;
+                diloObjects.scaleStackM = toxicObjects.scaleStackM;
+                diloObjects.scaleStacks = toxicObjects.scaleStacks;
+                diloObjects.spawnAsChild = toxicObjects.spawnAsChild;
+                diloObjects.spawnOn = toxicObjects.spawnOn;
+                //diloObjects.stacks = toxicObjects.stacks;
+                diloObjects.stickToAllTargets = toxicObjects.stickToAllTargets;
+                diloObjects.stickToBigTargets = toxicObjects.stickToBigTargets;
+                diloObjects.zeroZ = toxicObjects.zeroZ;
+
+
+                //Color Change Code but it changes the base thing and we dont want that probably...
+                //var e_toxicCloud = diloObjects.effect.GetComponent<SpawnObjects>().objectToSpawn[0];
+
+                //diloObject = GameObject.Instantiate(e_toxicCloud);
+                HDC.Log("Dilo Object Active? "+diloObjects.ToString());
             }
             else
             {
                 HDC.Log("Toxic Objects already exists");                
             }
-            toxicObjects.stacks = characterStats.GetAdditionalData().diloCards - 1;
+            diloObjects.stacks = characterStats.GetAdditionalData().diloCards - 1;
 
             if (characterStats.GetAdditionalData().diloCards <= 1)
             {
                 List<ObjectsToSpawn> list = gun.objectsToSpawn.ToList();
-                list.Add(toxicObjects);
+
+                //list.Add(toxicObjects);
+                list.Add(diloObjects);
                 gun.objectsToSpawn = list.ToArray();
             }
+
+            HDC.Log("Gun Objects to spawn" + gun.objectsToSpawn[0].ToString());
             //only ever adds 1 instance of the cloud and just stacks damage
 
             //may wanna come back and eventually limit stack size but for now lets let it be fun
@@ -69,14 +103,14 @@ namespace HDC.Cards
             characterStats.GetAdditionalData().diloCards--;
             if (characterStats.GetAdditionalData().diloCards > 0)
             {
-                toxicObjects.stacks = characterStats.GetAdditionalData().diloCards - 1;
+                diloObjects.stacks = characterStats.GetAdditionalData().diloCards - 1;
             }
             else
             {
                 List<ObjectsToSpawn> list = gun.objectsToSpawn.ToList();
-                if (list.Contains(toxicObjects))    //It should contain it, but just to avoid errors
+                if (list.Contains(diloObjects))    //It should contain it, but just to avoid errors
                 {
-                    list.Remove(toxicObjects);
+                    list.Remove(diloObjects);
                     gun.objectsToSpawn = list.ToArray();
                 }
                 else
@@ -119,4 +153,5 @@ namespace HDC.Cards
             return "HDC";
         }
     }
+    
 }
