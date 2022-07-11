@@ -12,8 +12,8 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ## Cards Added
 -------------
 
-
-<details open><summary><h3>Angel Cards</h3></summary>
+<h3>Angel Cards</h3>
+<details open>
 	
 	Divine Blessing: Reduces block cooldown and heals the player a percentage of their max HP on block
 	
@@ -30,7 +30,8 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 	
 ---
 
-<details open><summary><h3>Dino Pun Cards</h3></summary>
+<h3>Dino Pun Cards</h3>
+<details open>
 	
 	Paleontologist: Unlocks the Paleontologist Class and gives buffs based on the total number of dinosaur cards a player has. 
 
@@ -64,7 +65,8 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 ---
 
-<details open><summary><h3>Signature Cards</h3></summary>
+<h3>Signature Cards</h3>
+<details open>
 	
 	Behind You: Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
 	
