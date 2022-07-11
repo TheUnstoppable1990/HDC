@@ -169,7 +169,7 @@ namespace HDC.MonoBehaviours
 			};
 			hornsLineEffect.widthMultiplier = 1f;
 			hornsLineEffect.radius = Triceratops_Effect.range;
-			hornsLineEffect.raycastCollision = false; // i think i want it to go through walls
+			hornsLineEffect.raycastCollision = true; // i think i want it to go through walls
 			hornsLineEffect.useColorOverTime = true;
 			
         }

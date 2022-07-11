@@ -39,7 +39,7 @@ namespace HDC
 
         //Remember to change this before release
 
-        private static bool debugging = true;
+        private static bool debugging = false;
 
         public static float auraConst = 1.375f;// stil trying to tweak this
 

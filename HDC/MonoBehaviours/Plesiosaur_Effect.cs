@@ -34,16 +34,22 @@ namespace HDC.MonoBehaviours
             ooB = data.GetAdditionalData().outOfBoundsHandler;
             bouncesLeft = floorBounces;
             base.SetLivesToEffect(int.MaxValue);
+            HealthHandler healthHandler = this.data.healthHandler;
+            healthHandler.reviveAction = (Action)Delegate.Combine(healthHandler.reviveAction, new Action(this.ResetStuff));
         }
         public void OnPointStart()
         {
             HDC.Log("New Point starting? Reset should occur here");
+            ResetStuff();
+        }
+        private void ResetStuff()
+        {
+            HDC.Log("Resetting Bounces");
             bouncesLeft = floorBounces;
             HDC.Log("Bounces Left: " + bouncesLeft);
         }
         public override void OnUpdate()
-        {
-            
+        {            
             if ((bool)Traverse.Create(ooB).Field("outOfBounds").GetValue() && PlayerStatus.PlayerAlive(player) && (transform.position.y <= -19) && bouncesLeft > 0)
             {
                 data.block.sinceBlock = 0.299f;
@@ -77,7 +83,13 @@ namespace HDC.MonoBehaviours
 
         }
 
-               
+        public override void OnOnDestroy()
+        {
+            HealthHandler healthHandler = this.data.healthHandler;
+            healthHandler.reviveAction = (Action)Delegate.Remove(healthHandler.reviveAction, new Action(this.ResetStuff));
+        }
+
+             
 
     }
 }

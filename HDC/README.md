@@ -13,8 +13,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 -------------
 
 
-<details open>
-	<summary><h3>Angel Cards</h3></summary>
+<details open><summary><h3>Angel Cards</h3></summary>
 	
 	Divine Blessing: Reduces block cooldown and heals the player a percentage of their max HP on block
 	
@@ -31,14 +30,17 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 	
 ---
 
-<details open>
-	<summary><h3>Dino Pun Cards</h3></summary>
+<details open><summary><h3>Dino Pun Cards</h3></summary>
 	
 	Paleontologist: Unlocks the Paleontologist Class and gives buffs based on the total number of dinosaur cards a player has. 
 
 	Dig Site: Grabs a Random Dinosaur card to give to the player at a cost 
 
 	Ankylosaurus: Does Thorns damage, lots of knockback
+
+	Dilophosaurus: adds a poison spit effect
+
+	Plesiosaur: Lets you bounce on the bottom of the stage and adds health
 
 	Compsognathus: Lots of player seeking bullets in a tiny package
 
@@ -56,14 +58,13 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 	Rex: Adds size and power!
 
-	Triceratops: Adds plenty of defense and block
+	Triceratops: Reduces block cooldown and adds an on block effect
 
 </details>
 
 ---
 
-<details open>
-	<summary><h3>Signature Cards</h3></summary>
+<details open><summary><h3>Signature Cards</h3></summary>
 	
 	Behind You: Teleports you behind an enemy player when you block. Increases Block Cooldown by 50% (Best Card)
 	
