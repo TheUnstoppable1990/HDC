@@ -55,17 +55,20 @@ namespace HDC.Cards
 
         public override void OnAddCard(Player player, Gun gun, GunAmmo gunAmmo, CharacterData data, HealthHandler health, Gravity gravity, Block block, CharacterStatModifiers characterStats)
         {
-            CardInfo randomCard = ModdingUtils.Utils.Cards.instance.NORARITY_GetRandomCardWithCondition(player, gun, gunAmmo, data, health, gravity, block, characterStats, this.condition);
-            if (randomCard == null)
+            //CardInfo randomCard;
+            HDC.instance.ExecuteAfterFrames(2, () =>
             {
-                // if there is no valid card, then try drawing from the list of all cards (inactive + active) but still make sure it is compatible
-                CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
-                randomCard = ModdingUtils.Utils.Cards.instance.DrawRandomCardWithCondition(allCards, player, null, null, null, null, null, null, null, this.condition);
-            }            
+                CardInfo randomCard = ModdingUtils.Utils.Cards.instance.NORARITY_GetRandomCardWithCondition(player, gun, gunAmmo, data, health, gravity, block, characterStats, this.condition);
+                if (randomCard == null)
+                {
+                    // if there is no valid card, then try drawing from the list of all cards (inactive + active) but still make sure it is compatible
+                    CardInfo[] allCards = ((ObservableCollection<CardInfo>)typeof(CardManager).GetField("activeCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToList().Concat((List<CardInfo>)typeof(CardManager).GetField("inactiveCards", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null)).ToArray();
+                    randomCard = ModdingUtils.Utils.Cards.instance.DrawRandomCardWithCondition(allCards, player, null, null, null, null, null, null, null, this.condition);
+                }
+                HDC.Log("Found Card: " + randomCard.cardName);
 
-            var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
-            HDC.instance.ExecuteAfterFrames(20, () =>
-            {
+                var paleo_effect = player.gameObject.GetOrAddComponent<Paleontologist_Effect>();
+            
                 ModdingUtils.Utils.Cards.instance.AddCardToPlayer(player, randomCard, addToCardBar: true);
                 ModdingUtils.Utils.CardBarUtils.instance.ShowImmediate(player, randomCard);
             });

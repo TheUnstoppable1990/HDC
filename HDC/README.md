@@ -31,6 +31,7 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 
 <details open><summary><b>Dino Pun Cards</b></summary>
 	
+
 	Paleontologist: Unlocks the Paleontologist Class and gives buffs based on the total number of dinosaur cards a player has. 
 
 	Dig Site: Grabs a Random Dinosaur card to give to the player at a cost 
@@ -81,6 +82,12 @@ Download [r2modman](https://rounds.thunderstore.io/package/ebkr/r2modman/), set 
 ### Version Notes
 
 -----------------
+
+### v1.2.7
+
+-Fixes
+
+	-Works with the new force class update now
 
 ### v1.2.6
 
